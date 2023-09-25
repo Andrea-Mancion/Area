@@ -140,6 +140,7 @@ app.get('/success', (req, res) => {
     function(accessToken, refreshToken, profile, done) {
         userProfile=profile;
         console.log(accessToken);
+        console.log(profile.id);
         return done(null, userProfile);
     }
   ));

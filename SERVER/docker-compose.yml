@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - local
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_DATABASE: gfg_db
+      MYSQL_USER: Ferius
+      MYSQL_PASSWORD: Ferius1901
+    networks:
+      - local
+
+networks:
+  local:
+  prod:
