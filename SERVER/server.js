@@ -2,6 +2,8 @@ const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const database = require('./sqlConnection');
+const indexApp = require('./index');
+const session = require('express-session');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -102,7 +104,55 @@ app.post('/login', (req, res) => {
 
 // Page de succès (vous pouvez créer cette page selon vos besoins)
 app.get('/success', (req, res) => {
-    res.send('Connexion réussie !');
+  app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'SECRET'
+  }));
+  res.render('pages/auth');
+  const passport = require('passport');
+  var userProfile;
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.set('view engine', 'ejs');
+
+  app.get('/auth/success', (req, res) => res.render('auth/success', { user: userProfile }));
+  app.get('/auth/error', (req, res) => res.send("error logging in"));
+
+  passport.serializeUser(function(user, cb) {
+    cb(null, user);
+  });
+
+  passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+  });
+
+  const GoogleStrategy = require('passport-google-oauth2').Strategy;
+  const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
+  const GOOGLE_CLIENT_SECRET = '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';
+  passport.use(new GoogleStrategy({
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        userProfile=profile;
+        console.log(accessToken);
+        return done(null, userProfile);
+    }
+  ));
+
+  app.get('/auth/google',
+    passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+  app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/auth/error' }),
+    function(req, res) {
+      // Successful authentication, redirect success.
+      res.redirect('/auth/success');
+    });
 });
 
 // Démarrer le serveur sur le port 3000
