@@ -1,14 +1,17 @@
 <template>
     <div class="Login">
-        <p>Enter yout mail :</p>
+        <p>Enter your mail :</p>
         <b-form-input placeholder="Mail" v-model="MailData" type="mail"></b-form-input>
-        <p>Enter yout Password :</p>
+        <p>Enter your Password :</p>
         <b-form-input placeholder="Password" v-model="PassData" type="password"></b-form-input>
         <br/>
         <b-button variant="info" @click="checkPassord">Login</b-button>
         <b-alert v-model="ShowLoginAlert" variant="danger" dismissible>
             Wrong mail or Password !
         </b-alert>
+        <br/>
+        <br/>
+        <b-button variant="info" @click="RedirectSignIn">Sign in</b-button>
     </div>
 </template>
 
@@ -26,6 +29,9 @@ export default {
             if (this.MailData != 'test@mail.com' && this.PassData != 'toto') {
                 this.ShowLoginAlert = true;
             }
+        },
+        RedirectSignIn () {
+            this.$router.push('/sign-in');
         },
     },
 }

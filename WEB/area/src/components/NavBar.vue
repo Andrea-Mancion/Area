@@ -4,6 +4,8 @@
       <b-navbar-brand href="#" @click="redirectHome">Area</b-navbar-brand>
       <div class="mr-auto">
         <router-link to="/login">Login</router-link>
+        <router-link to="/action-reaction">Action/Reaction</router-link>
+        <router-link to="/service">Service</router-link>
       </div>
     </b-navbar>
   </div>
