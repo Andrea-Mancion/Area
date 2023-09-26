@@ -112,6 +112,7 @@ app.get('/success', (req, res) => {
   res.render('pages/auth');
   const passport = require('passport');
   var userProfile;
+  var my_access_token
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -139,7 +140,7 @@ app.get('/success', (req, res) => {
     },
     function(accessToken, refreshToken, profile, done) {
         userProfile=profile;
-        console.log(accessToken);
+        my_access_token = accessToken;
         return done(null, userProfile);
     }
   ));
@@ -153,6 +154,32 @@ app.get('/success', (req, res) => {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
+  const { google } = require("googleapis");
+  const gmail = google.gmail('v1');
+  const GMAIL_ID = '444052914844-jpdmjulmqqe3qug54oi4cspbhe0ms9ch.apps.googleusercontent.com';
+  const GMAIL_SECRET = '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';
+
+  const oauth2Client = new google.auth.OAuth2(
+    GMAIL_ID,
+    GMAIL_SECRET,
+    "http://localhost:3000/auth/google/callback"
+  );
+
+  oauth2Client.setCredentials({
+    access_token: my_access_token
+  });
+
+  gmail.users.messages.list({
+    auth: oauth2Client,
+    userId: 'me',
+  }, (err, res) => {
+    if (err)
+      console.log('The API returned an error: ' + err);
+    else {
+      const messages = res.data.messages;
+      console.log(messages);
+    }
+  });
 });
 
 // Démarrer le serveur sur le port 3000
