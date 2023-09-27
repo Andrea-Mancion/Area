@@ -1,9 +1,11 @@
 const mysql = require("mysql2");
+require('dotenv').config();
 
 let db_con  = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: ""
+    host: 'db',
+    user: 'Ferius',
+    password: 'Ferius1901',
+    database: "gfg_db",
 });
 
 db_con.connect((err) => {
