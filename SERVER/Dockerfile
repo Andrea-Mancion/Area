@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:15-alpine
 
 COPY package*.json ./
 
@@ -8,4 +8,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npm", "--max-old-space-size=512", "start"]

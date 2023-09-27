@@ -9,12 +9,16 @@ services:
       - db
     networks:
       - local
+    container_name: server_app_1
+    mem_limit: 512m
   db:
-    image: mariadb:latest
+    image: postgres:latest
+    env_file:
+      - .env
     environment:
-      MYSQL_DATABASE: gfg_db
-      MYSQL_USER: Ferius
-      MYSQL_PASSWORD: Ferius1901
+      POSTGRES_DB: gfg_db
+      POSTGRES_USER: Ferius
+      POSTGRES_PASSWORD: Ferius1901
     networks:
       - local
 
