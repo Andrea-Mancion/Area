@@ -1,12 +1,12 @@
 <template>
   <div class="hello">
     <b-navbar toggleable="lg" type="dark" variant="info" class="navbar-expand-lg">
-      <b-navbar-brand href="#" @click="redirectHome">Area</b-navbar-brand>
-      <div class="mr-auto">
-        <router-link to="/login">Login</router-link>
-        <router-link to="/action-reaction">Action/Reaction</router-link>
-        <router-link to="/service">Service</router-link>
-      </div>
+      <b-navbar-brand href="#" @click="redirectHome" class="AreaMargin">Area</b-navbar-brand>
+      <b-nav>
+        <b-nav-item to="/action-reaction">Action/Reaction</b-nav-item>
+        <b-nav-item to="/service">Service</b-nav-item>
+        <b-nav-item to="/login" class="ml-auto">Login</b-nav-item>
+      </b-nav>
     </b-navbar>
   </div>
 </template>
@@ -27,4 +27,11 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.b-nav-item:not(:last-child) {
+  margin-right: 20px; /* Ajustez la valeur selon votre préférence */
+}
+.AreaMargin {
+  margin-left: 20px; /* Ajustez la valeur selon votre préférence */
+}
+</style>
