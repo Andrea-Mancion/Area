@@ -15,5 +15,9 @@
             </li>
         <% }); %>
     </ul>
+    <form action="/sendMessage" method="post">
+        <input type="text" name="message" placeholder="Write your Message" required>
+        <button type="submit">Send</button>
+    </form>
 </body>
 </html>

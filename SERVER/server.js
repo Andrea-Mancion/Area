@@ -203,6 +203,21 @@ app.get('/success', (req, res) => {
     } else
       console.log("I don't have the channel");
   });
+
+  app.post('/sendMessage', (req, res) => {
+    const { message } = req.body;
+    const channel = BotClient.channels.cache.get('1158325700105863229');
+
+    if (channel && channel.isTextBased()) {
+       channel.send(message).then(() => {
+        console.log("Message sent");
+        res.redirect('/messages');
+       }).catch(error => {
+        console.error("Error: " + error);
+       });
+    } else
+      console.log("I don't have the channel");
+  });
 });
 
 // Démarrer le serveur sur le port 3000
