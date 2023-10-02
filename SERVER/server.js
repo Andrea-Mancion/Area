@@ -6,6 +6,7 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const BotClient = require('./myBot.js');
+const DiscordStrategy = require('passport-discord').Strategy;
 
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
@@ -156,6 +157,17 @@ app.get('/success', (req, res) => {
     }
   ));
 
+  passport.use(new DiscordStrategy({
+      clientID: '1156974898644795393',
+      clientSecret: 'X8IKJ1RTnh-QUyfFTTh6N5d1lZoUuSGD',
+      callbackURL: "http://localhost:3000/auth/discord/callback",
+      scope: ['identify', 'guilds']
+    },
+    function(accessToken, refreshToken, profile, done) {
+      return done(null, profile);
+    }
+  ));
+
   app.get('/auth/google',
     passport.authenticate('google', { scope : ['profile', 'email'] }));
 
@@ -164,6 +176,14 @@ app.get('/success', (req, res) => {
     function(req, res) {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
+    });
+
+  app.get('/auth/discord', passport.authenticate('discord'));
+
+  app.get('/auth/discord/callback',
+    passport.authenticate('discord', { failureRedirect: '/auth/error' }),
+    function(req, res) {
+      res.redirect('/messages');
     });
 
   app.get('/messages', (req, res) => {
