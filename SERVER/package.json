@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/EpitechPromo2026/B-DEV-500-REN-5-1-area-mael.gouyet#readme",
   "dependencies": {
+    "axios": "^1.5.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "discord.js": "^14.13.0",

@@ -7,6 +7,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const BotClient = require('./myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
+const axios = require('axios');
 
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
@@ -217,6 +218,34 @@ app.get('/success', (req, res) => {
        });
     } else
       console.log("I don't have the channel");
+  });
+
+  app.get('/weather', (req, res) => {
+    const city = 'rennes';
+    const apiKey = 'd19864bfd5b231d6cf300df7080cbcaa';
+
+    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`).then(response => {
+      const weatherData = response.data;
+      const temp = Math.round(weatherData.main.temp - 273.15);
+      const condition = weatherData.weather[0].description;
+
+      console.log(weatherData);
+
+      const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
+      const channel = BotClient.channels.cache.get('1158325700105863229');
+
+      if (channel && channel.isTextBased()) {
+        channel.send(weatherMessage).then(() => {
+          console.log("Message sent");
+          res.redirect('/messages');
+        }).catch(error => {
+          console.error("Error: " + error);
+        });
+      } else
+        console.log("I don't have the channel");
+    }).catch(error => {
+      console.error("Error: " + error);
+    });
   });
 });
 
