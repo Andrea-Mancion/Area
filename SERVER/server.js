@@ -5,6 +5,7 @@ const session = require('express-session');
 const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const BotClient = require('./myBot.js');
 
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
@@ -164,6 +165,24 @@ app.get('/success', (req, res) => {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
+
+  app.get('/messages', (req, res) => {
+    const channel = BotClient.channels.cache.get('1158325700105863229');
+    if (channel && channel.isTextBased()) {
+      console.log("I Have the channe");
+
+      channel.messages.fetch().then(messages => {
+        const messagesArray = messages.map(message => ({
+          author: message.author.tag,
+          content: message.content,
+        }));
+        res.render('pages/messages', { messages: messagesArray });
+      }).catch(error => {
+        console.error("Error: " + error);
+      });
+    } else
+      console.log("I don't have the channel");
+  });
 });
 
 // Démarrer le serveur sur le port 3000
