@@ -236,7 +236,6 @@ app.get('/success', (req, res) => {
       if (channel && channel.isTextBased()) {
         channel.send(weatherMessage).then(() => {
           console.log("Message sent");
-          res.redirect('/messages');
         }).catch(error => {
           console.error("Error: " + error);
         });
