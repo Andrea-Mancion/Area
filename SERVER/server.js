@@ -9,9 +9,8 @@ const BotClient = require('./myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
+require('dotenv').config();
 
-const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
 var userProfile;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,8 +33,8 @@ app.get('/login', (req, res) => {
 
 const pool = new Pool({
   host: 'db',
-  user: 'Ferius',
-  password: 'Ferius1901',
+  user: process.env.USER,
+  password: process.env.PASSWORD,
   database: 'gfg_db',
   port: 5432,
 });
@@ -122,8 +121,8 @@ app.get('/success', (req, res) => {
   });
 
   passport.use(new GoogleStrategy({
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:3000/auth/google/callback"
     },
     function(accessToken, refreshToken, profile, done) {
@@ -135,8 +134,8 @@ app.get('/success', (req, res) => {
   ));
 
   passport.use(new DiscordStrategy({
-      clientID: '1156974898644795393',
-      clientSecret: 'X8IKJ1RTnh-QUyfFTTh6N5d1lZoUuSGD',
+      clientID: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
       callbackURL: "http://localhost:3000/auth/discord/callback",
       scope: ['identify', 'guilds']
     },
@@ -164,7 +163,7 @@ app.get('/success', (req, res) => {
     });
 
   app.get('/messages', (req, res) => {
-    const channel = BotClient.channels.cache.get('1158325700105863229');
+    const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
     if (channel && channel.isTextBased()) {
       console.log("I Have the channe");
 
@@ -183,7 +182,7 @@ app.get('/success', (req, res) => {
 
   app.post('/sendMessage', (req, res) => {
     const { message } = req.body;
-    const channel = BotClient.channels.cache.get('1158325700105863229');
+    const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
 
     if (channel && channel.isTextBased()) {
        channel.send(message).then(() => {
@@ -198,7 +197,7 @@ app.get('/success', (req, res) => {
 
   cron.schedule('0 10 * * *', () => {
     const city = 'rennes';
-    const apiKey = 'd19864bfd5b231d6cf300df7080cbcaa';
+    const apiKey = process.env.WEATHER_API_KEY;
 
     axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`).then(response => {
       const weatherData = response.data;
@@ -206,7 +205,7 @@ app.get('/success', (req, res) => {
       const condition = weatherData.weather[0].description;
 
       const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
-      const channel = BotClient.channels.cache.get('1158325700105863229');
+      const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
 
       if (channel && channel.isTextBased()) {
         channel.send(weatherMessage).then(() => {
@@ -225,7 +224,7 @@ app.get('/success', (req, res) => {
 
   app.get('/weather', (req, res) => {
     const city = 'rennes';
-    const apiKey = 'd19864bfd5b231d6cf300df7080cbcaa';
+    const apiKey = process.env.WEATHER_API_KEY;
 
     axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`).then(response => {
       const weatherData = response.data;
@@ -233,7 +232,7 @@ app.get('/success', (req, res) => {
       const condition = weatherData.weather[0].description;
 
       const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
-      const channel = BotClient.channels.cache.get('1158325700105863229');
+      const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
 
       if (channel && channel.isTextBased()) {
         channel.send(weatherMessage).then(() => {

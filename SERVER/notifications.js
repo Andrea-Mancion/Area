@@ -7,8 +7,8 @@ const transporter = nodemailer.createTransport({
         rejectUnauthorized: false
     },
     auth: {
-      user: 'ferius.mancion@gmail.com',
-      pass: 'msnxvnosimkkugql'
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASSWORD,
     },
 });
 
