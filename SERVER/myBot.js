@@ -10,6 +10,7 @@ const client = new Client({
 });
 const { sendMail } = require('./notifications.js');
 const TOKEN = process.env.TOKEN_BOT;
+let nbMessages = 0;
 
 client.login(TOKEN);
 
@@ -20,9 +21,13 @@ client.on('ready', () => {
 client.on('messageCreate', (msg) => {
     if (msg.guild && msg.guild.id === process.env.DISCORD_SERVER_ID) {
         const messages = msg.content;
+        nbMessages++;
 
         console.log(`Message from ${msg.author.tag}: ${messages}`);
-        sendMail(messages);
+        if (nbMessages === 5) {
+            sendMail(messages);
+            nbMessages = 0;
+        }
     }
 });
 
