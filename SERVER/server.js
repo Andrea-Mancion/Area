@@ -96,8 +96,8 @@ app.post('/login', (req, res) => {
         .then(results => {
           if (results.rows.length > 0) {
             console.log('Authentication successful!');
-            client.release(); // Release the client connection
-            res.redirect('/success');
+            res.status(200).json({ success: 'Authentication successful' });
+            //client.release(); // Release the client connection
           } else {
             console.log('Authentication failed: incorrect username or password');
             client.release(); // Release the client connection
