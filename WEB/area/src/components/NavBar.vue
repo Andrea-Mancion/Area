@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'NavBar',
   props: {
     msg: String
   },
@@ -26,12 +26,11 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .b-nav-item:not(:last-child) {
-  margin-right: 20px; /* Ajustez la valeur selon votre préférence */
+  margin-right: 20px;
 }
 .AreaMargin {
-  margin-left: 20px; /* Ajustez la valeur selon votre préférence */
+  margin-left: 20px;
 }
 </style>
