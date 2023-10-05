@@ -68,16 +68,21 @@ app.post('/register', (req, res) => {
 
   pool.connect()
     .then(client => {
-      return client.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password])
+      client.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password])
         .then(result => {
-          console.log('User registered successfully!');
-          client.release(); // Release the client connection
-          res.redirect('/success');
+          if (!result.error) {
+            console.log(result);
+            console.log('User registered successfully!');
+            res.sendStatus(200);
+          }
+          else {
+            console.log('Error registering user');
+            res.status(400).json({ error: 'Error registering user' });
+          }
         })
         .catch(err => {
           console.error('Error registering user: ' + err.message);
-          client.release(); // Release the client connection
-          res.status(500).json({ error: 'Error registering user' });
+          res.status(400).json({ error: 'Error registering user' });
         });
     })
     .catch(err => {
@@ -96,17 +101,15 @@ app.post('/login', (req, res) => {
         .then(results => {
           if (results.rows.length > 0) {
             console.log('Authentication successful!');
-            client.release(); // Release the client connection
-            res.redirect('/success');
+            res.status(200).json({ success: 'Authentication successful' });
+            //client.release(); // Release the client connection
           } else {
             console.log('Authentication failed: incorrect username or password');
-            client.release(); // Release the client connection
             res.status(401).json({ error: 'Incorrect username or password' });
           }
         })
         .catch(err => {
           console.error('Error during authentication: ' + err.message);
-          client.release(); // Release the client connection
           res.status(500).json({ error: 'Error during authentication' });
         });
     })
@@ -129,8 +132,6 @@ app.get('/success', (req, res) => {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.set('view engine', 'ejs');
-
   app.get('/auth/success', (req, res) => res.render('auth/success', { user: userProfile }));
   app.get('/auth/error', (req, res) => res.send("error logging in"));
 
@@ -141,30 +142,31 @@ app.get('/success', (req, res) => {
   passport.deserializeUser(function(obj, cb) {
     cb(null, obj);
   });
-
-  passport.use(new GoogleStrategy({
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback"
-    },
-    function(accessToken, refreshToken, profile, done) {
-        userProfile=profile;
-        console.log(accessToken);
-        console.log(profile.id);
-        return done(null, userProfile);
-    }
-  ));
-
-  app.get('/auth/google',
-    passport.authenticate('google', { scope : ['profile', 'email'] }));
-
-  app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/auth/error' }),
-    function(req, res) {
-      // Successful authentication, redirect success.
-      res.redirect('/auth/success');
-    });
 });
+
+  // passport.use(new GoogleStrategy({
+  //     clientID: GOOGLE_CLIENT_ID,
+  //     clientSecret: GOOGLE_CLIENT_SECRET,
+  //     callbackURL: "http://localhost:3000/auth/google/callback"
+  //   },
+  //   function(accessToken, refreshToken, profile, done) {
+  //       userProfile=profile;
+  //       console.log(accessToken);
+  //       console.log(profile.id);
+  //       return done(null, userProfile);
+  //   }
+  // ));
+
+//   app.get('/auth/google',
+//     passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+//   app.get('/auth/google/callback',
+//     passport.authenticate('google', { failureRedirect: '/auth/error' }),
+//     function(req, res) {
+//       // Successful authentication, redirect success.
+//       res.redirect('/auth/success');
+//     });
+// });
 
 // Démarrer le serveur sur le port 3000
 app.listen(port, () => {
