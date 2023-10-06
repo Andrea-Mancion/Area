@@ -8,6 +8,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home Page"),
+      ),
       body: Center(
         child: Column(
           children: [
@@ -40,7 +43,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            const Flexible(child: SizedBox(height: 50)),
+            const SizedBox(height: 50),
             Flexible(
               child: SizedBox(
                 width: 300,
