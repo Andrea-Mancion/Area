@@ -6,6 +6,10 @@ const { info, error } = require('console');
 const { get } = require('http');
 const session = require('express-session');
 const { access } = require('fs');
+const { callReaction } = require('./reaction');
+// const generateCodeVerifier = require('reaction');
+//import generateCodeVerifier function from server.js
+
 
 let nbEpisode = -1;
 let nbTrack = -1;
@@ -43,27 +47,38 @@ let isThereNewSavedTrack = false;
 // });
 
 
-app.get('/check_new_saved_track', async (req, res) => {
+// app.get('/check_new_saved_track', async (req, res) => {
 
-    const accessToken = req.query.accessToken;
-    try {
-        const newTrack = await checkNewSavedTrack(accessToken);
+//     const accessToken = req.query.accessToken;
+//     try {
+//         const newTrack = await checkNewSavedTrack(accessToken);
+//         if (newTrack) {
+//             res.sendStatus(200);
+//         } else {
+//             res.sendStatus(900);
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Erreur lors de la récupération du profil');
+//     }
+// });
+
+callAction = async (area) => {
+    const action_Name = area.action_Name;
+    if (action_Name == "check_new_saved_track") {
+        const newTrack = await checkNewSavedTrack(area.access_token);
         if (newTrack) {
-            res.sendStatus(200);
-        } else {
-            res.sendStatus(900);
+            callReaction(area);
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Erreur lors de la récupération du profil');
     }
-});
-
-app.listen(port, () => {
-    console.log(`Serveur Express écoutant sur le port ${port}`);
-});
-
-
+    if (action_Name == "check_new_episode") {
+        const newEpisode = await checkNewEpisode(area.access_token, area.action_Param);
+        if (newEpisode) {
+            callReaction(area);
+        }
+    }
+}
+exports.callAction = callAction;
 
 checkNewSavedTrack = async (accessToken) => {
     if (isThereNewSavedTrack)
@@ -72,51 +87,38 @@ checkNewSavedTrack = async (accessToken) => {
     if (infoTrack.error) {
         console.error(infoTrack.error);
         // throw error;
-        return;
+        return false;
     }
     if (nbTrack == -1) {
         nbTrack = infoTrack.total;
+        return false;
     } else {
         if (infoTrack.total > nbTrack) {
             console.log("Nouveau morceau");
             nbTrack = infoTrack.total;
             isThereNewSavedTrack = true;
+            return true;
         } else if (infoTrack.total < nbTrack) {
             nbTrack = infoTrack.total;
+            return false;
         }
         else {
             console.log("Pas de nouveau morceau");
-            return;
+            return false;
         }
     }
 }
 
-app.get('/check_new_episode', async (req, res) => {
-    accessToken = req.query.accessToken;
 
-    try {
-        checkNewEpisode(accessToken, show).then((newEpisode) => {
-            if (newEpisode) {
-                res.sendStatus(200);
-            }
-            else {
-                res.sendStatus(400);
-            }
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Erreur lors de la récupération du profil');
-    }
-});
-
-async function checkNewEpisode(accessToken, nameShow) {
-    const infoShow = await fetchShow(accessToken, nameShow);
+async function checkNewEpisode(accessToken, ShowId) {
+    const infoShow = await fetchShow(accessToken, ShowId);
     if (infoShow.error) {
         console.error(infoShow.error);
         throw error;
     }
     if (nbEpisode == -1) {
         nbEpisode = infoShow.total;
+        return false;
     } else {
         if (infoShow.total > nbEpisode) {
             console.log("Nouvel épisode");
@@ -127,6 +129,17 @@ async function checkNewEpisode(accessToken, nameShow) {
             return false;
         }
     }
+}
+
+
+function generateCodeVerifier(length) {
+    let text = '';
+    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
 }
 
 async function fetchShow(token, nameShow) {
@@ -145,3 +158,4 @@ async function fetchTrack(token) {
     return await result.json();
 }
 
+module.exports = app;
