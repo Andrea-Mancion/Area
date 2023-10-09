@@ -66,18 +66,27 @@ const pool = new Pool({
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
 
+  console.log("====================================");
+  console.log(username);
+  console.log(password);
+
   pool.connect()
     .then(client => {
-      return client.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password])
+      client.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password])
         .then(result => {
-          console.log('User registered successfully!');
-          client.release(); // Release the client connection
-          res.redirect('/success');
+          if (!result.error) {
+            console.log(result);
+            console.log('User registered successfully!');
+            res.sendStatus(200);
+          }
+          else {
+            console.log('Error registering user');
+            res.status(400).json({ error: 'Error registering user' });
+          }
         })
         .catch(err => {
           console.error('Error registering user: ' + err.message);
-          client.release(); // Release the client connection
-          res.status(500).json({ error: 'Error registering user' });
+          res.status(400).json({ error: 'Error registering user' });
         });
     })
     .catch(err => {
@@ -96,17 +105,15 @@ app.post('/login', (req, res) => {
         .then(results => {
           if (results.rows.length > 0) {
             console.log('Authentication successful!');
-            client.release(); // Release the client connection
-            res.redirect('/success');
+            res.status(200).json({ success: 'Authentication successful' });
+            //client.release(); // Release the client connection
           } else {
             console.log('Authentication failed: incorrect username or password');
-            client.release(); // Release the client connection
             res.status(401).json({ error: 'Incorrect username or password' });
           }
         })
         .catch(err => {
           console.error('Error during authentication: ' + err.message);
-          client.release(); // Release the client connection
           res.status(500).json({ error: 'Error during authentication' });
         });
     })
