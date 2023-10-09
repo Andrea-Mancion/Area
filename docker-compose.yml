@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: ./SERVER
+    ports:
+      - "3000:3000"
+
+  mobile:
+    build:
+      context: ./MOBILE
+
+  web:
+    build:
+      context: ./WEB
+    ports:
+      - "8080:8080"
