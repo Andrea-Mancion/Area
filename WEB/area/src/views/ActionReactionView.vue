@@ -67,7 +67,7 @@ export default {
                 this.createActRecData.reaction_Name = this.$store.getters.getSavedReaction;
                 this.createActRecData.action_Param = this.$store.state.ActionsList.Spotify.check_new_episode;
                 this.createActRecData.reaction_Param = this.$store.state.ReactionsList.Spotify.createPlaylistData;
-                this.createActRecData.access_token = this.$store.authentificationTokens.Spotify;
+                this.createActRecData.access_token = this.$store.state.authentificationTokens.Spotify;
                 this.createActRecData.user_id = "toto";
             },
     }
