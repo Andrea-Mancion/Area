@@ -4,43 +4,45 @@ const fetch = require('node-fetch');
 const crypto = require('crypto');
 const { info } = require('console');
 const { accessSync } = require('fs');
+const { create } = require('domain');
 
 let nbEpisode = -1;
 const app = express();
 const port = 3000; // Le port sur lequel le serveur Express écoutera
 
-let codeVerifier = generateCodeVerifier(128);; // Variable globale pour stocker le code vérificateur
-app.set('view engine', 'ejs');
-const show = "6y1PloEyNsCNJH9vHias4T";
-
-app.get('/callback', async (req, res) => {
-    const clientId = "fdbe5e5dbe5c42b680efb3ab1d3574af";
-    const code = req.query.code;
-
-    if (!code) {
-        redirectToAuthCodeFlow(clientId, res);
-    } else {
-        try {
-            getAccessToken(clientId, code).then((accessToken) => {
-                // startSong(accessToken, show);
-                // setVolume(accessToken, 0);
-                // addTrackToQueue(accessToken, "spotify:track:7ETSUd74fhHvG2JldNVizV");
-                // addItemsToPlaylist(accessToken, "4G0RZx6TlXycJ82b8MQ18C", "spotify:track:7ETSUd74fhHvG2JldNVizV");
-                createPlaylist(accessToken, "test2", "test", true, "moi");
-            });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Erreur lors de la récupération du profil');
-        }
+function callReaction(area) { // to replace
+    const reaction_Name = area.reaction.name;
+    const reaction_Param = area.reaction.param;
+    const accessToken = area.access_token;
+    if (reaction_Name == "createPlaylist") {
+        createPlaylist(accessToken, reaction_Param.name, reaction_Param.description, reaction_Param.is_public);
     }
-});
+    if (reaction_Name == "add_items_to_playlist") {
+        add_items_to_playlist(accessToken, reaction_Param.playlistId, reaction_Param.trackId);
+    }
+    if (reaction_Name == "addTrackToQueue") {
+        addTrackToQueue(accessToken, reaction_Param.trackId);
+    }
+    if (reaction_Name == "setVolume") {
+        setVolume(accessToken, reaction_Param.volume);
+    }
+    if (reaction_Name == "startSong") {
+        startSong(accessToken);
+    }
+    if (reaction_Name == "pauseSong") {
+        pauseSong(accessToken);
+    }
+    if (reaction_Name == "nextSong") {
+        nextSong(accessToken);
+    }
+    if (reaction_Name == "previousSong") {
+        previousSong(accessToken);
+    }
+}
 
+exports.callReaction = callReaction;
 
-app.get('/create_playlist', async (req, res) => {
-    const accessToken = req.query.accessToken;
-    const name = req.query.name;
-    const description = req.query.description;
-    const public = req.query.public;
+createPlaylist = async (accessToken, name, description, is_public) => {
     fetch("https://api.spotify.com/v1/me", {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -56,7 +58,7 @@ app.get('/create_playlist', async (req, res) => {
                 body: JSON.stringify({
                     "name": name,
                     "description": description,
-                    "public": public
+                    "public": is_public
                 })
             }).then((result) => {
                 result.json().then((data) => {
@@ -71,13 +73,10 @@ app.get('/create_playlist', async (req, res) => {
             })
         });
     });
-});
+};
 
 
-app.get('/add_items_to_playlist', async (req, res) => {
-    const accessToken = req.query.accessToken;
-    const playlistId = req.query.playlistId;
-    const trackId = req.query.trackId;
+add_items_to_playlist = async (accessToken, playlistId, trackId) => {
     fetch("https://api.spotify.com/v1/playlists/" + playlistId + "/tracks", {
         method: "POST", headers: { Authorization: `Bearer ${accessToken}` },
         body: JSON.stringify({
@@ -92,12 +91,10 @@ app.get('/add_items_to_playlist', async (req, res) => {
             console.log("result", data);
         });
     })
-});
+};
 
-// async function addTrackToQueue(accessToken, trackId) {
-app.get('/add_track_to_queue', async (req, res) => {
-    const accessToken = req.query.accessToken;
-    const trackId = req.query.trackId;
+// app.get('/add_track_to_queue', async (req, res) => {
+async function addTrackToQueue(accessToken, trackId) {
     fetch("https://api.spotify.com/v1/me/player/devices", {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -123,12 +120,10 @@ app.get('/add_track_to_queue', async (req, res) => {
             console.log("result", data);
         });
     });
-});
+};
 
-// async function setVolume(accessToken, volume) {
-app.get('/set_volume', async (req, res) => {
-    const accessToken = req.query.accessToken;
-    const volume = req.query.volume;
+// app.get('/set_volume', async (req, res) => {
+async function setVolume(accessToken, volume) {
     fetch("https://api.spotify.com/v1/me/player/devices", {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -153,11 +148,9 @@ app.get('/set_volume', async (req, res) => {
             console.log("result", data);
         });
     });
-});
+};
 
-// async function startSong(accessToken) {
-app.get('/start_song', async (req, res) => {
-    const accessToken = req.query.accessToken;
+async function startSong(accessToken) {
     fetch("https://api.spotify.com/v1/me/player/devices", {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -183,11 +176,9 @@ app.get('/start_song', async (req, res) => {
             console.log("result", data);
         });
     });
-});
+};
 
-// async function pauseSong(accessToken) {
-app.get('/pause_song', async (req, res) => {
-    const accessToken = req.query.accessToken;
+async function pauseSong(accessToken) {
     fetch("https://api.spotify.com/v1/me/player/devices", {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -213,11 +204,9 @@ app.get('/pause_song', async (req, res) => {
             console.log("result", data);
         });
     });
-});
+};
 
-// async function nextSong(accessToken) {
-app.get('/next_song', async (req, res) => {
-    const accessToken = req.query.accessToken;
+async function nextSong(accessToken) {
     fetch("https://api.spotify.com/v1/me/player/devices", {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -243,11 +232,9 @@ app.get('/next_song', async (req, res) => {
             console.log("result", data);
         });
     });
-});
+};
 
-// async function previousSong(accessToken) {
-app.get('/previous_song', async (req, res) => {
-    const accessToken = req.query.accessToken;
+async function previousSong(accessToken) {
     fetch("https://api.spotify.com/v1/me/player/devices", {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -273,12 +260,9 @@ app.get('/previous_song', async (req, res) => {
             console.log("result", data);
         });
     });
-});
+};
 // data.devices[0].id;
 
-app.listen(port, () => {
-    console.log(`Serveur Express écoutant sur le port ${port}`);
-});
 /*
 async function redirectToAuthCodeFlow(clientId, res) {
     codeVerifier = generateCodeVerifier(128); // Stocker le code vérificateur dans la variable globale
@@ -296,7 +280,6 @@ async function redirectToAuthCodeFlow(clientId, res) {
     const authorizationUrl = `https://accounts.spotify.com/authorize?${params.toString()}`;
     res.redirect(authorizationUrl);
 }
-
 function generateCodeVerifier(length) {
     let text = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -306,7 +289,6 @@ function generateCodeVerifier(length) {
     }
     return text;
 }
-
 async function generateCodeChallenge(codeVerifier) {
     const encoder = new TextEncoder();
     const data = encoder.encode(codeVerifier);
