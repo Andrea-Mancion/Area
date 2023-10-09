@@ -25,6 +25,7 @@
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
     "pg": "^8.11.3"
+    "node-fetch": "^2.7.0"
   },
   "scripts": {
     "start": "node server.js",
