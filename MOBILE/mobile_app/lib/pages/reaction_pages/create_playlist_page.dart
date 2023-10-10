@@ -49,8 +49,8 @@ class _CreatePlayListPageState extends State<CreatePlayListPage> {
                 onPressed: () {
                   AllVariables.reactionDescription = {
                     "name": AllVariables.spotifyCreatePlaylistReactionName.text,
-                    "description": AllVariables.spotifyPlaylistReactionDescription.text,
-                    "private": AllVariables.spotifyPlaylistReactionPrivate.text,
+                    "description": AllVariables.spotifyCreatePlaylistReactionDescription.text,
+                    "private": AllVariables.spotifyCreatePlaylistReactionPrivate.text,
                   };
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const CreateTaskPage()));

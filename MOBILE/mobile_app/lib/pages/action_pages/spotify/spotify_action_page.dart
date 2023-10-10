@@ -56,7 +56,7 @@ class _SpotifyActionPageState extends State<SpotifyActionPage> {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const NewSaveTrackActionSpotify()),
                   );
-                  AllVariables.action = "check_new_saved_track";
+                  AllVariables.Action = "check_new_saved_track";
                   AllVariables.actionPrint = "il y a une nouvelle musique enregistrée";
                 },
                 child: const Text(AllVariables.spotifyAction1)
@@ -79,7 +79,7 @@ class _SpotifyActionPageState extends State<SpotifyActionPage> {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const SpotifyActionPage()),
                   );
-                  AllVariables.action = "check_new_episode";
+                  AllVariables.Action = "check_new_episode";
                   AllVariables.actionPrint = "il y a un nouvel épisode";
                 },
                 child: const Text(AllVariables.spotifyAction2),

@@ -11,6 +11,8 @@ class AllVariables {
 
 
   };
+  static String reactionPrint = "";
+  static String actionPrint = "";
   static const double spaceBetweenButton = 30;
   static const double heightButton = 45;
   static const double widthButton = 220;

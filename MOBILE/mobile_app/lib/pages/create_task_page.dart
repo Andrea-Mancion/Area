@@ -17,12 +17,12 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   String whatPrintThen = "";
   @override
   Widget build(BuildContext context) {
-    if (AllVariables.action == "") {
+    if (AllVariables.Action == "") {
       whatPrintIf = "...";
     } else {
       whatPrintIf = AllVariables.actionPrint;
     }
-    if (AllVariables.reaction == "") {
+    if (AllVariables.Reaction == "") {
       whatPrintThen = "...";
     } else {
       whatPrintThen = AllVariables.reactionPrint;
@@ -95,8 +95,8 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                print(AllVariables.action);
-                print(AllVariables.reaction);
+                print(AllVariables.Action);
+                print(AllVariables.Reaction);
                 AllVariables.tasks[0] = ("Si \"${AllVariables.actionPrint}\", fais \"${AllVariables.reactionPrint}\"");
                 print(AllVariables.tasks[AllVariables.taskIndex]);
                 AllVariables.taskIndex++;

@@ -15,7 +15,7 @@ void function() async {
     'client_id': spotifyClientId,
     'callbackUrlScheme': "mobile",
     'redirect_uri': 'mobile:/',
-    'scope': 'user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public',
+    'scope': 'user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public playlist-modify-private',
     'grant_type': 'authorization_code',
   });
 

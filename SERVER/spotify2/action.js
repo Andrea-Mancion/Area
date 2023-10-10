@@ -19,6 +19,7 @@ function addNewVariables() {
     spotifyVariables.push({
         nbTrack: -1
     });
+    nbreact++;
 }
 
 const app = express();
@@ -53,7 +54,6 @@ async function checkNewSavedTrack(accessToken, nbReact) {
         // throw error;
         return false;
     }
-    console.log(spotifyVariables[nbReact].nbTrack, "fqifqi    ," , nbReact, nbreact);
     if (spotifyVariables[nbReact].nbTrack == -1) {
         spotifyVariables[nbReact].nbTrack = infoTrack.total;
         console.log("Pas de nouveau morceau");
