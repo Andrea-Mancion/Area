@@ -5,6 +5,8 @@ const session = require('express-session');
 const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const { access } = require('fs');
+const { callAction } = require('./spotify/action');
 
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
@@ -19,6 +21,7 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+let area = [];
 
 // app.get("/createDatabase", (req, res) => {
 
@@ -66,18 +69,27 @@ const pool = new Pool({
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
 
+  console.log("====================================");
+  console.log(username);
+  console.log(password);
+
   pool.connect()
     .then(client => {
-      return client.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password])
+      client.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password])
         .then(result => {
-          console.log('User registered successfully!');
-          client.release(); // Release the client connection
-          res.redirect('/success');
+          if (!result.error) {
+            console.log(result);
+            console.log('User registered successfully!');
+            res.sendStatus(200);
+          }
+          else {
+            console.log('Error registering user');
+            res.status(400).json({ error: 'Error registering user' });
+          }
         })
         .catch(err => {
           console.error('Error registering user: ' + err.message);
-          client.release(); // Release the client connection
-          res.status(500).json({ error: 'Error registering user' });
+          res.status(400).json({ error: 'Error registering user' });
         });
     })
     .catch(err => {
@@ -100,13 +112,11 @@ app.post('/login', (req, res) => {
             //client.release(); // Release the client connection
           } else {
             console.log('Authentication failed: incorrect username or password');
-            client.release(); // Release the client connection
             res.status(401).json({ error: 'Incorrect username or password' });
           }
         })
         .catch(err => {
           console.error('Error during authentication: ' + err.message);
-          client.release(); // Release the client connection
           res.status(500).json({ error: 'Error during authentication' });
         });
     })
@@ -134,37 +144,84 @@ app.get('/success', (req, res) => {
   app.get('/auth/success', (req, res) => res.render('auth/success', { user: userProfile }));
   app.get('/auth/error', (req, res) => res.send("error logging in"));
 
-  passport.serializeUser(function(user, cb) {
+  passport.serializeUser(function (user, cb) {
     cb(null, user);
   });
 
-  passport.deserializeUser(function(obj, cb) {
+  passport.deserializeUser(function (obj, cb) {
     cb(null, obj);
   });
 
   passport.use(new GoogleStrategy({
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback"
-    },
-    function(accessToken, refreshToken, profile, done) {
-        userProfile=profile;
-        console.log(accessToken);
-        console.log(profile.id);
-        return done(null, userProfile);
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+    function (accessToken, refreshToken, profile, done) {
+      userProfile = profile;
+      console.log(accessToken);
+      console.log(profile.id);
+      return done(null, userProfile);
     }
   ));
 
   app.get('/auth/google',
-    passport.authenticate('google', { scope : ['profile', 'email'] }));
+    passport.authenticate('google', { scope: ['profile', 'email'] }));
 
   app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/auth/error' }),
-    function(req, res) {
+    function (req, res) {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
 });
+
+app.get('/create_action', (req, res) => {
+  const {
+    service_Name,
+    action_Name,
+    reaction_Name,
+    action_Param,
+    reaction_Param,
+    access_token,
+    user_id
+  } = req.body;
+
+  // Créez un nouvel objet pour chaque entrée et ajoutez-le au tableau
+  const newAreaObject = {
+    service_Name,
+    action_Name,
+    reaction_Name,
+    action_Param,
+    reaction_Param,
+    access_token,
+    user_id
+  };
+
+  area.push(newAreaObject);
+  /*
+    pool.connect()
+      .then(client => {
+        return client.query('INSERT INTO actions (action_Name, reaction_Name, action_Param, reaction_Param) VALUES ($1, $2, $3, $4)', [action_Name, reaction_Name, action_Param, reaction_Param])
+          .then(result => {
+            console.log('Action created successfully!');
+            client.release(); // Release the client connection
+            res.redirect('/success');
+          })
+          .catch(err => {
+            console.error('Error creating action: ' + err.message);
+            client.release(); // Release the client connection
+            res.status(500).json({ error: 'Error creating action' });
+          });
+      })
+      .catch(err => {
+        console.error('Error getting database connection: ' + err.message);
+        res.status(500).json({ error: 'Error getting database connection' });
+      });
+  */
+  callAction(newAreaObject);
+});
+
 
 // Démarrer le serveur sur le port 3000
 app.listen(port, () => {

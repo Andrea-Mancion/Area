@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/home_page.dart';
-import 'package:mobile_app/pages/login_page.dart';
+// import 'package:mobile_app/pages/home_page.dart';
+import 'package:mobile_app/pages/service_page.dart';
 
 const double verticaleSpace = 60;
 const double horizontalSpace = 20;
 
-class ReactionPage extends StatefulWidget {
-  const ReactionPage({super.key});
+class IfThisPage extends StatefulWidget {
+  const IfThisPage({super.key});
 
   @override
-  State<ReactionPage> createState() => ReaActionPageState();
+  State<IfThisPage> createState() => IfThisPageState();
 }
 
-class ReaActionPageState extends State<ReactionPage> {
+class IfThisPageState extends State<IfThisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("If This Page"),
+      ),
       body: Center(
         child: ListView(
           children: [
@@ -61,7 +65,7 @@ class ReaActionPageState extends State<ReactionPage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                          MaterialPageRoute(builder: (context) => const ServicePage()),
                         );
                       },
                       child: const Text("login Page"),
@@ -112,7 +116,7 @@ class ReaActionPageState extends State<ReactionPage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                          MaterialPageRoute(builder: (context) => const HomePage()),
                         );
                       },
                       child: const Text("login Page"),
@@ -163,7 +167,7 @@ class ReaActionPageState extends State<ReactionPage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                          MaterialPageRoute(builder: (context) => const HomePage()),
                         );
                       },
                       child: const Text("login Page"),

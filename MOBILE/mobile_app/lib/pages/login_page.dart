@@ -3,6 +3,8 @@ import 'package:mobile_app/pages/home_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:mobile_app/pages/register_page.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -33,13 +35,14 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (response.statusCode == 200) {
+        message = 'Logged in successfully';
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
         );
       } else {
         setState(() {
-          message = 'Wrong email or password';
+          message = ('Mauvais identifiants ou mot de passe');
         });
       }
     } catch (e) {
@@ -73,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 10),
               TextField(
                 controller: usernameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                 ),
@@ -104,6 +107,22 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: _login,
                 child: const Text(
                   'Connexion',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 255, 0, 0),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  );
+                },
+                child: const Text(
+                  "S'inscrire",
                   style: TextStyle(
                     fontSize: 20,
                     color: Color.fromARGB(255, 255, 0, 0),
