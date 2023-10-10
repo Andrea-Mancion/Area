@@ -41,9 +41,9 @@ async function callReaction(area) { // to replace
     return;
 }
 
-exports.callReaction = callReaction;
+module.exports = { callReaction };
 
-createPlaylist = async (accessToken, name, description, is_public) => {
+async function createPlaylist(accessToken, name, description, is_public) {
     fetch("https://api.spotify.com/v1/me", {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -51,7 +51,6 @@ createPlaylist = async (accessToken, name, description, is_public) => {
         result.json().then((data) => {
             if (data.error) {
                 console.error(data.error);
-                res.sendStatus(500);
                 return;
             }
             fetch("https://api.spotify.com/v1/users/" + data.id + "/playlists", {
@@ -65,10 +64,8 @@ createPlaylist = async (accessToken, name, description, is_public) => {
                 result.json().then((data) => {
                     if (data.error) {
                         console.error(data.error);
-                        res.sendStatus(500);
                         return;
                     }
-                    res.sendStatus(200);
                     console.log("result", data);
                 });
             })
@@ -77,7 +74,7 @@ createPlaylist = async (accessToken, name, description, is_public) => {
 };
 
 
-add_items_to_playlist = async (accessToken, playlistId, trackId) => {
+async function add_items_to_playlist(accessToken, playlistId, trackId) {
     fetch("https://api.spotify.com/v1/playlists/" + playlistId + "/tracks", {
         method: "POST", headers: { Authorization: `Bearer ${accessToken}` },
         body: JSON.stringify({

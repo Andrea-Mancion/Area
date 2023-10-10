@@ -6,12 +6,14 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-const { callAction } = require('./spotify/action');
+const { callAction } = require('./spotify/action.js');
+const cors = require('cors');
 
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
 var userProfile;
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 path = require('path');
@@ -20,6 +22,7 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 // Middleware pour gérer les données POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 let area = [];
 // Route pour l'inscription (register)
 app.get('/register', (req, res) => {
@@ -43,18 +46,27 @@ const pool = new Pool({
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
 
+  console.log("====================================");
+  console.log(username);
+  console.log(password);
+
   pool.connect()
     .then(client => {
-      return client.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password])
+      client.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password])
         .then(result => {
-          console.log('User registered successfully!');
-          client.release(); // Release the client connection
-          res.redirect('/success');
+          if (!result.error) {
+            console.log(result);
+            console.log('User registered successfully!');
+            res.sendStatus(200);
+          }
+          else {
+            console.log('Error registering user');
+            res.status(400).json({ error: 'Error registering user' });
+          }
         })
         .catch(err => {
           console.error('Error registering user: ' + err.message);
-          client.release(); // Release the client connection
-          res.status(500).json({ error: 'Error registering user' });
+          res.status(400).json({ error: 'Error registering user' });
         });
     })
     .catch(err => {
@@ -73,17 +85,15 @@ app.post('/login', (req, res) => {
         .then(results => {
           if (results.rows.length > 0) {
             console.log('Authentication successful!');
-            client.release(); // Release the client connection
-            res.redirect('/success');
+            res.status(200).json({ success: 'Authentication successful' });
+            //client.release(); // Release the client connection
           } else {
             console.log('Authentication failed: incorrect username or password');
-            client.release(); // Release the client connection
             res.status(401).json({ error: 'Incorrect username or password' });
           }
         })
         .catch(err => {
           console.error('Error during authentication: ' + err.message);
-          client.release(); // Release the client connection
           res.status(500).json({ error: 'Error during authentication' });
         });
     })
@@ -143,7 +153,7 @@ app.get('/success', (req, res) => {
     });
 });
 
-app.get('/create_action', (req, res) => {
+app.post('/create_action', (req, res) => {
   const {
     service_Name,
     action_Name,
@@ -164,13 +174,14 @@ app.get('/create_action', (req, res) => {
     access_token,
     user_id
   };
-
+  console.log(newAreaObject);
   area.push(newAreaObject);
   // spotifyVariables.push(newAreaObject);
   console.log(spotifyVariables.nbTrack);
   addNewVariables();
-  setInterval(() => callAction(newAreaObject, nbreact), 3000);
+  setInterval(() => callAction(newAreaO bject, nbreact), 3000);
   nbreact++;
+
   /*
     pool.connect()
       .then(client => {
@@ -191,7 +202,6 @@ app.get('/create_action', (req, res) => {
         res.status(500).json({ error: 'Error getting database connection' });
       });
   */
-  callAction(newAreaObject);
 });
 
 

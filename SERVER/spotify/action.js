@@ -42,12 +42,12 @@ async function callAction(area, nbReact) {
         }
     }
 }
-exports.callAction = callAction;
 
 async function checkNewSavedTrack(accessToken, nbReact) {
     const infoTrack = await fetchTrack(accessToken);
     if (infoTrack.error) {
         console.error(infoTrack.error);
+        console.log("Erreur lors de la récupération du profil");
         // throw error;
         return false;
     }
