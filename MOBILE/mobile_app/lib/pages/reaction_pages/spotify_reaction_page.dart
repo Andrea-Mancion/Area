@@ -14,7 +14,6 @@ const double spaceBetweenButton = 30;
 const double heightButton = 45;
 const double widthButton = 220;
 const String spotifyReaction1 = "Add Items To Playlist";
-const String spotifyReaction2 = "Create Playlist";
 class _SpotifyReactionPageState extends State<SpotifyReactionPage> {
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,8 @@ class _SpotifyReactionPageState extends State<SpotifyReactionPage> {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AddItemToPlaylist()),
                   );
-                  AllVariables.Reaction = "add_items_to_playlist";
+                  AllVariables.reaction = "add_items_to_playlist";
+                  AllVariables.reactionPrint = "ajoute un item à une playlist";
                 },
                 child: const Text(spotifyReaction1)
               ),
@@ -83,9 +83,10 @@ class _SpotifyReactionPageState extends State<SpotifyReactionPage> {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const CreatePlayListPage()),
                   );
-                  AllVariables.Reaction = "createPlaylist";
+                  AllVariables.reaction = "createPlaylist";
+                  AllVariables.reactionPrint = "créer une playlist";
                 },
-                child: const Text(spotifyReaction2)
+                child: const Text(AllVariables.spotifyReaction2)
               ),
             ),
             const SizedBox(height: spaceBetweenButton),

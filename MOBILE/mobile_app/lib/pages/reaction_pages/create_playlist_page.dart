@@ -25,23 +25,23 @@ class _CreatePlayListPageState extends State<CreatePlayListPage> {
                 controller: AllVariables.spotifyCreatePlaylistReactionName,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Playlist name',
+                  labelText: 'Nom de la playlist',
                 ),
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: AllVariables.spotifyPlaylistReactionDescription,
+                controller: AllVariables.spotifyCreatePlaylistReactionDescription,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Playlist description',
+                  labelText: 'Description de la playlist',
                 ),
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: AllVariables.spotifyPlaylistReactionPrivate,
+                controller: AllVariables.spotifyCreatePlaylistReactionPrivate,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Private (true or false)',
+                  labelText: 'Playlist priée (vrai ou faux))',
                 ),
               ),
               const SizedBox(height: 200),

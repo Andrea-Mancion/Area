@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/pages/home_page.dart';
 import 'package:mobile_app/pages/if_this_page.dart';
 import 'package:mobile_app/pages/then_that_page.dart';
 import 'package:mobile_app/variable.dart';
@@ -16,19 +17,19 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   String whatPrintThen = "";
   @override
   Widget build(BuildContext context) {
-    if (AllVariables.Action == "") {
-      whatPrintIf = "This";
+    if (AllVariables.action == "") {
+      whatPrintIf = "...";
     } else {
-      whatPrintIf = AllVariables.Action;
+      whatPrintIf = AllVariables.actionPrint;
     }
-    if (AllVariables.Reaction == "") {
-      whatPrintThen = "That";
+    if (AllVariables.reaction == "") {
+      whatPrintThen = "...";
     } else {
-      whatPrintThen = AllVariables.Reaction;
+      whatPrintThen = AllVariables.reactionPrint;
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Task"),
+        title: const Text("Crée une tâche"),
       ),
       body: Center(
         child: Column(
@@ -53,7 +54,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                       MaterialPageRoute(builder: (context) => const IfThisPage()),
                     );
                   },
-                  child: Text("If $whatPrintIf",
+                  child: Text("Si \"$whatPrintIf\"",
                     style: const TextStyle(
                       fontSize: 20,
                       color: Color.fromARGB(255, 255, 255, 255)
@@ -82,7 +83,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                       MaterialPageRoute(builder: (context) => const ThenThatPage()),
                     );
                   },
-                  child: Text("Then $whatPrintThen",
+                  child: Text("Fais \"$whatPrintThen\"",
                     style: const TextStyle(
                       fontSize: 20,
                       color: Color.fromARGB(255, 255, 255, 255)
@@ -94,10 +95,18 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
+                print(AllVariables.action);
+                print(AllVariables.reaction);
+                AllVariables.tasks[0] = ("Si \"${AllVariables.actionPrint}\", fais \"${AllVariables.reactionPrint}\"");
+                print(AllVariables.tasks[AllVariables.taskIndex]);
+                AllVariables.taskIndex++;
                 postDataToServer();
-                //print(AllVariables.spotifyCreatePlaylistReactionName.text + " " + AllVariables.spotifyPlaylistReactionDescription.text + " " + AllVariables.spotifyPlaylistReactionPrivate.text);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
               },
-              child: const Text("Create"),
+              child: const Text("Confirmer"),
             )
           ],
         ),
