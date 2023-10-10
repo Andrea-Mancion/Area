@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/pages/home_page.dart';
+import 'package:mobile_app/pages/create_task_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         message = 'Logged in successfully';
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(builder: (context) => const CreateTaskPage()),
         );
       } else {
         setState(() {
