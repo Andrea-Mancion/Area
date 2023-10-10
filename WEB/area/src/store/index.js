@@ -31,7 +31,7 @@ export default new Vuex.Store({
   },
   getters: {
     getSpotifyToken(state) {
-      return state.authentificationTokens.spotify;
+      return state.authentificationTokens.Spotify;
     },
     getSavedAction(state) {
       return state.Action;
@@ -42,7 +42,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setSpotifyToken(state, token) {
-      state.authentificationTokens.spotify = token;
+      state.authentificationTokens.Spotify = token;
     },
     setSavedAction(state, action) {
       state.Action = action;
