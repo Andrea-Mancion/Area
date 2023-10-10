@@ -23,8 +23,11 @@ class _LoginPageState extends State<LoginPage> {
     final password = passwordController.text;
 
     try {
-      final response = await http.post(
-        Uri.parse('http://localhost:3000/login'), // Replace with your server URL
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CreateTaskPage()),
+      /*final response = await http.post(
+        Uri.parse('http://localhost:3000/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -44,10 +47,11 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           message = ('Mauvais identifiants ou mot de passe');
         });
-      }
+      }*/
+      );
     } catch (e) {
       setState(() {
-        message = 'Error: $e'; // Handle network errors
+        message = 'Error: $e';
       });
     }
   }

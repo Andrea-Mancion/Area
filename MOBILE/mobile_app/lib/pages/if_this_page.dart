@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:mobile_app/pages/home_page.dart';
 import 'package:mobile_app/pages/service_page.dart';
 import 'package:mobile_app/pages/action_pages/spotify/spotify_action_page.dart';
+import 'package:mobile_app/spotify_oauth2.dart';
 
 const double verticaleSpace = 60;
 const double horizontalSpace = 20;
@@ -43,6 +44,7 @@ class IfThisPageState extends State<IfThisPage> {
                         backgroundColor:MaterialStateProperty.all<Color>(caseColor),
                       ),
                       onPressed: () {
+                        function();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const SpotifyActionPage()),

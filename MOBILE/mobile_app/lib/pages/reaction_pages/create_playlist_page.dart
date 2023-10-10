@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/create_task_page.dart';
 import 'package:mobile_app/variable.dart';
+import 'dart:convert';
 
 class CreatePlayListPage extends StatefulWidget {
   const CreatePlayListPage({super.key});
@@ -46,6 +47,11 @@ class _CreatePlayListPageState extends State<CreatePlayListPage> {
               const SizedBox(height: 200),
               ElevatedButton(
                 onPressed: () {
+                  AllVariables.reactionDescription = {
+                    "name": AllVariables.spotifyCreatePlaylistReactionName.text,
+                    "description": AllVariables.spotifyPlaylistReactionDescription.text,
+                    "private": AllVariables.spotifyPlaylistReactionPrivate.text,
+                  };
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const CreateTaskPage()));
                 },

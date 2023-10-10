@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 class AllVariables {
   static String Reaction = "";
   static String Action = "";
+  static String accessTokenSpotify = '';
+  static var actionDescription = <String, dynamic>{
+
+  };
+  static var reactionDescription = <String, dynamic>{
+
+  };
   static const double spaceBetweenButton = 30;
   static const double heightButton = 45;
   static const double widthButton = 220;

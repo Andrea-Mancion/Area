@@ -4,31 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
-
-String accessToken = '';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Spotify Authentication'),
-        ),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: function,
-            child: Text('Authenticate with Spotify'),
-          ),
-        ),
-      ),
-    );
-  }
-}
+import 'package:mobile_app/variable.dart';
 
 void function() async {
   final spotifyClientId = 'fdbe5e5dbe5c42b680efb3ab1d3574af';
@@ -42,7 +18,6 @@ void function() async {
     'scope': 'user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public',
     'grant_type': 'authorization_code',
   });
-  print(url);
 
   try {
     final result = await FlutterWebAuth.authenticate(url: url.toString(), callbackUrlScheme: callbackUrlScheme);
@@ -63,14 +38,10 @@ void function() async {
       headers: {"content-type": "application/x-www-form-urlencoded"},
     );
 
-    accessToken = jsonDecode(response.body)['access_token'] as String;
+    AllVariables.accessTokenSpotify = jsonDecode(response.body)['access_token'] as String;
     print("access token:");
-    print(accessToken);
+    print(AllVariables.accessTokenSpotify);
   } catch (e) {
     print('Error: $e');
   }
-}
-
-void send_post_request_check_new_episode() async {
-
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/if_this_page.dart';
 import 'package:mobile_app/pages/then_that_page.dart';
 import 'package:mobile_app/variable.dart';
+import 'package:mobile_app/send_information_to_server.dart';
 
 class CreateTaskPage extends StatefulWidget {
   const CreateTaskPage({super.key});
@@ -93,9 +94,10 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                print(AllVariables.spotifyCreatePlaylistReactionName.text + " " + AllVariables.spotifyPlaylistReactionDescription.text + " " + AllVariables.spotifyPlaylistReactionPrivate.text);
+                postDataToServer();
+                //print(AllVariables.spotifyCreatePlaylistReactionName.text + " " + AllVariables.spotifyPlaylistReactionDescription.text + " " + AllVariables.spotifyPlaylistReactionPrivate.text);
               },
-              child: const Text("Back"),
+              child: const Text("Create"),
             )
           ],
         ),
