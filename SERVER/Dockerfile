@@ -3,6 +3,7 @@ FROM node:latest
 COPY package*.json ./
 
 RUN npm install
+RUN touch .env
 
 COPY . .
 

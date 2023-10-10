@@ -15,6 +15,7 @@
   "homepage": "https://github.com/EpitechPromo2026/B-DEV-500-REN-5-1-area-mael.gouyet#readme",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
@@ -22,10 +23,10 @@
     "express-session": "^1.17.3",
     "morgan": "^1.10.0",
     "mysql2": "^3.6.1",
+    "node-fetch": "^2.7.0",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
-    "pg": "^8.11.3",
-    "node-fetch": "^2.7.0"
+    "pg": "^8.11.3"
   },
   "scripts": {
     "start": "nodemon test.js",
