@@ -3,6 +3,7 @@
     <div class="centerImage">
       <img src="@/assets/logo.png" alt="Logo" />
     </div>
+    <!-- <p> {{ this.$store.getters.getSpotifyToken }} </p> -->
   </div>
 </template>
 
@@ -13,13 +14,12 @@
 <style scoped>
 .home {
   display: flex;
-  justify-content: center; /* Centre le contenu horizontalement */
-  align-items: center; /* Centre le contenu verticalement */
+  justify-content: center;
+  align-items: center;
   height: 100vh;
 }
 
 .centerImage {
-  text-align: center; /* Centre le contenu horizontalement */
-  width: 100%; /* Prend toute la largeur disponible */
-}
-</style>
+  text-align: center;
+  width: 100%;
+}</style>

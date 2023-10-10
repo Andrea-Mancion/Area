@@ -63,7 +63,8 @@ let isThereNewSavedTrack = false;
 //     }
 // });
 
-callAction = async (area) => {
+// callAction = async (area) => {
+async function callAction(area) {
     const action_Name = area.action_Name;
     if (action_Name == "check_new_saved_track") {
         const newTrack = await checkNewSavedTrack(area.access_token);
@@ -78,9 +79,8 @@ callAction = async (area) => {
         }
     }
 }
-exports.callAction = callAction;
 
-checkNewSavedTrack = async (accessToken) => {
+async function checkNewSavedTrack(accessToken) {
     if (isThereNewSavedTrack)
         return;
     const infoTrack = await fetchTrack(accessToken);
@@ -158,4 +158,4 @@ async function fetchTrack(token) {
     return await result.json();
 }
 
-module.exports = app;
+module.exports = {app, callAction};
