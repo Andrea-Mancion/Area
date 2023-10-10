@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-const { callAction } = require('./spotify/action.js');
+let { callAction, spotifyVariables, nbreact, addNewVariables } = require('./spotify/action.js');
 const cors = require('cors');
 
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
@@ -179,7 +179,7 @@ app.post('/create_action', (req, res) => {
   // spotifyVariables.push(newAreaObject);
   console.log(spotifyVariables.nbTrack);
   addNewVariables();
-  setInterval(() => callAction(newAreaO bject, nbreact), 3000);
+  setInterval(() => callAction(newAreaObject, nbreact), 3000);
   nbreact++;
 
   /*

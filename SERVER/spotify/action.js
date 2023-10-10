@@ -9,7 +9,9 @@ const { access } = require('fs');
 const { callReaction } = require('./reaction');
 const { json } = require('body-parser');
 
-let spotifyVariables = [];
+let spotifyVariables = [{
+    nbTrack: -1
+}];
 
 let nbreact = 0;
 
@@ -110,4 +112,4 @@ async function fetchTrack(token) {
     return await result.json();
 }
 
-module.exports = { app, callAction, spotifyVariables, nbreact, addNewVariables };
+module.exports = { callAction, spotifyVariables, nbreact, addNewVariables };
