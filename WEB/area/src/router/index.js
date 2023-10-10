@@ -4,8 +4,11 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ActionReactionView from '../views/ActionReactionView.vue'
 import ServiceView from '../views/ServiceView.vue'
-import DetailServiceView from '../views/DetailServiceView.vue'
+import ActionApplicationListView from '../views/ActionApplicationListView.vue'
+import ReactionApplicationListView from '../views/ReactionApplicationListView.vue'
 import SignInView from '../views/SignInView.vue'
+import OAuthLogin from '../components/OAuthLogin.vue'
+import OAuthCallback from '../components/OAuthCallback.vue'
 
 Vue.use(VueRouter)
 
@@ -31,18 +34,34 @@ const routes = [
     component: ServiceView,
   },
   {
-    path: '/service/detail',
-    name: 'detail-service',
-    component: DetailServiceView,
+    path: '/action-application-list',
+    name: 'action-application-list',
+    component: ActionApplicationListView,
+  },
+  {
+    path: '/reaction-application-list',
+    name: 'reaction-application-list',
+    component: ReactionApplicationListView,
   },
   {
     path: '/sign-in',
     name: 'sign-in',
     component: SignInView,
-  }
+  },
+  {
+    path: '/oauth-login',
+    name: 'oauth-logi',
+    component: OAuthLogin
+  },
+  {
+    path: '/oauth-callback',
+    name: 'oauth-callback',
+    component: OAuthCallback
+  },
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

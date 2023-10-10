@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -35,14 +36,28 @@ export default {
             Name: '',
             ShowMailAlert: false,
             ShowPassAlert: false,
+            loginData: {
+                username: '',
+                password: '',
+            },
         }
     },
     methods: {
         VerifRegister() {
-            if (this.MailData != this.MailDataVerif)
-                this.ShowMailAlert = true;
             if (this.PassData != this.PassDataVerif)
                 this.ShowPassAlert = true;
+            else {
+                this.loginData.password = this.PassData;
+                this.loginData.username = this.MailData;
+                axios.post('http://localhost:3000/register', this.loginData)
+                    .then((response) => {
+                        if (response.status === 200)
+                            this.$router.push('/login');
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            }
         },
         RedirectSignIn() {
             this.$router.push('/sign-in');
