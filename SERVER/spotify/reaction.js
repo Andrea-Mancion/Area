@@ -11,8 +11,8 @@ const app = express();
 const port = 3000; // Le port sur lequel le serveur Express écoutera
 
 function callReaction(area) { // to replace
-    const reaction_Name = area.reaction.name;
-    const reaction_Param = area.reaction.param;
+    const reaction_Name = area.reaction_Name;
+    const reaction_Param = area.reaction_Param;
     const accessToken = area.access_token;
     if (reaction_Name == "createPlaylist") {
         createPlaylist(accessToken, reaction_Param.name, reaction_Param.description, reaction_Param.is_public);
@@ -50,7 +50,6 @@ async function createPlaylist(accessToken, name, description, is_public) {
         result.json().then((data) => {
             if (data.error) {
                 console.error(data.error);
-                res.sendStatus(500);
                 return;
             }
             fetch("https://api.spotify.com/v1/users/" + data.id + "/playlists", {
@@ -64,10 +63,8 @@ async function createPlaylist(accessToken, name, description, is_public) {
                 result.json().then((data) => {
                     if (data.error) {
                         console.error(data.error);
-                        res.sendStatus(500);
                         return;
                     }
-                    res.sendStatus(200);
                     console.log("result", data);
                 });
             })

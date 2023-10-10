@@ -22,6 +22,8 @@ export default {
   },
   methods: {
     ToggleVisibility() {
+      if (this.$store.state.authentificationTokens.Spotify == '')
+        this.$router.push('/oauth-login');
       this.IsClicked = !this.IsClicked;
     },
     CallServer() {
