@@ -174,12 +174,11 @@ app.post('/create_action', (req, res) => {
     access_token,
     user_id
   };
-  console.log(newAreaObject);
   area.push(newAreaObject);
   // spotifyVariables.push(newAreaObject);
-  console.log(spotifyVariables.nbTrack);
   addNewVariables();
-  setInterval(() => callAction(newAreaObject, nbreact), 3000);
+  x = spotifyVariables.length - 1;
+  setInterval(() => callAction(newAreaObject, x), 3000);
   nbreact++;
 
   /*

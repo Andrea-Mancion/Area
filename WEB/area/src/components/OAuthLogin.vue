@@ -16,7 +16,7 @@ export default {
       const redirectUri = "http://localhost:8080/oauth-callback";
       // Les scopes que vous souhaitez demander (séparés par des espaces)
       const scopes =
-        "user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public";
+        "user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-currently-playing user-read-recently-played user-top-read user-follow-read user-follow-modify streaming app-remote-control ";
 
       // Créez l'URL de redirection OAuth2 en incluant le scope
       const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(scopes)}`;
