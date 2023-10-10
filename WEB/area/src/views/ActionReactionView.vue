@@ -48,8 +48,7 @@ export default {
         },
         CreateActionReaction() {
             this.setActionReactionData();
-            axios
-                .post('http://localhost:3000/create_action', this.createActRecData)
+            axios.post('http://localhost:3000/create_action', this.createActRecData)
                 .then((response) => {
                     if (response.status === 200)
                         console.log("ça marche!");
@@ -59,6 +58,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
+                    console.log("ça marche pas (arg invalide)!");
                 });
             },
             setActionReactionData() {
