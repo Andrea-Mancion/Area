@@ -14,7 +14,7 @@ class _AddItemToPlaylistState extends State<AddItemToPlaylist> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add item to playlist"),
+        title: const Text("Ajouter la musique à une playlist"),
       ),
       body: Center(
         child:
@@ -25,7 +25,7 @@ class _AddItemToPlaylistState extends State<AddItemToPlaylist> {
                 controller: AllVariables.spotifyAddItemToPlaylistReactionName,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Name',
+                  labelText: 'Nom de la playlist',
                 ),
               ),
               const SizedBox(height: 50),
@@ -34,7 +34,7 @@ class _AddItemToPlaylistState extends State<AddItemToPlaylist> {
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const CreateTaskPage()));
                 },
-                child: const Text("confirm"),
+                child: const Text("Confirmer"),
               ),
             ],
           ),

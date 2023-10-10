@@ -24,7 +24,7 @@ class _CreatePlayListPageState extends State<CreatePlayListPage> {
                 controller: AllVariables.spotifyCreatePlaylistReactionName,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Playlist name',
+                  labelText: 'Nom de la playlist',
                 ),
               ),
               const SizedBox(height: 20),
@@ -32,7 +32,7 @@ class _CreatePlayListPageState extends State<CreatePlayListPage> {
                 controller: AllVariables.spotifyCreatePlaylistReactionDescription,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Playlist description',
+                  labelText: 'Description de la playlist',
                 ),
               ),
               const SizedBox(height: 20),
@@ -40,7 +40,7 @@ class _CreatePlayListPageState extends State<CreatePlayListPage> {
                 controller: AllVariables.spotifyCreatePlaylistReactionPrivate,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Private (true or false)',
+                  labelText: 'Playlist priée (vrai ou faux))',
                 ),
               ),
               const SizedBox(height: 200),
