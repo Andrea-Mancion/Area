@@ -10,6 +10,8 @@ services:
       - "3000:3000"
     networks:
       - local
+    volumes:
+      - ./empty.env:/SERVER/.env
 
   mobile:
     build:
