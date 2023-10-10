@@ -3,6 +3,7 @@ import 'package:mobile_app/pages/home_page.dart';
 import 'package:mobile_app/pages/if_this_page.dart';
 import 'package:mobile_app/pages/then_that_page.dart';
 import 'package:mobile_app/variable.dart';
+import 'package:mobile_app/send_information_to_server.dart';
 
 class CreateTaskPage extends StatefulWidget {
   const CreateTaskPage({super.key});
@@ -99,6 +100,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 AllVariables.tasks[0] = ("Si \"${AllVariables.actionPrint}\", fais \"${AllVariables.reactionPrint}\"");
                 print(AllVariables.tasks[AllVariables.taskIndex]);
                 AllVariables.taskIndex++;
+                postDataToServer();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const HomePage()),

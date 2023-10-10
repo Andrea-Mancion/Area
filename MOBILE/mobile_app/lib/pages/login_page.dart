@@ -44,10 +44,11 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           message = ('Mauvais identifiants ou mot de passe');
         });
-      }
+      }*/
+      );
     } catch (e) {
       setState(() {
-        message = 'Error: $e'; // Handle network errors
+        message = 'Error: $e';
       });
     }
   }

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 class AllVariables {
-  static String reaction = "";
-  static String action = "";
-  static String reactionPrint = "";
-  static String actionPrint = "";
-  static var reactionDescription = <String, dynamic> {
+
+  static String Reaction = "";
+  static String Action = "";
+  static String accessTokenSpotify = '';
+  static var actionDescription = <String, dynamic>{
+
+  };
+  static var reactionDescription = <String, dynamic>{
+
 
   };
   static const double spaceBetweenButton = 30;
