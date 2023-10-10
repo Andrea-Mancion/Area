@@ -27,7 +27,7 @@ export default {
       .then((response) => {
         const accessToken = response.data.access_token;
         this.$store.commit("setSpotifyToken", accessToken);
-        this.$router.push("/");
+        this.$router.push("/action-reaction");
       })
       .catch((error) => {
         console.error("Erreur lors de l'échange du code d'autorisation : ", error);
