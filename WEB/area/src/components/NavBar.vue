@@ -18,7 +18,7 @@ export default {
   },
 
   methods: {
-    redirectHome () {
+    redirectHome() {
       this.$router.push('/');
     }
   },
@@ -29,6 +29,7 @@ export default {
 .b-nav-item:not(:last-child) {
   margin-right: 20px;
 }
+
 .AreaMargin {
   margin-left: 20px;
 }

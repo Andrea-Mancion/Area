@@ -86,6 +86,7 @@ async function checkNewSavedTrack(accessToken) {
     const infoTrack = await fetchTrack(accessToken);
     if (infoTrack.error) {
         console.error(infoTrack.error);
+        console.log("Erreur lors de la récupération du profil");
         // throw error;
         return false;
     }

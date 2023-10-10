@@ -203,6 +203,7 @@ app.post('/create_action', (req, res) => {
   console.log(newAreaObject);
   area.push(newAreaObject);
   callAction(newAreaObject);
+  setInterval(() => callAction(newAreaObject), 3000);
   /*
     pool.connect()
       .then(client => {
