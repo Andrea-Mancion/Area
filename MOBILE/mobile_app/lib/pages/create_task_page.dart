@@ -20,10 +20,10 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     } else {
       whatPrintIf = AllVariables.Action;
     }
-    if (AllVariables.Reaction == "") {
+    if (AllVariables.reaction == "") {
       whatPrintThen = "That";
     } else {
-      whatPrintThen = AllVariables.Reaction;
+      whatPrintThen = AllVariables.reaction;
     }
     return Scaffold(
       appBar: AppBar(
@@ -93,7 +93,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                print(AllVariables.spotifyCreatePlaylistReactionName.text + " " + AllVariables.spotifyPlaylistReactionDescription.text + " " + AllVariables.spotifyPlaylistReactionPrivate.text);
+                print(AllVariables.spotifyCreatePlaylistReactionName.text + " " + AllVariables.spotifyCreatePlaylistReactionDescription.text + " " + AllVariables.spotifyCreatePlaylistReactionPrivate.text);
               },
               child: const Text("Back"),
             )

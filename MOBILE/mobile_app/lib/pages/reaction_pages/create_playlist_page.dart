@@ -29,7 +29,7 @@ class _CreatePlayListPageState extends State<CreatePlayListPage> {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: AllVariables.spotifyPlaylistReactionDescription,
+                controller: AllVariables.spotifyCreatePlaylistReactionDescription,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Playlist description',
@@ -37,7 +37,7 @@ class _CreatePlayListPageState extends State<CreatePlayListPage> {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: AllVariables.spotifyPlaylistReactionPrivate,
+                controller: AllVariables.spotifyCreatePlaylistReactionPrivate,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Private (true or false)',

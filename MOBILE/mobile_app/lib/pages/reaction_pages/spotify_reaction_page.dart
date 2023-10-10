@@ -61,7 +61,7 @@ class _SpotifyReactionPageState extends State<SpotifyReactionPage> {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AddItemToPlaylist()),
                   );
-                  AllVariables.Reaction = "add_items_to_playlist";
+                  AllVariables.reaction = "add_items_to_playlist";
                 },
                 child: const Text(spotifyReaction1)
               ),
@@ -83,7 +83,7 @@ class _SpotifyReactionPageState extends State<SpotifyReactionPage> {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const CreatePlayListPage()),
                   );
-                  AllVariables.Reaction = "createPlaylist";
+                  AllVariables.reaction = "createPlaylist";
                 },
                 child: const Text(spotifyReaction2)
               ),
