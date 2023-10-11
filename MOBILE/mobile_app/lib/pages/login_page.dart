@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:3000/login'), // Replace with your server URL
+        Uri.parse('http://10.19.255.75:3000/login'), // Replace with your server URL
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
