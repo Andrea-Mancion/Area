@@ -6,6 +6,7 @@ import ActionReactionView from '../views/ActionReaction/ActionReactionView.vue'
 import ServiceView from '../views/ServiceView.vue'
 import ActionServiceListView from '../views/ActionReaction/Action/ActionServiceListView.vue'
 import ActionListView from '../views/ActionReaction/Action/ActionListView.vue'
+import ActionParamsView from '../views/ActionReaction/Action/ActionParamsView.vue'
 import ReactionerviceListView from '../views/ActionReaction/Reaction/ReactionServiceListView.vue'
 import SignInView from '../views/SignInView.vue'
 import OAuthLogin from '../components/OAuthLogin.vue'
@@ -43,6 +44,12 @@ const routes = [
     path: '/action-list',
     name: 'action-list',
     component: ActionListView,
+    props: true,
+  },
+  {
+    path: '/action-params',
+    name: 'action-params',
+    component: ActionParamsView,
     props: true,
   },
   {

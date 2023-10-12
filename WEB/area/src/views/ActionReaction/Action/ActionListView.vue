@@ -10,7 +10,7 @@
           :header="action.Name"
           class="service-card text-center"
         >
-          <b-button variant="info" class="full-width-button">Select</b-button>
+          <b-button variant="info" class="full-width-button" @click="RedirectToActionParams(action.Params)">Select</b-button>
         </b-card>
       </div>
     </b-card-group>
@@ -32,7 +32,12 @@ export default {
         const service = this.ServiceName;
         return this.$store.state.Services[service].Actions;
     },
-  }
+  },
+  methods: {
+    RedirectToActionParams(actionParams) {
+        this.$router.push({ name: 'action-params', params: { actionParams: actionParams } });
+    },
+  },
 };
 </script>
 
