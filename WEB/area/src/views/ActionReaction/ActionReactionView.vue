@@ -41,10 +41,10 @@ export default {
     },
     methods: {
         RedirectActionList() {
-            this.$router.push('/action-Application-list');
+            this.$router.push('/action-service-list');
         },
         RedirectReactionList() {
-            this.$router.push('/reaction-application-list');
+            this.$router.push('/reaction-service-list');
         },
         CreateActionReaction() {
             this.setActionReactionData();

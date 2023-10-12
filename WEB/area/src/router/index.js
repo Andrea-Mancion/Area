@@ -2,10 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import ActionReactionView from '../views/ActionReactionView.vue'
+import ActionReactionView from '../views/ActionReaction/ActionReactionView.vue'
 import ServiceView from '../views/ServiceView.vue'
-import ActionApplicationListView from '../views/ActionApplicationListView.vue'
-import ReactionApplicationListView from '../views/ReactionApplicationListView.vue'
+import ActionServiceListView from '../views/ActionReaction/Action/ActionServiceListView.vue'
+import ActionListView from '../views/ActionReaction/Action/ActionListView.vue'
+import ReactionerviceListView from '../views/ActionReaction/Reaction/ReactionServiceListView.vue'
 import SignInView from '../views/SignInView.vue'
 import OAuthLogin from '../components/OAuthLogin.vue'
 import OAuthCallback from '../components/OAuthCallback.vue'
@@ -34,14 +35,20 @@ const routes = [
     component: ServiceView,
   },
   {
-    path: '/action-application-list',
-    name: 'action-application-list',
-    component: ActionApplicationListView,
+    path: '/action-service-list',
+    name: 'action-service-list',
+    component: ActionServiceListView,
   },
   {
-    path: '/reaction-application-list',
-    name: 'reaction-application-list',
-    component: ReactionApplicationListView,
+    path: '/action-list',
+    name: 'action-list',
+    component: ActionListView,
+    props: true,
+  },
+  {
+    path: '/reaction-service-list',
+    name: 'reaction-service-list',
+    component: ReactionerviceListView,
   },
   {
     path: '/sign-in',
