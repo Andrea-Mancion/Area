@@ -5,11 +5,15 @@ const session = require('express-session');
 const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const { access } = require('fs');
+let { callAction, spotifyVariables, nbreact, addNewVariables } = require('./spotify/action.js');
+const cors = require('cors');
 
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
 var userProfile;
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 path = require('path');
@@ -19,31 +23,7 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-// app.get("/createDatabase", (req, res) => {
-
-//     let databaseName = "gfg_db";
-
-//     let createQuery = `CREATE DATABASE ${databaseName}`;
-
-//     // use the query to create a Database.
-//     database.query(createQuery, (err) => {
-//         if(err) throw err;
-
-//         console.log("Database Created Successfully !");
-
-//         let useQuery = `USE ${databaseName}`;
-//         database.query(useQuery, (error) => {
-//             if(error) throw error;
-
-//             console.log("Using Database");
-
-//             return res.send(
-// `Created and Using ${databaseName} Database`);
-//         })
-//     });
-// });
-
+let area = [];
 // Route pour l'inscription (register)
 app.get('/register', (req, res) => {
   res.render('register'); // Utilisez res.render pour afficher la page EJS (assurez-vous que 'login.ejs' existe dans le dossier 'views')
@@ -141,37 +121,88 @@ app.get('/success', (req, res) => {
   app.get('/auth/success', (req, res) => res.render('auth/success', { user: userProfile }));
   app.get('/auth/error', (req, res) => res.send("error logging in"));
 
-  passport.serializeUser(function(user, cb) {
+  passport.serializeUser(function (user, cb) {
     cb(null, user);
   });
 
-  passport.deserializeUser(function(obj, cb) {
+  passport.deserializeUser(function (obj, cb) {
     cb(null, obj);
   });
 
   passport.use(new GoogleStrategy({
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback"
-    },
-    function(accessToken, refreshToken, profile, done) {
-        userProfile=profile;
-        console.log(accessToken);
-        console.log(profile.id);
-        return done(null, userProfile);
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+    function (accessToken, refreshToken, profile, done) {
+      userProfile = profile;
+      console.log(accessToken);
+      console.log(profile.id);
+      return done(null, userProfile);
     }
   ));
 
   app.get('/auth/google',
-    passport.authenticate('google', { scope : ['profile', 'email'] }));
+    passport.authenticate('google', { scope: ['profile', 'email'] }));
 
   app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/auth/error' }),
-    function(req, res) {
+    function (req, res) {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
 });
+
+app.post('/create_action', (req, res) => {
+  const {
+    service_Name,
+    action_Name,
+    reaction_Name,
+    action_Param,
+    reaction_Param,
+    access_token,
+    user_id
+  } = req.body;
+
+  // Créez un nouvel objet pour chaque entrée et ajoutez-le au tableau
+  const newAreaObject = {
+    service_Name,
+    action_Name,
+    reaction_Name,
+    action_Param,
+    reaction_Param,
+    access_token,
+    user_id
+  };
+  area.push(newAreaObject);
+  // spotifyVariables.push(newAreaObject);
+  addNewVariables();
+  x = spotifyVariables.length - 1;
+  setInterval(() => callAction(newAreaObject, x), 3000);
+  nbreact++;
+
+  /*
+    pool.connect()
+      .then(client => {
+        return client.query('INSERT INTO actions (action_Name, reaction_Name, action_Param, reaction_Param) VALUES ($1, $2, $3, $4)', [action_Name, reaction_Name, action_Param, reaction_Param])
+          .then(result => {
+            console.log('Action created successfully!');
+            client.release(); // Release the client connection
+            res.redirect('/success');
+          })
+          .catch(err => {
+            console.error('Error creating action: ' + err.message);
+            client.release(); // Release the client connection
+            res.status(500).json({ error: 'Error creating action' });
+          });
+      })
+      .catch(err => {
+        console.error('Error getting database connection: ' + err.message);
+        res.status(500).json({ error: 'Error getting database connection' });
+      });
+  */
+});
+
 
 // Démarrer le serveur sur le port 3000
 app.listen(port, () => {
