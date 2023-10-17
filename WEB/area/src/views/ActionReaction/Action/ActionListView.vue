@@ -2,15 +2,16 @@
   <div>
     <br />
     <p class="tittle">Welcome to the action list view !</p>
-    <p class="tittle" >{{ this.ServiceName }}</p>
+    <p class="tittle">{{ this.ServiceName }}</p>
     <b-card-group deck class="card-container">
       <div v-for="action in this.getActions" :key="action">
-        <b-card
-          bg-variant="info"
-          :header="action.Name"
-          class="service-card text-center"
-        >
-          <b-button variant="info" class="full-width-button" @click="RedirectToActionParams(action.Params)">Select</b-button>
+        <b-card bg-variant="info" :header="action.Name" class="service-card text-center">
+          <b-button
+            variant="info"
+            class="full-width-button"
+            @click="RedirectToActionParams(action)"
+            >Select</b-button
+          >
         </b-card>
       </div>
     </b-card-group>
@@ -21,7 +22,7 @@
 export default {
   data() {
     return {
-      ServiceName: '',
+      ServiceName: "",
     };
   },
   mounted() {
@@ -29,13 +30,22 @@ export default {
   },
   computed: {
     getActions() {
-        const service = this.ServiceName;
-        return this.$store.state.Services[service].Actions;
+      const service = this.ServiceName;
+      return this.$store.state.Services[service].Actions;
     },
   },
   methods: {
-    RedirectToActionParams(actionParams) {
-        this.$router.push({ name: 'action-params', params: { actionParams: actionParams } });
+    RedirectToActionParams(action) {
+      if (action.IsParams == true) {
+        this.$store.commit("setSavedAction", action.Name);
+        this.$router.push({
+          name: "action-params",
+          params: { action: action },
+        });
+      } else {
+        this.$store.commit("setSavedAction", action.Name);
+        this.$router.push("/action-reaction");
+      }
     },
   },
 };
