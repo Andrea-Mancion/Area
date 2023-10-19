@@ -37,7 +37,8 @@ export default {
   data() {
     return {
       createActRecData: {
-        service_Name: "",
+        action_service_Name: "",
+        reaction_service_Name: "",
         action_Name: "",
         reaction_Name: "",
         action_Param: {},
@@ -55,7 +56,7 @@ export default {
       this.$router.push("/reaction-service-list");
     },
     CreateActionReaction() {
-      // this.setActionReactionData();
+      this.setActionReactionData();
       axios
         .post("http://localhost:3000/create_action", this.createActRecData)
         .then((response) => {
@@ -64,11 +65,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          console.log("ça marche pas (arg invalide)!");
         });
     },
     setActionReactionData() {
-        this.createActRecData.service_Name = this.$store.getters.getServiceActionSelected;
+        this.createActRecData.action_service_Name = this.$store.getters.getServiceActionSelected;
+        this.createActRecData.reaction_service_Name = this.$store.getters.getServiceReactionSelected;
         this.createActRecData.action_Name = this.$store.getters.getSavedAction;
         this.createActRecData.reaction_Name = this.$store.getters.getSavedReaction;
         this.createActRecData.action_Param = this.$store.getters.getSavedActionParams;

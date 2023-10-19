@@ -18,8 +18,12 @@ export default {
   name: "actionServiceList",
   methods: {
     RedirectToActionList(service) {
-      this.$store.commit("setServiceActionSelected", service.Name);
-      this.$router.push({ name: "action-list", params: { name: service.Name } });
+      if (this.$store.state.Services[service.Name].AuthentificationTokens == "")
+        this.$router.push({ name: "oauth-login", params: { name: service.Name } });
+      else {
+        this.$store.commit("setServiceActionSelected", service.Name);
+        this.$router.push({ name: "action-list", params: { name: service.Name } });
+      }
     },
   },
 };

@@ -11,8 +11,8 @@ import ReactionServiceListView from '../views/ActionReaction/Reaction/ReactionSe
 import ReactionListView from '../views/ActionReaction/Reaction/ReactionListView.vue'
 import ReactionParamsView from '../views/ActionReaction/Reaction/ReactionParamsView.vue'
 import SignInView from '../views/SignInView.vue'
-import OAuthLogin from '../components/OAuthLogin.vue'
-import OAuthCallback from '../components/OAuthCallback.vue'
+import OAuthLogin from '../views/OAuth2/OAuthLoginView.vue'
+import OAuthCallback from '../views/OAuth2/OAuthCallbackView.vue'
 
 Vue.use(VueRouter)
 
@@ -78,7 +78,7 @@ const routes = [
   },
   {
     path: '/oauth-login',
-    name: 'oauth-logi',
+    name: 'oauth-login',
     component: OAuthLogin
   },
   {
