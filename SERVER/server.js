@@ -6,7 +6,8 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-let { callAction, spotifyVariables, nbreact, addNewVariables } = require('./spotify/action.js');
+let { callActionSpotify, spotifyVariables, nbreact, addNewVariables } = require('./spotify/action.js');
+let { callActionDiscord } = require('./discord/actions.js');
 const cors = require('cors');
 const BotClient = require('./myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
@@ -147,16 +148,16 @@ app.get('/success', (req, res) => {
     }
   ));
 
-  passport.use(new DiscordStrategy({
-      clientID: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/discord/callback",
-      scope: ['identify', 'guilds']
-    },
-    function(accessToken, refreshToken, profile, done) {
-      return done(null, profile);
-    }
-  ));
+  // passport.use(new DiscordStrategy({
+  //     clientID: process.env.DISCORD_CLIENT_ID,
+  //     clientSecret: process.env.DISCORD_CLIENT_SECRET,
+  //     callbackURL: "http://localhost:3000/auth/discord/callback",
+  //     scope: ['identify', 'guilds']
+  //   },
+  //   function(accessToken, refreshToken, profile, done) {
+  //     return done(null, profile);
+  //   }
+  // ));
 
   app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -168,138 +169,13 @@ app.get('/success', (req, res) => {
       res.redirect('/auth/success');
     });
 
-  app.get('/auth/discord', passport.authenticate('discord'));
+  // app.get('/auth/discord', passport.authenticate('discord'));
 
-  app.get('/auth/discord/callback',
-    passport.authenticate('discord', { failureRedirect: '/auth/error' }),
-    function(req, res) {
-      res.redirect('/messages');
-    });
-
-  app.get('/messages', (req, res) => {
-    const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
-    if (channel && channel.isTextBased()) {
-      console.log("I Have the channe");
-
-      channel.messages.fetch().then(messages => {
-        const messagesArray = messages.map(message => ({
-          author: message.author.tag,
-          content: message.content,
-        }));
-        res.render('pages/messages', { messages: messagesArray });
-      }).catch(error => {
-        console.error("Error: " + error);
-      });
-    } else
-      console.log("I don't have the channel");
-  });
-
-  app.post('/sendMessage', (req, res) => {
-    const { message } = req.body;
-    const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
-
-    if (channel && channel.isTextBased()) {
-       channel.send(message).then(() => {
-        console.log("Message sent");
-        res.redirect('/messages');
-       }).catch(error => {
-        console.error("Error: " + error);
-       });
-    } else
-      console.log("I don't have the channel");
-  });
-
-  cron.schedule('0 10 * * *', () => {
-    const city = 'rennes';
-    const apiKey = process.env.WEATHER_API_KEY;
-
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`).then(response => {
-      const weatherData = response.data;
-      const temp = Math.round(weatherData.main.temp - 273.15);
-      const condition = weatherData.weather[0].description;
-
-      const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
-      const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
-
-      if (channel && channel.isTextBased()) {
-        channel.send(weatherMessage).then(() => {
-          console.log("Message sent");
-        }).catch(error => {
-          console.error("Error: " + error);
-        });
-      } else
-        console.log("I don't have the channel");
-    }).catch(error => {
-      console.error("Error: " + error);
-    });
-  }, {
-    timezone: "Europe/Paris"
-  });
-
-  function checkWeatherDiff() {
-    const city = 'rennes';
-    const apiKey = process.env.WEATHER_API_KEY;
-
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`).then(response => {
-      const weatherData = response.data;
-      const temp = Math.round(weatherData.main.temp - 273.15);
-      const condition = weatherData.weather[0].description;
-
-      if (previousWeatherData) {
-        const tempDifference = Math.abs(temp - previousWeatherData.temp);
-        if (tempDifference >= 5 || condition !== previousWeatherData.condition) {
-          const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
-          const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
-
-          if (channel && channel.isTextBased()) {
-            channel.send(weatherMessage).then(() => {
-              console.log("Message sent");
-            }).catch(error => {
-              console.error("Error with the weather change: " + error);
-            });
-          } else
-            console.log("I don't have the channel");
-        }
-      }
-
-      previousWeatherData = {
-        temp: temp,
-        condition: condition,
-      };
-    }).catch(error => {
-      console.error("Error with the axios weather: " + error);
-    });
-  }
-
-  cron.schedule('*/30 * * * *', checkWeatherDiff, {
-    timezone: "Europe/Paris"
-  });
-
-  app.get('/weather', (req, res) => {
-    const city = 'rennes';
-    const apiKey = process.env.WEATHER_API_KEY;
-
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`).then(response => {
-      const weatherData = response.data;
-      const temp = Math.round(weatherData.main.temp - 273.15);
-      const condition = weatherData.weather[0].description;
-
-      const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
-      const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
-
-      if (channel && channel.isTextBased()) {
-        channel.send(weatherMessage).then(() => {
-          console.log("Message sent");
-          res.redirect('/messages');
-        }).catch(error => {
-          console.error("Error: " + error);
-        });
-      } else
-        console.log("I don't have the channel");
-    }).catch(error => {
-      console.error("Error: " + error);
-    });
-  });
+  // app.get('/auth/discord/callback',
+  //   passport.authenticate('discord', { failureRedirect: '/auth/error' }),
+  //   function(req, res) {
+  //     res.redirect('/messages');
+  //   });
 });
 
 app.post('/create_action', (req, res) => {
@@ -327,8 +203,12 @@ app.post('/create_action', (req, res) => {
   // spotifyVariables.push(newAreaObject);
   addNewVariables();
   x = spotifyVariables.length - 1;
-  setInterval(() => callAction(newAreaObject, x), 3000);
-  nbreact++;
+  if (newAreaObject.service_Name == "spotify") {
+    setInterval(() => callActionSpotify(newAreaObject, x), 3000);
+    nbreact++;
+  } else if (newAreaObject.service_Name == "discord") {
+    setInterval(() => callActionDiscord(newAreaObject), 3000);
+  }
 
   /*
     pool.connect()

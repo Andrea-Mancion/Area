@@ -29,7 +29,7 @@ const port = 3000; // Le port sur lequel le serveur Express écoutera
 
 let isThereNewSavedTrack = false;
 
-async function callAction(area, nbReact) {
+async function callActionSpotify(area, nbReact) {
     const action_Name = area.action_Name;
     if (action_Name == "check_new_saved_track") {
         // let nbTrack = jsonparse(spotifyVariables.nbTrack);
@@ -112,4 +112,4 @@ async function fetchTrack(token) {
     return await result.json();
 }
 
-module.exports = { callAction, spotifyVariables, nbreact, addNewVariables };
+module.exports = { callActionSpotify, spotifyVariables, nbreact, addNewVariables };
