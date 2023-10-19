@@ -9,6 +9,8 @@ export default new Vuex.Store({
     ActionParams: {},
     Reaction: '',
     ReactionParams: {},
+    ServiceActionSelected: '',
+    ServiceReactionSelected: '',
     Services: {
       Spotify: {
         Name: 'Spotify',
@@ -35,7 +37,7 @@ export default new Vuex.Store({
           CreatePlaylist: {
             Name: 'CreatePlaylist',
             IsParams: true,
-            IsBoolParams: false,
+            IsBoolParams: true,
             Params: {
               name: '',
               description: '',
@@ -100,6 +102,12 @@ export default new Vuex.Store({
     },
     getSavedReactionParams(state) {
       return state.ReactionParams;
+    },
+    getServiceActionSelected(state) {
+      return state.ServiceActionSelected;
+    },
+    getServiceReactionSelected(state) {
+      return state.ServiceReactionSelected;
     }
   },
   mutations: {
@@ -117,6 +125,12 @@ export default new Vuex.Store({
     },
     setSavedReactionParams(state, reactionParams) {
       state.ReactionParams = reactionParams;
+    },
+    setServiceActionSelected(state, serviceSelectedName) {
+      state.ServiceActionSelected = serviceSelectedName;
+    },
+    setServiceReactionSelected(state, serviceSelectedName) {
+      state.ServiceReactionSelected = serviceSelectedName;
     },
   },
   actions: {

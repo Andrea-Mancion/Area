@@ -2,6 +2,12 @@
   <div class="ActionReaction">
     <div class="centered-containe">
       <p>Welcome to the action/reaction view !</p>
+      <div v-if="this.$store.getters.getServiceActionSelected != ''">
+        <p> Service Action selected is {{ this.$store.getters.getServiceActionSelected}}</p>
+      </div>
+      <div v-if="this.$store.getters.getServiceReactionSelected != ''">
+        <p> Service Reaction selected is {{ this.$store.getters.getServiceReactionSelected}}</p>
+      </div>
       <div v-if="this.$store.getters.getSavedAction != ''">
         <p>Action selected: {{ this.$store.getters.getSavedAction }}</p>
         <div v-for="(value, key) in this.$store.getters.getSavedActionParams" :key="key">
@@ -13,9 +19,9 @@
       <br />
       <div v-if="this.$store.getters.getSavedReaction != ''">
         <p>Reaction selected: {{ this.$store.getters.getSavedReaction }}</p>
-        <!-- <p> name : {{ this.$store.state.ReactionsList.Spotify.createPlaylistData.name }}</p>
-                <p> description : {{ this.$store.state.ReactionsList.Spotify.createPlaylistData.description }}</p>
-                <p> is public : {{ this.$store.state.ReactionsList.Spotify.createPlaylistData.is_public }}</p> -->
+        <div v-for="(value, key) in this.$store.getters.getSavedReactionParams" :key="key">
+          <p>{{ key }} : {{ value }}</p>
+        </div>
       </div>
       <b-button variant="info" @click="RedirectReactionList">Add an Reaction</b-button>
       <br />
@@ -61,15 +67,15 @@ export default {
           console.log("ça marche pas (arg invalide)!");
         });
     },
-    // setActionReactionData() {
-    //     this.createActRecData.service_Name = 'spotify';
-    //     this.createActRecData.action_Name = this.$store.getters.getSavedAction;
-    //     this.createActRecData.reaction_Name = this.$store.getters.getSavedReaction;
-    //     this.createActRecData.action_Param = this.$store.state.ActionsList.Spotify.check_new_episode;
-    //     this.createActRecData.reaction_Param = this.$store.state.ReactionsList.Spotify.createPlaylistData;
-    //     this.createActRecData.access_token = this.$store.state.authentificationTokens.Spotify;
-    //     this.createActRecData.user_id = "toto";
-    // },
+    setActionReactionData() {
+        this.createActRecData.service_Name = this.$store.getters.getServiceActionSelected;
+        this.createActRecData.action_Name = this.$store.getters.getSavedAction;
+        this.createActRecData.reaction_Name = this.$store.getters.getSavedReaction;
+        this.createActRecData.action_Param = this.$store.getters.getSavedActionParams;
+        this.createActRecData.reaction_Param = this.$store.getters.getSavedReactionParams;
+        this.createActRecData.access_token = this.$store.state.Services[this.$store.getters.getServiceActionSelected].AuthentificationTokens;
+        this.createActRecData.user_id = "toto";
+    },
   },
 };
 </script>
