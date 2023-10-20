@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/pages/reaction_pages/add_item_to_playlist.dart';
-import 'package:mobile_app/pages/reaction_pages/create_playlist_page.dart';
+import 'package:mobile_app/pages/reaction_pages/spotify/add_item_to_playlist.dart';
+import 'package:mobile_app/pages/reaction_pages/spotify/create_playlist_page.dart';
 import 'package:mobile_app/variable.dart';
 
 class SpotifyReactionPage extends StatefulWidget {
@@ -60,7 +60,7 @@ class _SpotifyReactionPageState extends State<SpotifyReactionPage> {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AddItemToPlaylist()),
                   );
-                  AllVariables.Reaction = "add_items_to_playlist";
+                  AllVariables.reaction = "add_items_to_playlist";
                   AllVariables.reactionPrint = "ajoute un item à une playlist";
                 },
                 child: const Text(spotifyReaction1)
@@ -83,7 +83,7 @@ class _SpotifyReactionPageState extends State<SpotifyReactionPage> {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const CreatePlayListPage()),
                   );
-                  AllVariables.Reaction = "createPlaylist";
+                  AllVariables.reaction = "createPlaylist";
                   AllVariables.reactionPrint = "créer une playlist";
                 },
                 child: const Text(AllVariables.spotifyReaction2)
