@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 class AllVariables {
 
-  static String Reaction = "";
-  static String Action = "";
+  static String reaction = "";
+  static String action = "";
   static String accessTokenSpotify = '';
   static var actionDescription = <String, dynamic>{
 
@@ -26,9 +26,12 @@ class AllVariables {
   static final TextEditingController spotifyCreatePlaylistReactionDescription = TextEditingController();
   static final TextEditingController spotifyCreatePlaylistReactionPrivate = TextEditingController();
   static final TextEditingController spotifyAddItemToPlaylistReactionName = TextEditingController();
-  static List<String> tasks = [""];
+  static List<String> tasks = [createTask];
   static int taskIndex = 0;
   static List<String> getTask() {
     return tasks;
   }
+  static int nbTask = 1;
+  static String createNewTask = "Créer une nouvelle tâche";
+  static String createTask = "Créer une tâche";
 }
