@@ -36,7 +36,7 @@ export default new Vuex.Store({
         },
         Reactions: {
           CreatePlaylist: {
-            Name: 'CreatePlaylist',
+            Name: 'create_playlist',
             IsParams: true,
             IsBoolParams: true,
             Params: {

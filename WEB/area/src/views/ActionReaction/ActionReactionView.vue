@@ -3,10 +3,15 @@
     <div class="centered-containe">
       <p>Welcome to the action/reaction view !</p>
       <div v-if="this.$store.getters.getServiceActionSelected != ''">
-        <p> Service Action selected is {{ this.$store.getters.getServiceActionSelected}}</p>
+        <p>
+          Service Action selected is {{ this.$store.getters.getServiceActionSelected }}
+        </p>
       </div>
       <div v-if="this.$store.getters.getServiceReactionSelected != ''">
-        <p> Service Reaction selected is {{ this.$store.getters.getServiceReactionSelected}}</p>
+        <p>
+          Service Reaction selected is
+          {{ this.$store.getters.getServiceReactionSelected }}
+        </p>
       </div>
       <div v-if="this.$store.getters.getSavedAction != ''">
         <p>Action selected: {{ this.$store.getters.getSavedAction }}</p>
@@ -19,7 +24,10 @@
       <br />
       <div v-if="this.$store.getters.getSavedReaction != ''">
         <p>Reaction selected: {{ this.$store.getters.getSavedReaction }}</p>
-        <div v-for="(value, key) in this.$store.getters.getSavedReactionParams" :key="key">
+        <div
+          v-for="(value, key) in this.$store.getters.getSavedReactionParams"
+          :key="key"
+        >
           <p>{{ key }} : {{ value }}</p>
         </div>
       </div>
@@ -33,6 +41,7 @@
 
 <script>
 import axios from "axios";
+import Cookies from 'js-cookie';
 export default {
   data() {
     return {
@@ -48,6 +57,12 @@ export default {
         user_id: "",
       },
     };
+  },
+  mounted() {
+    if (Cookies.get('Spotify_access_token'))
+      this.$store.commit("setSpotifyToken", Cookies.get('Spotify_access_token'));
+    if (Cookies.get('Discord_access_token'))
+      this.$store.commit("setDiscordToken", Cookies.get('Discord_access_token'));
   },
   methods: {
     RedirectActionList() {
