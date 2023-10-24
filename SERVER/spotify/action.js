@@ -29,7 +29,6 @@ const port = 3000; // Le port sur lequel le serveur Express écoutera
 
 let isThereNewSavedTrack = false;
 
-
 async function callActionSpotify(area, nbReact, reaction_map) {
     const action_Name = area.action_Name;
     console.log(action_Name);

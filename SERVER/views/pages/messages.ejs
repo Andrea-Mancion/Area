@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord messages</title>
+</head>
+<body>
+    <h1>Discord messages</h1>
+    <ul>
+        <% messages.forEach(message => { %>
+            <li>
+                <strong><%= message.author %>:</strong>
+                <%= message.content %>
+            </li>
+        <% }); %>
+    </ul>
+    <form action="/sendMessage" method="post">
+        <input type="text" name="message" placeholder="Write your Message" required>
+        <button type="submit">Send</button>
+    </form>
+    <form action="/weather" method="get">
+        <button type="submit">Weather</button>
+    </form>
+</body>
+</html>
