@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-const { callActionSpotify } = require('./spotify/action.js');
+const { callActionSpotify, addNewVariables } = require('./spotify/action.js');
 const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
 const { verify } = require('crypto');
@@ -23,7 +23,6 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 // Middleware pour gérer les données POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 let area = [];
 // Route pour l'inscription (register)
 app.get('/register', (req, res) => {
@@ -197,13 +196,13 @@ app.post('/create_action', (req, res) => {
     user_id
   };
   area.push(newAreaObject);
-  console.log(spotifyVariables.nbTrack);
   addNewVariables();
+  console.log(area);
   if (!verify_variable(newAreaObject)) {
     res.status(400).json({ error: 'Error creating action' });
     return;
   }
-  setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
+  setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 300);
   nbreact++;
 
   /*
