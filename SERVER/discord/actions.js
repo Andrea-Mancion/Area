@@ -8,17 +8,17 @@ require('dotenv').config();
 
 async function callActionDiscord(area) {
     const action_Name = area.action_Name;
-    if (action_Name == "send_weather_hour") {
-        if (sendWeatherHour())
+    if (action_Name == "weather_hour") {
+        if (weatherHour())
           await callReaction(area);
     }
-    if (action_Name == "send_weather_diff") {
-        if (sendWeatherDiff())
+    if (action_Name == "weather_diff") {
+        if (weatherDiff())
           await callReaction(area);
     }
 }
 
-function sendWeatherHour() {
+function weatherHour() {
   cron.schedule('0 10 * * *', () => {
     const city = 'rennes';
     const apiKey = process.env.WEATHER_API_KEY;
@@ -90,7 +90,7 @@ function checkWeatherDiff() {
     return true;
 }
 
-function sendWeatherDiff() {
+function weatherDiff() {
   cron.schedule('*/30 * * * *', checkWeatherDiff, {
     timezone: "Europe/Paris"
   });
