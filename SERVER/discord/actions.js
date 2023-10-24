@@ -3,18 +3,18 @@ const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
-const { callReaction } = require('./reactions');
+const { callReactionDiscord } = require('./reactions');
 require('dotenv').config();
 
 async function callActionDiscord(area) {
     const action_Name = area.action_Name;
     if (action_Name == "send_weather_hour") {
         if (sendWeatherHour())
-          await callReaction(area);
+          await callReactionDiscord(area);
     }
     if (action_Name == "send_weather_diff") {
         if (sendWeatherDiff())
-          await callReaction(area);
+          await callReactionDiscord(area);
     }
 }
 

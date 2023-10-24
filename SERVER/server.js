@@ -11,6 +11,7 @@ const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
 const { verify } = require('crypto');
 let { callActionDiscord } = require('./discord/actions.js');
+const { callReactionDiscord } = require('./discord/reactions.js');
 const BotClient = require('./myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
@@ -181,10 +182,12 @@ app.get('/success', (req, res) => {
 
 const action_map = {
   'Spotify': callActionSpotify,
+  'Discord': callActionDiscord,
 }
 
 const reaction_map = {
   'Spotify': spotify_reaction,
+  'Discord': callReactionDiscord,
 }
 
 function verify_variable(area) {
@@ -243,13 +246,10 @@ app.post('/create_action', (req, res) => {
   };
   area.push(newAreaObject);
   addNewVariables();
-  console.log(area);
   if (!verify_variable(newAreaObject)) {
     res.status(400).json({ error: 'Error creating action' });
-    console.log("nsdkf");
     return;
   }
-  console.log("salut");
   setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
 

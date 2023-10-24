@@ -5,7 +5,7 @@ const cron = require('node-cron');
 const { time } = require('console');
 require('dotenv').config();
 
-async function callReaction(area) {
+async function callReactionDiscord(area) {
   if (area.reaction_Name == "list_message")
     listMessage();
   if (area.reaction_Name == "send_message")
@@ -15,7 +15,7 @@ async function callReaction(area) {
   return;
 }
 
-module.exports = { callReaction };
+module.exports = { callReactionDiscord };
 
 function listMessage() {
     const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
