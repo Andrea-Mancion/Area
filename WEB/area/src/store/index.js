@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    TryToLogTo: '',
     Action: '',
     ActionParams: {},
     Reaction: '',
@@ -54,8 +55,33 @@ export default new Vuex.Store({
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
+          SendWeatherHour: {
+            Name: 'send_weather_hour',
+            IsParams: false,
+            IsBoolParams: false,
+          },
+          SendWeatherDiff: {
+            Name: 'send_weather_diff',
+            IsParams: false,
+            IsBoolParams: false,
+          },
         },
         Reactions: {
+          ListMessage: {
+            Name: 'list_message',
+            IsParams: false,
+            IsBoolParams: false,
+          },
+          SendMessage: {
+            Name: 'send_message',
+            IsParams: false,
+            IsBoolParams: false,
+          },
+          SendWeather: {
+            Name: 'send_weather',
+            IsParams: false,
+            IsBoolParams: false,
+          },
         },
       },
       Gmail: {
@@ -89,7 +115,10 @@ export default new Vuex.Store({
   },
   getters: {
     getSpotifyToken(state) {
-      return state.authentificationTokens.Spotify;
+      return state.Services.Spotify.AuthentificationTokens;
+    },
+    getDiscordToken(state) {
+      return state.Services.Discord.AuthentificationTokens;
     },
     getSavedAction(state) {
       return state.Action;
@@ -112,7 +141,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setSpotifyToken(state, token) {
-      state.authentificationTokens.Spotify = token;
+      state.Services.Spotify.AuthentificationTokens = token;
+    },
+    setDiscordToken(state, token) {
+      state.Services.Discord.AuthentificationTokens = token;
     },
     setSavedAction(state, action) {
       state.Action = action;

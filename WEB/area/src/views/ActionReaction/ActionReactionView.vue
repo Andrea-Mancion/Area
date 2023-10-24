@@ -43,7 +43,8 @@ export default {
         reaction_Name: "",
         action_Param: {},
         reaction_Param: {},
-        access_token: "",
+        action_access_token: "",
+        reaction_access_token: "",
         user_id: "",
       },
     };
@@ -74,8 +75,9 @@ export default {
         this.createActRecData.reaction_Name = this.$store.getters.getSavedReaction;
         this.createActRecData.action_Param = this.$store.getters.getSavedActionParams;
         this.createActRecData.reaction_Param = this.$store.getters.getSavedReactionParams;
-        this.createActRecData.access_token = this.$store.state.Services[this.$store.getters.getServiceActionSelected].AuthentificationTokens;
-        this.createActRecData.user_id = "toto";
+        this.createActRecData.action_access_token = this.$store.state.Services[this.$store.getters.getServiceActionSelected].AuthentificationTokens;
+        this.createActRecData.reaction_access_token = this.$store.state.Services[this.$store.getters.getServiceReactionSelected].AuthentificationTokens;
+        this.createActRecData.user_id = "test";
     },
   },
 };

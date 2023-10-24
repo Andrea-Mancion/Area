@@ -18,9 +18,10 @@ export default {
   name: "actionServiceList",
   methods: {
     RedirectToReactionList(service) {
-      if (this.$store.state.Services[service.Name].AuthentificationTokens == "")
+      if (this.$store.state.Services[service.Name].AuthentificationTokens == "") {
+        this.$store.state.Services[service.Name].IsLog = true;
         this.$router.push({ name: "oauth-login", params: { name: service.Name } });
-      else {
+      } else {
         this.$store.commit("setServiceReactionSelected", service.Name);
         this.$router.push({ name: "reaction-list", params: { name: service.Name } });
       }
