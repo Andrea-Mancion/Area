@@ -9,7 +9,7 @@ async function callReactionDiscord(area) {
   if (area.reaction_Name == "list_message")
     listMessage();
   if (area.reaction_Name == "send_message")
-    sendMessage(area.reaction_Param);
+    sendMessage();
   if (area.reaction_Name == "send_weather")
     sendWeather();
   return;
@@ -35,8 +35,8 @@ function listMessage() {
       console.log("I don't have the channel");
 }
 
-function sendMessage(messageContent) {
-    const message = messageContent.message; //A voir avec Tristan pour le ".message"
+function sendMessage() {
+    const { message } = req.body;
     const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
 
     if (channel && channel.isTextBased()) {
