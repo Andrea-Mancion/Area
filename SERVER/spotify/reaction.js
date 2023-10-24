@@ -10,10 +10,11 @@ let nbEpisode = -1;
 const app = express();
 const port = 3000; // Le port sur lequel le serveur Express écoutera
 
-async function callReaction(area) { // to replace
+async function spotify_reaction(area) { // to replace
     const reaction_Name = area.reaction_Name;
     const reaction_Param = area.reaction_Param;
-    const accessToken = area.access_token;
+    const accessToken = area.reaction_access_token;
+    console.log(reaction_Name);
     if (reaction_Name == "createPlaylist") {
         await createPlaylist(accessToken, reaction_Param.name, reaction_Param.description, reaction_Param.is_public);
     }
@@ -41,7 +42,7 @@ async function callReaction(area) { // to replace
     return;
 }
 
-module.exports = { callReaction };
+module.exports = { spotify_reaction };
 
 async function createPlaylist(accessToken, name, description, is_public) {
     fetch("https://api.spotify.com/v1/me", {
