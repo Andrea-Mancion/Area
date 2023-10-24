@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:mobile_app/pages/home_page.dart';
-// import 'package:mobile_app/pages/home_page.dart';
-import 'package:mobile_app/pages/service_page.dart';
+// import 'package:mobile_app/pages/service_page.dart';
 import 'package:mobile_app/pages/action_pages/spotify/spotify_action_page.dart';
 import 'package:mobile_app/spotify_oauth2.dart';
 import 'package:mobile_app/discord_oauth2.dart';
@@ -73,7 +71,6 @@ class IfThisPageState extends State<IfThisPage> {
                         backgroundColor:MaterialStateProperty.all<Color>(caseColor),
                       ),
                         onPressed: () {
-                          //discordAuthentication();
                           Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => DiscordAuthenticationPage()),
@@ -91,107 +88,6 @@ class IfThisPageState extends State<IfThisPage> {
               )
             ),
             const SizedBox(height: verticaleSpace),
-            // SizedBox(
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       SizedBox(
-            //         width: 150,
-            //         child: ElevatedButton(
-            //           style: ButtonStyle(
-            //             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            //               RoundedRectangleBorder(
-            //                 borderRadius: BorderRadius.circular(0),
-            //               )
-            //             ),
-            //             padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(50)),
-            //             backgroundColor:MaterialStateProperty.all<Color>(caseColor),
-            //           ),
-            //           onPressed: () {
-            //             Navigator.push(
-            //               context,
-            //               MaterialPageRoute(builder: (context) => const HomePage()),
-            //             );
-            //           },
-            //           child: const Text("Home Page"),
-            //         ),
-            //       ),
-            //       const SizedBox(width: horizontalSpace),
-            //       SizedBox(
-            //         width: 150,
-            //         child: ElevatedButton(
-            //           style: ButtonStyle(
-            //             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            //               RoundedRectangleBorder(
-            //                 borderRadius: BorderRadius.circular(0),
-            //               )
-            //             ),
-            //             padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(50)),
-            //             backgroundColor:MaterialStateProperty.all<Color>(caseColor),
-            //           ),
-            //           onPressed: () {
-            //             Navigator.push(
-            //               context,
-            //               MaterialPageRoute(builder: (context) => const HomePage()),
-            //             );
-            //           },
-            //           child: const Text("login Page"),
-            //         ),
-            //       ),
-            //     ],
-            //   )
-            // ),
-            // const SizedBox(height: verticaleSpace),
-            // SizedBox(
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       SizedBox(
-            //         width: 150,
-            //         child: ElevatedButton(
-            //           style: ButtonStyle(
-            //             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            //               RoundedRectangleBorder(
-            //                 borderRadius: BorderRadius.circular(0),
-            //               )
-            //             ),
-            //             padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(50)),
-            //             backgroundColor:MaterialStateProperty.all<Color>(caseColor),
-            //           ),
-            //           onPressed: () {
-            //             Navigator.push(
-            //               context,
-            //               MaterialPageRoute(builder: (context) => const HomePage()),
-            //             );
-            //           },
-            //           child: const Text("Home Page"),
-            //         ),
-            //       ),
-            //       const SizedBox(width: horizontalSpace),
-            //       SizedBox(
-            //         width: 150,
-            //         child: ElevatedButton(
-            //           style: ButtonStyle(
-            //             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            //               RoundedRectangleBorder(
-            //                 borderRadius: BorderRadius.circular(0),
-            //               )
-            //             ),
-            //             padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(50)),
-            //             backgroundColor:MaterialStateProperty.all<Color>(caseColor),
-            //           ),
-            //           onPressed: () {
-            //             Navigator.push(
-            //               context,
-            //               MaterialPageRoute(builder: (context) => const HomePage()),
-            //             );
-            //           },
-            //           child: const Text("login Page"),
-            //         ),
-            //       ),
-            //     ],
-            //   )
-            // ),
           ]
         ),
       ),

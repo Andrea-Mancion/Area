@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/variable.dart';
-
+import 'package:mobile_app/pages/action_pages/discord/send_weather_hour_page.dart';
+import 'package:mobile_app/pages/action_pages/discord/send_weather_diff_page.dart';
 class DiscordActionPage extends StatefulWidget {
   const DiscordActionPage({super.key});
 
@@ -28,7 +29,7 @@ class _DiscordActionPageState extends State<DiscordActionPage> {
                             child: Container(
                                 width: 350,
                                 height: 250,
-                                color: const Color.fromRGBO(30, 215, 96, 1),
+                                color: const Color.fromRGBO(114,137,218, 1),
                                 child: Center(
                                     child: Image.asset(
                                         'assets/images/discord.png',
@@ -54,10 +55,10 @@ class _DiscordActionPageState extends State<DiscordActionPage> {
                                 ),
                                 onPressed: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => const DiscordActionPage()),
+                                        MaterialPageRoute(builder: (context) => const SendWeatherHourPage()),
                                     );
                                     AllVariables.Action = "send_weather_hour";
-                                    AllVariables.actionPrint = "Send the weather of the day";
+                                    AllVariables.actionPrint = AllVariables.discordAction1;
                                 },
                                 child: const Text(AllVariables.discordAction1)
                             ),
@@ -77,10 +78,10 @@ class _DiscordActionPageState extends State<DiscordActionPage> {
                                 ),
                                 onPressed: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => const DiscordActionPage()),
+                                        MaterialPageRoute(builder: (context) => const SendWeatherDiffPage()),
                                     );
                                     AllVariables.Action = "send_weather_diff";
-                                    AllVariables.actionPrint = "Send the new weather when there is a difference";
+                                    AllVariables.actionPrint = AllVariables.discordAction2;
                                 },
                                 child: const Text(AllVariables.discordAction2)
                             ),
