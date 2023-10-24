@@ -68,7 +68,6 @@ async function createPlaylist(accessToken, name, description, is_public) {
                         console.error(data.error);
                         return;
                     }
-                    console.log("result", data);
                 });
             })
         });
@@ -88,7 +87,6 @@ async function add_items_to_playlist(accessToken, playlistId, trackId) {
                 console.error(data.error);
                 return;
             }
-            console.log("result", data);
         });
     })
 };

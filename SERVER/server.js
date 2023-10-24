@@ -197,7 +197,6 @@ app.post('/create_action', (req, res) => {
     reaction_access_token,
     user_id
   };
-  console.log(newAreaObject);
   area.push(newAreaObject);
   console.log(spotifyVariables.nbTrack);
   addNewVariables();

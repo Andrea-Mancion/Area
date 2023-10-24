@@ -9,7 +9,9 @@ const { access } = require('fs');
 const { callReaction } = require('./reaction');
 const { json } = require('body-parser');
 
-let spotifyVariables = [];
+let spotifyVariables = [{
+    nbTrack: -1
+}];
 
 let nbreact = 0;
 
@@ -17,6 +19,7 @@ function addNewVariables() {
     spotifyVariables.push({
         nbTrack: -1
     });
+    nbreact++;
 }
 
 const app = express();
@@ -51,7 +54,6 @@ async function checkNewSavedTrack(accessToken, nbReact) {
         // throw error;
         return false;
     }
-    console.log(spotifyVariables[nbReact].nbTrack, "fqifqi    ," , nbReact, nbreact);
     if (spotifyVariables[nbReact].nbTrack == -1) {
         spotifyVariables[nbReact].nbTrack = infoTrack.total;
         console.log("Pas de nouveau morceau");
@@ -111,4 +113,4 @@ async function fetchTrack(token) {
 }
 
 
-module.exports = { app, callActionSpotify, spotifyVariables, nbreact, addNewVariables };
+module.exports = { callActionSpotify};

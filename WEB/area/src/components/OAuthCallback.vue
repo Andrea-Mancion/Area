@@ -19,7 +19,7 @@ export default {
           client_secret: "8f5b9b576da44c32bf53b1fa53786b8f",
           redirect_uri: "http://localhost:8080/oauth-callback",
           grant_type: "authorization_code",
-          scopes:"user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public"
+          scopes:"user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-currently-playing user-read-recently-played user-top-read user-follow-read user-follow-modify streaming app-remote-control user-read-playback-position user-read-playback-state user-modify-p"
         },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
