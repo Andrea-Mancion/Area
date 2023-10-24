@@ -10,7 +10,6 @@ const { callActionSpotify } = require('./spotify/action.js');
 const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
 const { verify } = require('crypto');
-
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
 var userProfile;

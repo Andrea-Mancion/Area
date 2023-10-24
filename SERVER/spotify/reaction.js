@@ -10,8 +10,6 @@ let nbEpisode = -1;
 const app = express();
 const port = 3000; // Le port sur lequel le serveur Express écoutera
 
-reaction_map = new Map();
-
 async function callReaction(area) { // to replace
     const reaction_Name = area.reaction_Name;
     const reaction_Param = area.reaction_Param;
