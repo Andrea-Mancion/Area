@@ -1,4 +1,4 @@
-const BotClient = require('./myBot.js');
+const BotClient = require('../myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
