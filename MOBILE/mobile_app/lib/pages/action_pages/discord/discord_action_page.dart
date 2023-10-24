@@ -90,6 +90,6 @@ class _DiscordActionPageState extends State<DiscordActionPage> {
                     ],
                 )
             )
-        )
+        );
     }
 }
