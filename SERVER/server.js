@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-const { callAction } = require('./spotify/action.js');
+let { callAction, spotifyVariables, nbreact, addNewVariables } = require('./spotify/action.js');
 const cors = require('cors');
 
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
@@ -23,33 +23,7 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 let area = [];
-
-// app.get("/createDatabase", (req, res) => {
-
-//     let databaseName = "gfg_db";
-
-//     let createQuery = `CREATE DATABASE ${databaseName}`;
-
-//     // use the query to create a Database.
-//     database.query(createQuery, (err) => {
-//         if(err) throw err;
-
-//         console.log("Database Created Successfully !");
-
-//         let useQuery = `USE ${databaseName}`;
-//         database.query(useQuery, (error) => {
-//             if(error) throw error;
-
-//             console.log("Using Database");
-
-//             return res.send(
-// `Created and Using ${databaseName} Database`);
-//         })
-//     });
-// });
-
 // Route pour l'inscription (register)
 app.get('/register', (req, res) => {
   res.render('register'); // Utilisez res.render pour afficher la page EJS (assurez-vous que 'login.ejs' existe dans le dossier 'views')
@@ -200,10 +174,13 @@ app.post('/create_action', (req, res) => {
     access_token,
     user_id
   };
-  console.log(newAreaObject);
   area.push(newAreaObject);
-  callAction(newAreaObject);
-  setInterval(() => callAction(newAreaObject), 3000);
+  // spotifyVariables.push(newAreaObject);
+  addNewVariables();
+  x = spotifyVariables.length - 1;
+  setInterval(() => callAction(newAreaObject, x), 3000);
+  nbreact++;
+
   /*
     pool.connect()
       .then(client => {

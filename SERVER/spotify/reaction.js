@@ -10,34 +10,35 @@ let nbEpisode = -1;
 const app = express();
 const port = 3000; // Le port sur lequel le serveur Express écoutera
 
-function callReaction(area) { // to replace
+async function callReaction(area) { // to replace
     const reaction_Name = area.reaction_Name;
     const reaction_Param = area.reaction_Param;
     const accessToken = area.access_token;
     if (reaction_Name == "createPlaylist") {
-        createPlaylist(accessToken, reaction_Param.name, reaction_Param.description, reaction_Param.is_public);
+        await createPlaylist(accessToken, reaction_Param.name, reaction_Param.description, reaction_Param.is_public);
     }
     if (reaction_Name == "add_items_to_playlist") {
-        add_items_to_playlist(accessToken, reaction_Param.playlistId, reaction_Param.trackId);
+        await add_items_to_playlist(accessToken, reaction_Param.playlistId, reaction_Param.trackId);
     }
     if (reaction_Name == "addTrackToQueue") {
-        addTrackToQueue(accessToken, reaction_Param.trackId);
+        await addTrackToQueue(accessToken, reaction_Param.trackId);
     }
     if (reaction_Name == "setVolume") {
-        setVolume(accessToken, reaction_Param.volume);
+        await setVolume(accessToken, reaction_Param.volume);
     }
     if (reaction_Name == "startSong") {
-        startSong(accessToken);
+        await startSong(accessToken);
     }
     if (reaction_Name == "pauseSong") {
-        pauseSong(accessToken);
+        await pauseSong(accessToken);
     }
     if (reaction_Name == "nextSong") {
         nextSong(accessToken);
     }
     if (reaction_Name == "previousSong") {
-        previousSong(accessToken);
+        await previousSong(accessToken);
     }
+    return;
 }
 
 module.exports = { callReaction };
@@ -65,7 +66,6 @@ async function createPlaylist(accessToken, name, description, is_public) {
                         console.error(data.error);
                         return;
                     }
-                    console.log("result", data);
                 });
             })
         });
@@ -85,7 +85,6 @@ async function add_items_to_playlist(accessToken, playlistId, trackId) {
                 console.error(data.error);
                 return;
             }
-            console.log("result", data);
         });
     })
 };

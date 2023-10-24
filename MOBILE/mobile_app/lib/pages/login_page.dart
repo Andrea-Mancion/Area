@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/pages/home_page.dart';
+import 'package:mobile_app/pages/create_task_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:3000/login'), // Replace with your server URL
+        Uri.parse('http://10.19.255.75:3000/login'), // Replace with your server URL
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -38,16 +38,16 @@ class _LoginPageState extends State<LoginPage> {
         message = 'Logged in successfully';
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(builder: (context) => const CreateTaskPage()),
         );
       } else {
         setState(() {
           message = ('Mauvais identifiants ou mot de passe');
         });
-      }
+      };
     } catch (e) {
       setState(() {
-        message = 'Error: $e'; // Handle network errors
+        message = 'Error: $e';
       });
     }
   }
