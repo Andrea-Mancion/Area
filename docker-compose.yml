@@ -13,6 +13,13 @@ services:
     volumes:
       - ./empty.env:/SERVER/.env
 
+  mobile:
+    build:
+      context: ./MOBILE/mobile_app
+    depends_on:
+      - server
+    volumes:
+      - common:/apk
 
   web:
     build:
@@ -36,13 +43,6 @@ services:
     networks:
       - local
 
-  mobile:
-    build:
-      context: ./MOBILE/mobile_app
-    depends_on:
-      - server
-    volumes:
-      - common:/apk
 
 networks:
   local:

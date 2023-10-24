@@ -6,9 +6,11 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-let { callActionSpotify, spotifyVariables, nbreact, addNewVariables } = require('./spotify/action.js');
-let { callActionDiscord } = require('./discord/actions.js');
+let { callActionSpotify, addNewVariables, nbreact} = require('./spotify/action.js');
+const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
+const { verify } = require('crypto');
+let { callActionDiscord } = require('./discord/actions.js');
 const BotClient = require('./myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
@@ -28,7 +30,6 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 // Middleware pour gérer les données POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 let area = [];
 // Route pour l'inscription (register)
 app.get('/register', (req, res) => {
@@ -178,37 +179,79 @@ app.get('/success', (req, res) => {
   //   });
 });
 
+const action_map = {
+  'Spotify': callActionSpotify,
+}
+
+const reaction_map = {
+  'Spotify': spotify_reaction,
+}
+
+function verify_variable(area) {
+  if (area.length == 0) {
+    console.log("size");
+    return false;
+  }
+  if (area.action_service_Name == "" || area.reaction_service_Name == "" || area.action_Name == "" || area.reaction_Param == "" || area.access_token == "" || area.user_id == "") {
+    if (area.action_service_Name == "") {
+      console.log("action_service_Name");
+    }
+    if (area.reaction_service_Name == "") {
+      console.log("reaction_service_Name");
+    }
+    if (area.action_Name == "") {
+      console.log("action_Name");
+    }
+    if (area.reaction_Param == "") {
+      console.log("reaction_Param");
+    }
+    if (area.access_token == "") {
+      console.log("access_token");
+    }
+    if (area.user_id == "") {
+      console.log("user_id");
+    }
+    return false;
+  }
+  return true;
+}
+
 app.post('/create_action', (req, res) => {
   const {
-    service_Name,
+    action_service_Name,
+    reaction_service_Name,
     action_Name,
     reaction_Name,
     action_Param,
     reaction_Param,
-    access_token,
+    action_access_token,
+    reaction_access_token,
     user_id
   } = req.body;
 
   // Créez un nouvel objet pour chaque entrée et ajoutez-le au tableau
   const newAreaObject = {
-    service_Name,
+    action_service_Name,
+    reaction_service_Name,
     action_Name,
     reaction_Name,
     action_Param,
     reaction_Param,
-    access_token,
+    action_access_token,
+    reaction_access_token,
     user_id
   };
   area.push(newAreaObject);
-  // spotifyVariables.push(newAreaObject);
   addNewVariables();
-  x = spotifyVariables.length - 1;
-  if (newAreaObject.service_Name == "spotify") {
-    setInterval(() => callActionSpotify(newAreaObject, x), 3000);
-    nbreact++;
-  } else if (newAreaObject.service_Name == "discord") {
-    setInterval(() => callActionDiscord(newAreaObject), 3000);
+  console.log(area);
+  if (!verify_variable(newAreaObject)) {
+    res.status(400).json({ error: 'Error creating action' });
+    console.log("nsdkf");
+    return;
   }
+  console.log("salut");
+  setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
+  nbreact++;
 
   /*
     pool.connect()
