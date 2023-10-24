@@ -114,4 +114,4 @@ async function fetchTrack(token) {
     return await result.json();
 }
 
-module.exports = { callActionSpotify, addNewVariables};
+module.exports = { callActionSpotify, addNewVariables, nbreact};

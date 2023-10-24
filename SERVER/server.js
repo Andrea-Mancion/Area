@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-const { callActionSpotify, addNewVariables } = require('./spotify/action.js');
+let { callActionSpotify, addNewVariables, nbreact} = require('./spotify/action.js');
 const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
 const { verify } = require('crypto');
@@ -154,20 +154,40 @@ app.get('/success', (req, res) => {
 });
 
 const action_map = {
-  'spotify': callActionSpotify,
+  'Spotify': callActionSpotify,
 }
 
 const reaction_map = {
-  'spotify': spotify_reaction,
+  'Spotify': spotify_reaction,
 }
 
 function verify_variable(area) {
   if (area.length == 0) {
+    console.log("size");
     return false;
   }
   if (area.action_service_Name == "" || area.reaction_service_Name == "" || area.action_Name == "" || area.reaction_Param == "" || area.access_token == "" || area.user_id == "") {
+    if (area.action_service_Name == "") {
+      console.log("action_service_Name");
+    }
+    if (area.reaction_service_Name == "") {
+      console.log("reaction_service_Name");
+    }
+    if (area.action_Name == "") {
+      console.log("action_Name");
+    }
+    if (area.reaction_Param == "") {
+      console.log("reaction_Param");
+    }
+    if (area.access_token == "") {
+      console.log("access_token");
+    }
+    if (area.user_id == "") {
+      console.log("user_id");
+    }
     return false;
   }
+  return true;
 }
 
 app.post('/create_action', (req, res) => {
@@ -200,9 +220,11 @@ app.post('/create_action', (req, res) => {
   console.log(area);
   if (!verify_variable(newAreaObject)) {
     res.status(400).json({ error: 'Error creating action' });
+    console.log("nsdkf");
     return;
   }
-  setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 300);
+  console.log("salut");
+  setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
 
   /*
