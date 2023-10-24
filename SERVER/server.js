@@ -180,7 +180,8 @@ app.post('/create_action', (req, res) => {
     reaction_Name,
     action_Param,
     reaction_Param,
-    access_token,
+    action_access_token,
+    reaction_access_token,
     user_id
   } = req.body;
 
@@ -192,7 +193,8 @@ app.post('/create_action', (req, res) => {
     reaction_Name,
     action_Param,
     reaction_Param,
-    access_token,
+    action_access_token,
+    reaction_access_token,
     user_id
   };
   console.log(newAreaObject);

@@ -30,13 +30,13 @@ async function callActionSpotify(area, nbReact, reaction_map) {
     const action_Name = area.action_Name;
     if (action_Name == "check_new_saved_track") {
         // let nbTrack = jsonparse(spotifyVariables.nbTrack);
-        const newTrack = await checkNewSavedTrack(area.access_token, nbReact);
+        const newTrack = await checkNewSavedTrack(area.action_access_token, nbReact);
         if (newTrack) {
             await reaction_map[area.reaction_service_Name](area);
         }
     }
     if (action_Name == "check_new_episode") {
-        const newEpisode = await checkNewEpisode(area.access_token, area.action_Param);
+        const newEpisode = await checkNewEpisode(area.action_access_token, area.action_Param);
         if (newEpisode) {
             await reaction_map[area.reaction_service_Name](area);
         }
