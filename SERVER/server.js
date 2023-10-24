@@ -6,9 +6,10 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-let { callAction, spotifyVariables, nbreact, addNewVariables } = require('./spotify/action.js');
+const { callActionSpotify } = require('./spotify/action.js');
+const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
-
+const { verify } = require('crypto');
 const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
 var userProfile;
@@ -153,32 +154,56 @@ app.get('/success', (req, res) => {
     });
 });
 
+const action_map = {
+  'spotify': callActionSpotify,
+}
+
+const reaction_map = {
+  'spotify': spotify_reaction,
+}
+
+function verify_variable(area) {
+  if (area.length == 0) {
+    return false;
+  }
+  if (area.action_service_Name == "" || area.reaction_service_Name == "" || area.action_Name == "" || area.reaction_Param == "" || area.access_token == "" || area.user_id == "") {
+    return false;
+  }
+}
+
 app.post('/create_action', (req, res) => {
   const {
-    service_Name,
+    action_service_Name,
+    reaction_service_Name,
     action_Name,
     reaction_Name,
     action_Param,
     reaction_Param,
-    access_token,
+    action_access_token,
+    reaction_access_token,
     user_id
   } = req.body;
 
   // Créez un nouvel objet pour chaque entrée et ajoutez-le au tableau
   const newAreaObject = {
-    service_Name,
+    action_service_Name,
+    reaction_service_Name,
     action_Name,
     reaction_Name,
     action_Param,
     reaction_Param,
-    access_token,
+    action_access_token,
+    reaction_access_token,
     user_id
   };
   area.push(newAreaObject);
-  // spotifyVariables.push(newAreaObject);
+  console.log(spotifyVariables.nbTrack);
   addNewVariables();
-  x = spotifyVariables.length - 1;
-  setInterval(() => callAction(newAreaObject, x), 3000);
+  if (!verify_variable(newAreaObject)) {
+    res.status(400).json({ error: 'Error creating action' });
+    return;
+  }
+  setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
 
   /*

@@ -13,7 +13,7 @@ const port = 3000; // Le port sur lequel le serveur Express écoutera
 async function callReaction(area) { // to replace
     const reaction_Name = area.reaction_Name;
     const reaction_Param = area.reaction_Param;
-    const accessToken = area.access_token;
+    const accessToken = area.reaction_access_token;
     if (reaction_Name == "createPlaylist") {
         await createPlaylist(accessToken, reaction_Param.name, reaction_Param.description, reaction_Param.is_public);
     }
