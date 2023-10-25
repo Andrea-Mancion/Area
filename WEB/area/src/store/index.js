@@ -57,8 +57,11 @@ export default new Vuex.Store({
         Actions: {
           WeatherHour: {
             Name: 'weather_hour',
-            IsParams: false,
+            IsParams: true,
             IsBoolParams: false,
+            Params: {
+              hours: '',
+            }
           },
           WeatherDiff: {
             Name: 'weather_diff',
