@@ -31,11 +31,7 @@ function sendWeatherHour(hourContent) {
       const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
       const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
 
-      if (channel && channel.isTextBased()) {
-        return true;
-      } else
-        console.log("I don't have the channel");
-        return false;
+      return true;
     }).catch(error => {
       console.error("Error: " + error);
       return false;
