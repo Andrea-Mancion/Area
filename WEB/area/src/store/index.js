@@ -74,8 +74,11 @@ export default new Vuex.Store({
           },
           SendMessage: {
             Name: 'send_message',
-            IsParams: false,
+            IsParams: true,
             IsBoolParams: false,
+            Params: {
+              message: '',
+            }
           },
           SendWeather: {
             Name: 'send_weather',

@@ -35,6 +35,15 @@
       <br />
       <br />
       <b-button variant="info" @click="CreateActionReaction">Create</b-button>
+      <b-alert v-model="ShowFaildAlert" variant="danger" dismissible>
+        Create Action-Reaction Faild !
+      </b-alert>
+      <b-alert v-model="ShowFaildArgAlert" variant="danger" dismissible>
+        Invalid Arg !
+      </b-alert>
+      <b-alert v-model="ShowGoodAlert" variant="succes" dismissible>
+        Create Action-Reaction done !
+      </b-alert>
     </div>
   </div>
 </template>
@@ -45,6 +54,9 @@ import Cookies from 'js-cookie';
 export default {
   data() {
     return {
+      ShowFaildAlert: false,
+      ShowGoodAlert: false,
+      ShowFaildArgAlert: false,
       createActRecData: {
         action_service_Name: "",
         reaction_service_Name: "",
@@ -76,10 +88,17 @@ export default {
       axios
         .post("http://localhost:3000/create_action", this.createActRecData)
         .then((response) => {
-          if (response.status === 200) console.log("ça marche!");
-          if (response.status === 500) console.log("ça marche pas (arg invalide)!");
+          if (response.status === 200) {
+            this.ShowGoodAlert = true;
+            console.log("ça marche!");
+          }
+          if (response.status === 500) {
+            this.ShowFaildArgAlert = true;
+             console.log("ça marche pas (arg invalide)!");
+          }
         })
         .catch((error) => {
+          this.ShowFaildAlert = true;
           console.log(error);
         });
     },
