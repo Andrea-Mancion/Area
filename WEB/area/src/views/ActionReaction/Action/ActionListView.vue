@@ -43,6 +43,7 @@ export default {
           params: { action: action },
         });
       } else {
+        this.$store.commit("setSavedActionParams", '');
         this.$store.commit("setSavedAction", action.Name);
         this.$router.push("/action-reaction");
       }
