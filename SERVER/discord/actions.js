@@ -19,7 +19,7 @@ async function callActionDiscord(area) {
 }
 
 function sendWeatherHour(hourContent) {
-  cron.schedule(hourContent.message, () => {
+  cron.schedule(hourContent.hours, () => {
     const city = 'rennes';
     const apiKey = process.env.WEATHER_API_KEY;
 
