@@ -6,6 +6,7 @@
 
 <script>
 import axios from "axios";
+import Cookies from 'js-cookie';
 export default {
   mounted() {
     // Récupérez le code d'autorisation de l'URL
@@ -29,6 +30,7 @@ export default {
         })
         .then((response) => {
           const accessToken = response.data.access_token;
+          Cookies.set('Spotify_access_token', accessToken, {expires: 7, secure: true});
           this.$store.commit("setSpotifyToken", accessToken);
           this.$router.push("/action-reaction");
         })
@@ -56,6 +58,7 @@ export default {
         })
         .then((response) => {
           const accessToken = response.data.access_token;
+          Cookies.set('Discord_access_token', accessToken, {expires: 7, secure: true});
           this.$store.commit("setDiscordToken", accessToken);
           this.$router.push("/action-reaction");
         })
