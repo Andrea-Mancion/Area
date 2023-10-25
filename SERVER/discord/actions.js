@@ -4,6 +4,7 @@ const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
 const { callReaction } = require('./reactions');
+const fs = require('fs');
 require('dotenv').config();
 
 async function callActionDiscord(area) {
@@ -32,12 +33,7 @@ function weatherHour() {
       const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
 
       if (channel && channel.isTextBased()) {
-        channel.send(weatherMessage).then(() => {
-          console.log("Message sent");
-        }).catch(error => {
-          console.error("Error: " + error);
-          return false;
-        });
+        fs.writeFileSync('weatherHour.json', JSON.stringify(weatherMessage));
       } else
         console.log("I don't have the channel");
         return false;
@@ -67,12 +63,7 @@ function checkWeatherDiff() {
           const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
 
           if (channel && channel.isTextBased()) {
-            channel.send(weatherMessage).then(() => {
-              console.log("Message sent");
-            }).catch(error => {
-              console.error("Error with the weather change: " + error);
-              return false;
-            });
+            fs.writeFileSync('weatherDiff.json', JSON.stringify(weatherMessage));
           } else
             console.log("I don't have the channel");
             return false;
