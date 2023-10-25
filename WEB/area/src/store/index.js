@@ -55,13 +55,13 @@ export default new Vuex.Store({
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
-          SendWeatherHour: {
-            Name: 'send_weather_hour',
+          WeatherHour: {
+            Name: 'weather_hour',
             IsParams: false,
             IsBoolParams: false,
           },
-          SendWeatherDiff: {
-            Name: 'send_weather_diff',
+          WeatherDiff: {
+            Name: 'weather_diff',
             IsParams: false,
             IsBoolParams: false,
           },
