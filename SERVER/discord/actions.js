@@ -1,4 +1,4 @@
-const BotClient = require('./myBot.js');
+const BotClient = require('../myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
@@ -81,7 +81,7 @@ function checkWeatherDiff() {
     return true;
 }
 
-function sendWeatherDiff() {
+function weatherDiff() {
   cron.schedule('*/30 * * * *', checkWeatherDiff, {
     timezone: "Europe/Paris"
   });
