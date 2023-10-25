@@ -1,10 +1,15 @@
 <template>
   <div class="Login">
-    <div class="centered-container">
+    <p v-if="this.$store.state.Connected">Connected</p>
+    <div class="centered-container" v-if="!this.$store.state.Connected">
       <p>Enter your mail :</p>
       <b-form-input placeholder="Mail" v-model="MailData" type="mail"></b-form-input>
       <p>Enter your Password :</p>
-      <b-form-input placeholder="Password" v-model="PassData" type="password"></b-form-input>
+      <b-form-input
+        placeholder="Password"
+        v-model="PassData"
+        type="password"
+      ></b-form-input>
       <br />
       <b-button variant="info" @click="checkPassord">Login</b-button>
       <b-alert v-model="ShowLoginAlert" variant="danger" dismissible>
@@ -13,45 +18,51 @@
       <br />
       <br />
       <b-button variant="info" @click="RedirectSignIn">Sign in</b-button>
+      <b-alert v-model="ShowConnected" variant="success" dismissible>
+        Connected!
+      </b-alert>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {
-      MailData: '',
-      PassData: '',
+      MailData: "",
+      PassData: "",
       ShowLoginAlert: false,
+      ShowConnected: false,
       loginData: {
-        username: '',
-        password: '',
+        username: "",
+        password: "",
       },
-    }
+    };
   },
   methods: {
     checkPassord() {
       this.loginData.username = this.MailData;
       this.loginData.password = this.PassData;
-      axios.post('http://localhost:3000/login', this.loginData)
-        .then(responce => {
+      axios
+        .post("http://localhost:3000/login", this.loginData)
+        .then((responce) => {
           console.log(responce.status);
-          if (responce.status === 200)
-            this.$router.push('/');
-          if (responce.status === 401)
-            this.ShowLoginAlert = true;
+          if (responce.status === 200) {
+            this.ShowConnectedFaild = true;
+            this.$router.push("/");
+          }
+          if (responce.status === 401) this.ShowLoginAlert = true;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
-        })
+        });
     },
     RedirectSignIn() {
-      this.$router.push('/sign-in');
+      this.$router.push("/sign-in");
     },
   },
-}
+};
 </script>
 
 <style scoped>

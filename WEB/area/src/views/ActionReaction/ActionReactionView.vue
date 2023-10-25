@@ -41,7 +41,7 @@
       <b-alert v-model="ShowFaildArgAlert" variant="danger" dismissible>
         Invalid Arg !
       </b-alert>
-      <b-alert v-model="ShowGoodAlert" variant="succes" dismissible>
+      <b-alert v-model="ShowGoodAlert" variant="success" dismissible>
         Create Action-Reaction done !
       </b-alert>
     </div>
