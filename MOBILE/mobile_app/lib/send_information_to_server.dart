@@ -20,7 +20,7 @@ Future<void> postDataToServer() async {
   };*/
 
   final response = await http.post(
-    Uri.parse("http://10.19.255.75:3000/create_action"),
+    Uri.parse("http://10.19.254.241:3000/create_action"),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     },

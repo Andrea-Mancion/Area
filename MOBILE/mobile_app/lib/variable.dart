@@ -23,7 +23,7 @@ class AllVariables {
   static const String spotifyAction4 = "test";
   static const String spotifyReaction1 = "Add Items To Playlist";
   static const String spotifyReaction2 = "Créer une playlist";
-  static const String discordAction1 = "Send the weather of the day";
+  static const String discordAction1 = "météo_heure";
   static const String discordAction2 = "La météo change";
   static final TextEditingController spotifyCreatePlaylistReactionName = TextEditingController();
   static final TextEditingController spotifyCreatePlaylistReactionDescription = TextEditingController();
