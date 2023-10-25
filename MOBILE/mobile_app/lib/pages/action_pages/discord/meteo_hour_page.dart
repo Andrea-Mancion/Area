@@ -14,7 +14,7 @@ class _SendWeatherHourPageState extends State<SendWeatherHourPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Send Weather Hour Page"),
+        title: const Text("Météo_heure Hour Page"),
       ),
       body:Center(
         child: Column(
