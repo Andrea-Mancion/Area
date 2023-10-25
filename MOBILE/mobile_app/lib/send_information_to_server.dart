@@ -26,8 +26,8 @@ Future<void> postDataToServer() async {
     },
     body: jsonEncode(<String, dynamic>{
       'service_Name': 'Spotify',
-      'action_Name': AllVariables.Action,
-      'reaction_Name': AllVariables.Reaction,
+      'action_Name': AllVariables.action,
+      'reaction_Name': AllVariables.reaction,
       'action_Param': AllVariables.actionDescription,
       'reaction_Param': AllVariables.reactionDescription,
       'access_token': AllVariables.accessTokenSpotify,

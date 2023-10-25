@@ -17,12 +17,12 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   String whatPrintThen = "";
   @override
   Widget build(BuildContext context) {
-    if (AllVariables.Action == "") {
+    if (AllVariables.action == "") {
       whatPrintIf = "...";
     } else {
       whatPrintIf = AllVariables.actionPrint;
     }
-    if (AllVariables.Reaction == "") {
+    if (AllVariables.reaction == "") {
       whatPrintThen = "...";
     } else {
       whatPrintThen = AllVariables.reactionPrint;
@@ -95,10 +95,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                print(AllVariables.Action);
-                print(AllVariables.Reaction);
-                AllVariables.tasks[0] = ("Si \"${AllVariables.actionPrint}\", fais \"${AllVariables.reactionPrint}\"");
-                print(AllVariables.tasks[AllVariables.taskIndex]);
+                AllVariables.tasks[AllVariables.taskIndex] = ("Si \"${AllVariables.actionPrint}\", fais \"${AllVariables.reactionPrint}\"");
+                AllVariables.tasks.add(AllVariables.createNewTask);
+                AllVariables.nbTask++;
                 AllVariables.taskIndex++;
                 postDataToServer();
                 Navigator.push(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/create_task_page.dart';
-import 'package:mobile_app/pages/reaction_pages/spotify_reaction_page.dart';
+import 'package:mobile_app/pages/reaction_pages/spotify/spotify_reaction_page.dart';
 
 const double verticaleSpace = 60;
 const double horizontalSpace = 20;
