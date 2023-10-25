@@ -1,8 +1,10 @@
 // import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:mobile_app/pages/home_page.dart';
+// import 'package:mobile_app/pages/home_page.dart';
 import 'package:mobile_app/pages/login_page.dart';
 // import 'package:mobile_app/pages/login_page.dart';
+// import 'package:mobile_app/pages/action_pages/discord/discord_action_page.dart';
+
 void main() {
   /*Timer.periodic(Duration(seconds: 5), (Timer timer) {
     // Placez le code que vous souhaitez exécuter ici
