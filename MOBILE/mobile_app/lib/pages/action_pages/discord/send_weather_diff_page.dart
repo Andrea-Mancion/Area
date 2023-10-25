@@ -2,26 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/create_task_page.dart';
 import 'package:mobile_app/variable.dart';
 
-class NewSaveTrackActionSpotify extends StatefulWidget {
-  const NewSaveTrackActionSpotify({super.key});
+class SendWeatherDiffPage extends StatefulWidget {
+  const SendWeatherDiffPage({super.key});
 
   @override
-  State<NewSaveTrackActionSpotify> createState() => _NewSaveTrackActionSpotifyState();
+  State<SendWeatherDiffPage> createState() => _SendWeatherDiffPageState();
 }
 
-class _NewSaveTrackActionSpotifyState extends State<NewSaveTrackActionSpotify> {
+class _SendWeatherDiffPageState extends State<SendWeatherDiffPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("New Save Track"),
+        title: const Text("Send Weather Hour Page"),
       ),
-      body: Center(
-        child:
-          Column(
-            children: [
-              const SizedBox(height: 300),
-              ElevatedButton(
+      body:Center(
+        child: Column(
+          children: [
+            const SizedBox(height: 300),
+             ElevatedButton(
                 onPressed: () {
                   AllVariables.actionDescription = {
                     "": "",
@@ -31,10 +30,9 @@ class _NewSaveTrackActionSpotifyState extends State<NewSaveTrackActionSpotify> {
                 },
                 child: const Text("confirm"),
               ),
-            ],
-          ),
+          ],
+        )
       ),
-      backgroundColor: const Color.fromRGBO(30, 215, 96, 1),
     );
   }
 }

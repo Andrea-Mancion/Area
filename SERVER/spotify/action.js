@@ -29,7 +29,6 @@ const port = 3000; // Le port sur lequel le serveur Express écoutera
 
 let isThereNewSavedTrack = false;
 
-
 async function callActionSpotify(area, nbReact, reaction_map) {
     const action_Name = area.action_Name;
     if (action_Name == "check_new_saved_track") {
@@ -57,11 +56,9 @@ async function checkNewSavedTrack(accessToken, nbReact) {
     }
     if (spotifyVariables[nbReact].nbTrack == -1) {
         spotifyVariables[nbReact].nbTrack = infoTrack.total;
-        console.log("Pas de nouveau morceau");
         return false;
     } else {
         if (infoTrack.total > spotifyVariables[nbReact].nbTrack) {
-            console.log("Nouveau morceau");
             spotifyVariables[nbReact].nbTrack = infoTrack.total;
             // isThereNewSavedTrack = true;
             return true;
@@ -91,7 +88,6 @@ async function checkNewEpisode(accessToken, ShowId) {
             return true;
         }
         else {
-            console.log("Pas de nouvel épisode");
             return false;
         }
     }
@@ -113,4 +109,4 @@ async function fetchTrack(token) {
     return await result.json();
 }
 
-module.exports = { callActionSpotify};
+module.exports = { callActionSpotify, addNewVariables, nbreact};

@@ -10,7 +10,7 @@ let nbEpisode = -1;
 const app = express();
 const port = 3000; // Le port sur lequel le serveur Express écoutera
 
-async function callReaction(area) { // to replace
+async function spotify_reaction(area) { // to replace
     const reaction_Name = area.reaction_Name;
     const reaction_Param = area.reaction_Param;
     const accessToken = area.reaction_access_token;
@@ -41,7 +41,7 @@ async function callReaction(area) { // to replace
     return;
 }
 
-module.exports = { callReaction };
+module.exports = { spotify_reaction };
 
 async function createPlaylist(accessToken, name, description, is_public) {
     fetch("https://api.spotify.com/v1/me", {
@@ -50,7 +50,8 @@ async function createPlaylist(accessToken, name, description, is_public) {
     }).then((result) => {
         result.json().then((data) => {
             if (data.error) {
-                console.error(data.error);
+                console.log(data.error);
+                console.log("Erreur lors de la récupération du profil");
                 return;
             }
             fetch("https://api.spotify.com/v1/users/" + data.id + "/playlists", {
@@ -63,7 +64,8 @@ async function createPlaylist(accessToken, name, description, is_public) {
             }).then((result) => {
                 result.json().then((data) => {
                     if (data.error) {
-                        console.error(data.error);
+                        console.log(data.error);
+                        console.error("Erreur lors de la création de la playlist");
                         return;
                     }
                 });
