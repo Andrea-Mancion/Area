@@ -36,7 +36,7 @@ export default new Vuex.Store({
         },
         Reactions: {
           CreatePlaylist: {
-            Name: 'CreatePlaylist',
+            Name: 'create_playlist',
             IsParams: true,
             IsBoolParams: true,
             Params: {
@@ -55,13 +55,16 @@ export default new Vuex.Store({
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
-          SendWeatherHour: {
-            Name: 'send_weather_hour',
-            IsParams: false,
+          WeatherHour: {
+            Name: 'weather_hour',
+            IsParams: true,
             IsBoolParams: false,
+            Params: {
+              hours: '',
+            }
           },
-          SendWeatherDiff: {
-            Name: 'send_weather_diff',
+          WeatherDiff: {
+            Name: 'weather_diff',
             IsParams: false,
             IsBoolParams: false,
           },
@@ -74,8 +77,11 @@ export default new Vuex.Store({
           },
           SendMessage: {
             Name: 'send_message',
-            IsParams: false,
+            IsParams: true,
             IsBoolParams: false,
+            Params: {
+              message: '',
+            }
           },
           SendWeather: {
             Name: 'send_weather',

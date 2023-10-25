@@ -11,7 +11,8 @@ const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
 const { verify } = require('crypto');
 let { callActionDiscord } = require('./discord/actions.js');
-const BotClient = require('./myBot.js');
+const { callReactionDiscord } = require('./discord/reactions.js');
+const BotClient = require('./discord/myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
@@ -181,10 +182,12 @@ app.get('/success', (req, res) => {
 
 const action_map = {
   'Spotify': callActionSpotify,
+  'Discord': callActionDiscord,
 }
 
 const reaction_map = {
   'Spotify': spotify_reaction,
+  'Discord': callReactionDiscord,
 }
 
 function verify_variable(area) {
@@ -242,17 +245,15 @@ app.post('/create_action', (req, res) => {
     user_id
   };
   area.push(newAreaObject);
-  addNewVariables();
   console.log(area);
+  addNewVariables();
   if (!verify_variable(newAreaObject)) {
-    res.status(400).json({ error: 'Error creating action' });
-    console.log("nsdkf");
+    res.status(500).json({ error: 'Error creating action' });
     return;
   }
-  console.log("salut");
   setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
-
+  res.sendStatus(200);
   /*
     pool.connect()
       .then(client => {

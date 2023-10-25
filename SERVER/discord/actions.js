@@ -3,23 +3,23 @@ const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
-const { callReaction } = require('./reactions');
+const { callReactionDiscord } = require('./reactions');
 require('dotenv').config();
 
 async function callActionDiscord(area) {
     const action_Name = area.action_Name;
     if (action_Name == "weather_hour") {
-        if (weatherHour(area.action_Param))
-          await callReaction(area);
+        if (sendWeatherHour(area.action_Param))
+          await callReactionDiscord(area);
     }
     if (action_Name == "weather_diff") {
-        if (weatherDiff())
-          await callReaction(area);
+        if (sendWeatherDiff())
+          await callReactionDiscord(area);
     }
 }
 
-function weatherHour(hourContent) {
-  cron.schedule(hourContent.message, () => {
+function sendWeatherHour(hourContent) {
+  cron.schedule(hourContent.hours, () => {
     const city = 'rennes';
     const apiKey = process.env.WEATHER_API_KEY;
 
@@ -31,16 +31,7 @@ function weatherHour(hourContent) {
       const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
       const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
 
-      if (channel && channel.isTextBased()) {
-        channel.send(weatherMessage).then(() => {
-          console.log("Message sent");
-        }).catch(error => {
-          console.error("Error: " + error);
-          return false;
-        });
-      } else
-        console.log("I don't have the channel");
-        return false;
+      return true;
     }).catch(error => {
       console.error("Error: " + error);
       return false;
@@ -48,7 +39,7 @@ function weatherHour(hourContent) {
   }, {
     timezone: "Europe/Paris"
   });
-  return true;
+  return false;
 }
 
 function checkWeatherDiff() {

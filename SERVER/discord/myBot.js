@@ -8,7 +8,7 @@ const client = new Client({
         GatewayIntentBits.DirectMessages,
     ],
 });
-const { sendMail } = require('./notifications.js');
+const { sendMail } = require('../notifications.js');
 const TOKEN = process.env.TOKEN_BOT;
 let nbMessages = 0;
 
