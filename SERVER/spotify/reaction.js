@@ -14,7 +14,6 @@ async function spotify_reaction(area) { // to replace
     const reaction_Name = area.reaction_Name;
     const reaction_Param = area.reaction_Param;
     const accessToken = area.reaction_access_token;
-    console.log(reaction_Name);
     if (reaction_Name == "createPlaylist") {
         await createPlaylist(accessToken, reaction_Param.name, reaction_Param.description, reaction_Param.is_public);
     }
@@ -51,7 +50,8 @@ async function createPlaylist(accessToken, name, description, is_public) {
     }).then((result) => {
         result.json().then((data) => {
             if (data.error) {
-                console.error(data.error);
+                console.log(data.error);
+                console.log("Erreur lors de la récupération du profil");
                 return;
             }
             fetch("https://api.spotify.com/v1/users/" + data.id + "/playlists", {
@@ -64,7 +64,8 @@ async function createPlaylist(accessToken, name, description, is_public) {
             }).then((result) => {
                 result.json().then((data) => {
                     if (data.error) {
-                        console.error(data.error);
+                        console.log(data.error);
+                        console.error("Erreur lors de la création de la playlist");
                         return;
                     }
                 });

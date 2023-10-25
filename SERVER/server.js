@@ -12,7 +12,7 @@ const cors = require('cors');
 const { verify } = require('crypto');
 let { callActionDiscord } = require('./discord/actions.js');
 const { callReactionDiscord } = require('./discord/reactions.js');
-const BotClient = require('./myBot.js');
+const BotClient = require('./discord/myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
@@ -245,6 +245,7 @@ app.post('/create_action', (req, res) => {
     user_id
   };
   area.push(newAreaObject);
+  console.log(area);
   addNewVariables();
   if (!verify_variable(newAreaObject)) {
     res.status(400).json({ error: 'Error creating action' });
