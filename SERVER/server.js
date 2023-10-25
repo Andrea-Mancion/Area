@@ -172,52 +172,6 @@ app.get('/success', (req, res) => {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
-
-  const gmailOAuth2Client = new OAuth2Client({
-    clientId: GMAIL_CLIENT_ID,
-    clientSecret: GMAIL_CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/gmail-auth-callback'
-  });
-
-  app.get('/gmail-auth', (req, res) => {
-    const authUrl = gmailOAuth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope: ['https://www.googleapis.com/auth/gmail.readonly'],
-      redirect_uri: 'http://localhost:3000/gmail-auth-callback'
-    });
-    res.redirect(authUrl);
-  });
-
-  app.get('/gmail-auth-callback', async (req, res) => {
-    const { tokens } = await gmailOAuth2Client.getToken(req.query.code);
-    gmailOAuth2Client.setCredentials(tokens);
-    res.redirect('/gmail');
-  });
-
-  app.get('/get-gmail-messages', async (req, res) => {
-    if (!my_access_token)
-      return res.status(401).send('Unauthorized');
-    const oauth2Client = new OAuth2Client({
-      clientId: GMAIL_CLIENT_ID,
-      clientSecret: GMAIL_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/gmail-auth-callback',
-      accessToken: my_access_token,
-      refreshToken: my_refresh_token
-    });
-
-    const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
-
-    try {
-      const messages = await gmail.users.messages.list({
-        userId: 'me',
-        maxResults: 10
-      });
-      res.json(messages.data);
-    } catch (error) {
-      console.log("Error during the gmail " + error);
-      res.status(500).send(error.message);
-    }
-  });
 });
 
 // Démarrer le serveur sur le port 3000
