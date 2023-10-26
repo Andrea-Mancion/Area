@@ -18,7 +18,7 @@ export default {
           params: {
             code: code,
             client_id: "fdbe5e5dbe5c42b680efb3ab1d3574af",
-            client_secret: "8f5b9b576da44c32bf53b1fa53786b8f",
+            client_secret: process.env.SPOTIFY_CLIENT_SECRET,
             redirect_uri: `http://localhost:8080/oauth-callback?service=Spotify`,
             grant_type: "authorization_code",
             scopes:
@@ -41,7 +41,7 @@ export default {
     if (this.$route.query.service == "Discord") {
       const params = new URLSearchParams();
       params.append("client_id", "1156974898644795393");
-      params.append("client_secret", "X8IKJ1RTnh-QUyfFTTh6N5d1lZoUuSGD");
+      params.append("client_secret", process.env.DISCORD_CLIENT_SECRET);
       params.append(
         "redirect_uri",
         "http://localhost:8080/oauth-callback?service=Discord"
