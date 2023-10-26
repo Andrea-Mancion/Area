@@ -5,11 +5,11 @@ const session = require('express-session');
 const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const { google } = require('googleapis');
-const { OAuth2Client } = require('google-auth-library');
+const axios = require('axios');
+const { token } = require('morgan');
+const { EXTERNAL_ACCOUNT_AUTHORIZED_USER_TYPE } = require('google-auth-library/build/src/auth/externalAccountAuthorizedUserClient');
+require('dotenv').config();
 
-const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
@@ -19,31 +19,6 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 // Middleware pour gérer les données POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-
-// app.get("/createDatabase", (req, res) => {
-
-//     let databaseName = "gfg_db";
-
-//     let createQuery = `CREATE DATABASE ${databaseName}`;
-
-//     // use the query to create a Database.
-//     database.query(createQuery, (err) => {
-//         if(err) throw err;
-
-//         console.log("Database Created Successfully !");
-
-//         let useQuery = `USE ${databaseName}`;
-//         database.query(useQuery, (error) => {
-//             if(error) throw error;
-
-//             console.log("Using Database");
-
-//             return res.send(
-// `Created and Using ${databaseName} Database`);
-//         })
-//     });
-// });
 
 // Route pour l'inscription (register)
 app.get('/register', (req, res) => {
@@ -130,8 +105,10 @@ app.get('/success', (req, res) => {
   var userProfile;
   var my_access_token
   var my_refresh_token
-  const GMAIL_CLIENT_ID = '444052914844-jpdmjulmqqe3qug54oi4cspbhe0ms9ch.apps.googleusercontent.com';
-  const GMAIL_CLIENT_SECRET = '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';
+  var access_token_twitch;
+  var user_id_twitch;
+  var counter = 0;
+  var recup_Total;
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -150,8 +127,8 @@ app.get('/success', (req, res) => {
   });
 
   passport.use(new GoogleStrategy({
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:3000/auth/google/callback",
       scope: ['profile', 'email', 'https://www.googleapis.com/auth/gmail.readonly'],
     },
@@ -172,6 +149,92 @@ app.get('/success', (req, res) => {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
+
+  app.get('/auth/twitch', (req, res) => {
+    const twitchURL = `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT}&redirect_uri=http://localhost:3000/auth/twitch/callback&response_type=code&scope=user:read:email user:read:follows`;
+    res.redirect(twitchURL);
+  });
+
+  const twitchAPI = axios.create({
+    baseURL: 'https://api.twitch.tv/helix',
+    headers: {
+      'Client-ID': process.env.TWITCH_CLIENT,
+      'Authorization': `Bearer ${access_token_twitch}`,
+    },
+  });
+
+  async function getFollowedChannel() {
+    try {
+      const userURL = 'https://api.twitch.tv/helix/users';
+      const headers = {
+        'Client-ID': process.env.TWITCH_CLIENT,
+        'Authorization': `Bearer ${access_token_twitch}`,
+      };
+
+      const response = await axios.get(userURL, { headers });
+
+      if (response.status === 200) {
+        user_id_twitch = response.data.data[0].id;
+      } else {
+        console.log("FAILED");
+      }
+
+      const reponse = await axios.create({
+        baseURL: 'https://api.twitch.tv/helix',
+        headers: {
+          'Client-ID': process.env.TWITCH_CLIENT,
+          'Authorization': `Bearer ${access_token_twitch}`,
+        },
+      }).get('/channels/followed', {
+        params: {
+          user_id: user_id_twitch,
+        },
+      });
+      counter = counter + 1;
+      return reponse.data;
+    } catch(error) {
+      console.log("ERROR GETTING FOLLOWED CHANNELS");
+      console.log(error);
+    }
+  }
+
+  app.get('/getNew', async (res, req) => {
+    const test = await getFollowedChannel();
+    if (counter === 1) {
+      recup_Total = test.total;
+    } else {
+      if (recup_Total < test.total) {
+        console.log("NOUVEAU FOLLOW");
+      } else
+        console.log("PAS DE NOUVEAU FOLLOW");
+    }
+  });
+
+  app.get('/auth/twitch/callback', (req, res) => {
+    const code = req.query.code;
+    const tokenURL = 'https://id.twitch.tv/oauth2/token';
+
+    const data = {
+      client_id: process.env.TWITCH_CLIENT,
+      client_secret: process.env.TWITCH_SECRET,
+      code,
+      grant_type: 'authorization_code',
+      redirect_uri: 'http://localhost:3000/auth/twitch/callback',
+    };
+
+    axios.post(tokenURL, data).then((response) => {
+      if (response.status === 200) {
+        access_token_twitch = response.data.access_token;
+
+        console.log("OKKK");
+        res.render('auth/successTwitch');
+      } else
+        res.redirect('/auth/error');
+    }).catch((error) => {
+      console.log("NOOOOO");
+      console.log(error);
+    });
+  });
 });
 
 // Démarrer le serveur sur le port 3000
