@@ -52,6 +52,17 @@ export default {
           scopes
         )}`;
         window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Twitch") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://id.twitch.tv/oauth2/authorize";
+        const clientId = "wvtkdzlzxnrm3yucfl9tgx7sh2oqw5";
+        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
       } else {
         this.serviceNotImplemented = true;
       }
