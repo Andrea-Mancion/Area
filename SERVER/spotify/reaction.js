@@ -18,25 +18,40 @@ async function spotify_reaction(area) { // to replace
         await createPlaylist(accessToken, reaction_Param.name, reaction_Param.description, reaction_Param.is_public);
     }
     if (reaction_Name == "add_items_to_playlist") {
-        await add_items_to_playlist(accessToken, reaction_Param.playlistId, reaction_Param.trackId);
+        await add_items_to_playlist(accessToken, reaction_Param.playlist_id, reaction_Param.track_id);
     }
-    if (reaction_Name == "addTrackToQueue") {
-        await addTrackToQueue(accessToken, reaction_Param.trackId);
+    if (reaction_Name == "add_track_to_queue") {
+        await addTrackToQueue(accessToken, reaction_Param.track_id);
     }
-    if (reaction_Name == "setVolume") {
+    if (reaction_Name == "set_volume") {
         await setVolume(accessToken, reaction_Param.volume);
     }
-    if (reaction_Name == "startSong") {
+    if (reaction_Name == "start_song") {
         await startSong(accessToken);
     }
-    if (reaction_Name == "pauseSong") {
+    if (reaction_Name == "pause_song") {
         await pauseSong(accessToken);
     }
-    if (reaction_Name == "nextSong") {
+    if (reaction_Name == "next_song") {
         nextSong(accessToken);
     }
-    if (reaction_Name == "previousSong") {
+    if (reaction_Name == "previous_song") {
         await previousSong(accessToken);
+    }
+    if (reaction_Name == "follow_playlist") {
+        await followPlaylist(accessToken, reaction_Param.playlist_id);
+    }
+    if (reaction_Name == "unfollow_playlist") {
+        await unfollowPlaylist(accessToken, reaction_Param.playlist_id);
+    }
+    if (reaction_Name == "remove_saved_track") {
+        await remove_saved_track(accessToken, reaction_Param.track_id);
+    }
+    if (reaction_Name == "save_show") {
+        await save_show(accessToken, reaction_Param.show_id);
+    }
+    if (reaction_Name == "remove_saved_show") {
+        await remove_saved_show(accessToken, reaction_Param.show_id);
     }
     return;
 }
@@ -74,12 +89,85 @@ async function createPlaylist(accessToken, name, description, is_public) {
     });
 };
 
+async function followPlaylist(accessToken, playlistId) {
+    fetch("https://api.spotify.com/v1/playlists/" + playlistId + "/followers", {
+        method: "PUT", headers: { Authorization: `Bearer ${accessToken}` }
+    }).then((result) => {
+        result.json().then((data) => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+        });
+    })
+};
+
+async function unfollowPlaylist(accessToken, playlistId) {
+    fetch("https://api.spotify.com/v1/playlists/" + playlistId + "/followers", {
+        method: "DELETE", headers: { Authorization: `Bearer ${accessToken}` }
+    }).then((result) => {
+        result.json().then((data) => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+        });
+    })
+}
 
 async function add_items_to_playlist(accessToken, playlistId, trackId) {
     fetch("https://api.spotify.com/v1/playlists/" + playlistId + "/tracks", {
         method: "POST", headers: { Authorization: `Bearer ${accessToken}` },
         body: JSON.stringify({
             "uris": [trackId]
+        })
+    }).then((result) => {
+        result.json().then((data) => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+        });
+    })
+};
+
+async function remove_saved_track(accessToken, trackId) {
+    fetch("https://api.spotify.com/v1/me/tracks", {
+        method: "DELETE", headers: { Authorization: `Bearer ${accessToken}` },
+        body: JSON.stringify({
+            "ids": [trackId]
+        })
+    }).then((result) => {
+        result.json().then((data) => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+        });
+    })
+};
+
+async function save_show(accessToken, showId) {
+    fetch("https://api.spotify.com/v1/me/shows", {
+        method: "PUT", headers: { Authorization: `Bearer ${accessToken}` },
+        body: JSON.stringify({
+            "ids": [showId]
+        })
+    }).then((result) => {
+        result.json().then((data) => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+        });
+    })
+};
+
+async function remove_saved_show(accessToken, showId) {
+    fetch("https://api.spotify.com/v1/me/shows", {
+        method: "DELETE", headers: { Authorization: `Bearer ${accessToken}` },
+        body: JSON.stringify({
+            "ids": [showId]
         })
     }).then((result) => {
         result.json().then((data) => {
