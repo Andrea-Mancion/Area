@@ -63,6 +63,50 @@ export default {
           scopes
         )}`;
         window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Yahoo") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://api.login.yahoo.com/oauth2/request_auth";
+        const clientId = process.env.YHAOO_CLIENT_ID;
+        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "GitHub") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://github.com/login/oauth/authorize";
+        const clientId = process.env.GITHUB_CLIENT_ID;
+        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Deezer") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://connect.deezer.com/oauth/auth.php";
+        const clientId = process.env.DEEZER_CLIENT_ID;
+        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Google") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://accounts.google.com/o/oauth2/auth";
+        const clientId = process.env.GOOGLE_CLIENT_ID;
+        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
       } else {
         this.serviceNotImplemented = true;
       }
