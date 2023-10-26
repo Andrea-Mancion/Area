@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:mobile_app/pages/service_page.dart';
 import 'package:mobile_app/pages/action_pages/spotify/spotify_action_page.dart';
-import 'package:mobile_app/spotify_oauth2.dart';
 import 'package:mobile_app/discord_oauth2.dart';
+import 'package:mobile_app/twitch_oauth2.dart';
+import 'package:mobile_app/yahoo_oauth2.dart';
+import 'package:mobile_app/spotify_oauth2.dart';
+import 'package:mobile_app/google_oauth2.dart';
 
-const double verticaleSpace = 60;
+const double verticalSpace = 60;
 const double horizontalSpace = 20;
 
 class IfThisPage extends StatefulWidget {
@@ -16,6 +18,7 @@ class IfThisPage extends StatefulWidget {
 
 class IfThisPageState extends State<IfThisPage> {
   final caseColor = const Color.fromRGBO(217, 217, 217, 1);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,13 +40,13 @@ class IfThisPageState extends State<IfThisPage> {
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0),
-                          )
+                          ),
                         ),
                         padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(50)),
-                        backgroundColor:MaterialStateProperty.all<Color>(caseColor),
+                        backgroundColor: MaterialStateProperty.all<Color>(caseColor),
                       ),
                       onPressed: () {
-                        function();
+                        spotifyAuthentication();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const SpotifyActionPage()),
@@ -54,7 +57,7 @@ class IfThisPageState extends State<IfThisPage> {
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,
-                      )
+                      ),
                     ),
                   ),
                   const SizedBox(width: horizontalSpace),
@@ -65,13 +68,13 @@ class IfThisPageState extends State<IfThisPage> {
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0),
-                          )
+                          ),
                         ),
                         padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(50)),
-                        backgroundColor:MaterialStateProperty.all<Color>(caseColor),
+                        backgroundColor: MaterialStateProperty.all<Color>(caseColor),
                       ),
-                        onPressed: () {
-                          Navigator.push(
+                      onPressed: () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => DiscordAuthenticationPage()),
                         );
@@ -81,14 +84,14 @@ class IfThisPageState extends State<IfThisPage> {
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,
-                      )
+                      ),
                     ),
                   ),
                 ],
-              )
+              ),
             ),
-            const SizedBox(height: verticaleSpace),
-          ]
+            const SizedBox(height: verticalSpace),
+          ],
         ),
       ),
     );

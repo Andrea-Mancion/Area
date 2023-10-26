@@ -23,7 +23,7 @@ class RegisterPageState extends State<RegisterPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://10.19.255.70:3000/register'),
+        Uri.parse('http://10.19.254.241:3000/register'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

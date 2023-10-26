@@ -5,6 +5,10 @@ class AllVariables {
   static String action = "";
   static String accessTokenSpotify = '';
   static String discordAccessToken = '';
+  static String twitchAccessToken = '';
+  static String deezerAccessToken = '';
+  static String accessTokenYahoo = '';
+  static String accessTokenGoogle = '';
   static var actionDescription = <String, dynamic>{
 
   };
