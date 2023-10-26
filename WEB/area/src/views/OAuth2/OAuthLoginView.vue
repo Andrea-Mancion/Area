@@ -29,7 +29,7 @@ export default {
         // URL d'autorisation OAuth2
         const authUrl = "https://accounts.spotify.com/authorize";
         // Votre client_id OAuth2
-        const clientId = "fdbe5e5dbe5c42b680efb3ab1d3574af";
+        const clientId = process.env.SPOTIFY_CLIENT_ID;
         // URL de redirection après l'autorisation
         const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
         // Les scopes que vous souhaitez demander (séparés par des espaces)
@@ -45,7 +45,7 @@ export default {
       if (this.serviceName == "Discord") {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://discord.com/api/oauth2/authorize";
-        const clientId = "1156974898644795393";
+        const clientId = process.env.DISCORD_CLIENT_ID;
         const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
         const scopes = "identify guilds";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
@@ -56,7 +56,7 @@ export default {
       if (this.serviceName == "Twitch") {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://id.twitch.tv/oauth2/authorize";
-        const clientId = "wvtkdzlzxnrm3yucfl9tgx7sh2oqw5";
+        const clientId = process.env.TWITCH_CLIENT_ID;
         const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
