@@ -6,25 +6,44 @@
         " current_time ": 1531680780,
         " services ": [
             {
-                " name ": " facebook ",
+                " name ": " discord ",
                 " actions ": [
                     {
-                        " name ": " new_message_in_group ",
-                        " description ": " A new message is posted in the group "
+                        " name ": " weather_hour",
+                        " description ": " Get the weather at a certain hour "
                     },
                     {
-                        " name ": " new_message_inbox ",
-                        " description ": " A new private message is received by the user "
-                    },
-                    {
-                        " name ": " new_like ",
-                        " description ": " The user gains a like from one of their messages "
+                        " name ": " weather_diff",
+                        " description ": " Get the weather difference when there is a big difference "
                     }
                 ],
                 " reactions ": [
                     {
-                        " name ": " like_message ",
-                        " description ": " The user likes a message "
+                        " name ": " list_message ",
+                        " description ": " list all the message in a channel "
+                    },
+                    {
+                        " name ": " send_message ",
+                        " description ": " send a message in a channel "
+                    },
+                    {
+                        " name ": "send_weather",
+                        " description ": " send the weather in a channel "
+                    }
+                ]
+            },
+            {
+                " name ": " twitch ",
+                " actions ": [
+                    {
+                        " name ": " new_follow ",
+                        " description ": " The user follow a new channel "
+                    }
+                ],
+                " reactions ": [
+                    {
+                        " name ": " send_notif ",
+                        " description ": " send a message by mail "
                     }
                 ]
             }
