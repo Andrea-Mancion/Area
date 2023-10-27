@@ -91,9 +91,49 @@ export default new Vuex.Store({
           },
         },
       },
-      Gmail: {
-        Name: 'Gmail',
-        ImageLink: 'https://f.hellowork.com/blogdumoderateur/2019/03/gmail-logo-1200x758.jpg',
+      Deezer: {
+        Name: 'Deezer',
+        ImageLink: 'https://assets.stickpng.com/images/6297981ce01809629f11358d.png',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+        },
+        Reactions: {
+        },
+      },
+      GitHub: {
+        Name: 'GitHub',
+        ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Font_Awesome_5_brands_github.svg/1200px-Font_Awesome_5_brands_github.svg.png',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+        },
+        Reactions: {
+        },
+      },
+      Yahoo: {
+        Name: 'Yahoo',
+        ImageLink: 'https://s.yimg.com/cv/apiv2/social/images/yahoo_default_logo.png',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+        },
+        Reactions: {
+        },
+      },
+      Twitch: {
+        Name: 'Twitch',
+        ImageLink: 'https://play-lh.googleusercontent.com/QLQzL-MXtxKEDlbhrQCDw-REiDsA9glUH4m16syfar_KVLRXlzOhN7tmAceiPerv4Jg',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+        },
+        Reactions: {
+        },
+      },
+      Google: {
+        Name: 'Google',
+        ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {

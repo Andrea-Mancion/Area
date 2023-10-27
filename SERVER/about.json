@@ -6,6 +6,111 @@
         " current_time ": 1531680780,
         " services ": [
             {
+                " name ": " spotify ",
+                " actions ": [
+                    {
+                        " name ": "check_new_saved_track",
+                        " description ": " Check if a new song was saved",
+                        " parametter ": []
+                    },
+                    {
+                        " name ": "check_new_episode",
+                        " description ": " Check if there is a new episode in the given show",
+                        " parametter ": [
+                            "show_id"
+                        ]
+                    }
+                ],
+                " reactions ": [
+                    {
+                        " name ": "createPlaylist",
+                        " description ": " Create a playlist with the given name, the given description and if it's public or not ",
+                        " parametter ": [
+                            "name",
+                            "description",
+                            "is_public"
+                        ]
+                    },
+                    {
+                        " name ": "add_items_to_playlist",
+                        " description ": " add the given music to the given playlist ",
+                        " parametter ": [
+                            "playlist_id",
+                            "track_id"
+                        ]
+                    },
+                    {
+                        " name ": "add_track_to_queue",
+                        " description ": " add the given track to the list of the music in the player (premium only) ",
+                        " parametter ": [
+                            "track_id"
+                        ]
+                    },
+                    {
+                        " name ": "set_volume",
+                        " description ": " set the volume in the player with the given value (premium only) ",
+                        " parametter ": [
+                            "volume"
+                        ]
+                    },
+                    {
+                        " name ": "start_song",
+                        " description ": " start the current song in the queue (premium only) ",
+                        " parametter ": []
+                    },
+                    {
+                        " name ": "pause_song",
+                        " description ": " pause the current song in the queue (premium only) ",
+                        " parametter ": []
+                    },
+                    {
+                        " name ": "next_song",
+                        " description ": " launch the next song in the queue (premium only) ",
+                        " parametter ": []
+                    },
+                    {
+                        " name ": "previous_song",
+                        " description ": " launch the previous song in the queue (premium only) ",
+                        " parametter ": []
+                    },
+                    {
+                        " name ": "follow_playlist",
+                        " description ": " follow the given playlist ",
+                        " parametter ": [
+                            "playlist_id"
+                        ]
+                    },
+                    {
+                        " name ": "unfollow_playlist",
+                        " description ": " unfollow the given playlist ",
+                        " parametter ": [
+                            "playlist_id"
+                        ]
+                    },
+                    {
+                        " name ": "remove_saved_track",
+                        " description ": " remove given track ",
+                        " parametter ": [
+                            "track_id"
+                        ]
+                    },
+                    {
+                        " name ": "save_show",
+                        " description ": " save given show ",
+                        " parametter ": [
+                            "show_id"
+                        ]
+                    },
+                    {
+                        " name ": "remove_saved_show",
+                        " description ": " remove given saved show ",
+                        " parametter ": [
+                            "show_id"
+                        ]
+                    }
+                ]
+            },
+            {
                 " name ": " discord ",
                 " actions ": [
                     {
