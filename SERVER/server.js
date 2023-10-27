@@ -248,12 +248,12 @@ app.post('/create_action', (req, res) => {
   console.log(area);
   addNewVariables();
   if (!verify_variable(newAreaObject)) {
-    res.status(400).json({ error: 'Error creating action' });
+    res.status(500).json({ error: 'Error creating action' });
     return;
   }
   setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
-
+  res.sendStatus(200);
   /*
     pool.connect()
       .then(client => {

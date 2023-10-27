@@ -1,4 +1,4 @@
-const BotClient = require('./myBot.js');
+const BotClient = require('../myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
@@ -19,36 +19,18 @@ async function callActionDiscord(area) {
 }
 
 function sendWeatherHour(hourContent) {
-  cron.schedule(hourContent.message, () => {
-    const city = 'rennes';
-    const apiKey = process.env.WEATHER_API_KEY;
+  const currentDate = new Date();
+  const timeParts = hourContent.hours.match(/^(\d+) (\d+)/);
 
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`).then(response => {
-      const weatherData = response.data;
-      const temp = Math.round(weatherData.main.temp - 273.15);
-      const condition = weatherData.weather[0].description;
+  if (timeParts) {
+    const minutes = parseInt(timeParts[1], 10);
+    const hours = parseInt(timeParts[2], 10);
 
-      const weatherMessage = `Weather in ${city}: ${temp} degrees Celcius, ${condition}`;
-      const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
-
-      if (channel && channel.isTextBased()) {
-        channel.send(weatherMessage).then(() => {
-          console.log("Message sent");
-        }).catch(error => {
-          console.error("Error: " + error);
-          return false;
-        });
-      } else
-        console.log("I don't have the channel");
-        return false;
-    }).catch(error => {
-      console.error("Error: " + error);
+    if (currentDate.getHours() + 2 === hours && currentDate.getMinutes() === minutes) {
+      return true;
+    } else
       return false;
-    });
-  }, {
-    timezone: "Europe/Paris"
-  });
-  return true;
+  }
 }
 
 function checkWeatherDiff() {
@@ -90,7 +72,7 @@ function checkWeatherDiff() {
     return true;
 }
 
-function sendWeatherDiff() {
+function weatherDiff() {
   cron.schedule('*/30 * * * *', checkWeatherDiff, {
     timezone: "Europe/Paris"
   });

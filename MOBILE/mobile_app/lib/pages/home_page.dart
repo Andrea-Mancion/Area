@@ -8,18 +8,17 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-const double _verticalSpacing = 20;
-const double _horizontalSpacing = 30;
-const double _buttonWidth = 130;
-const double _buttonHeight = 130;
 const Color _buttonColor = Color.fromRGBO(217, 217, 217, 1);
-const String _buttonText = "Créer un service";
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    List<String> tmp = AllVariables.getTask();
-    if (tmp[0] == "") {
-      tmp[0] = _buttonText;
+    void suppButton(index) {
+      setState(() {
+        AllVariables.tasks.removeAt(index);
+        AllVariables.nbTask--;
+        Navigator.pop(context);
+        AllVariables.taskIndex--;
+      });
     }
     return Scaffold(
       appBar: AppBar(title:
@@ -27,121 +26,69 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          Row(
-            children: [
-              const SizedBox(width: 30),
-              SizedBox(
-                width: _buttonWidth,
-                height: _buttonHeight,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(_buttonColor),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)
-                      )
-                    )
+          Expanded(
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(_buttonColor),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0)
+                            )
+                          )
+                        ),
+                        onPressed: () => {
+                          if (AllVariables.tasks[index] == AllVariables.createNewTask || AllVariables.tasks[index] == AllVariables.createTask) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const CreateTaskPage()),
+                            )
+                          }
+                        },
+                        onLongPress: () {
+                          if (index == AllVariables.nbTask - 1) {
+                            return;
+                          }
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text("Supprimer cette tâche ?"),
+                              content: Text("Etes-vous sur de vouloir supprimer cette tâche ?\n\n${AllVariables.tasks[index]}"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    suppButton(index);
+                                  },
+                                  child: const Text("OK"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Cancel"),
+                                ),
+                              ]
+                            )
+                          );
+                        },
+                        child: Text(AllVariables.tasks[index].toString()),
+                      );
+                    },
+                    childCount: AllVariables.nbTask,
                   ),
-                  onPressed: () => print(AllVariables.tasks[0]),
-                  child: Text(tmp[0]),
-                ),
-              ),
-              const SizedBox(width: _horizontalSpacing),
-              SizedBox(
-                width: _buttonWidth,
-                height: _buttonHeight,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(_buttonColor),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)
-                      )
-                    )
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200.0,
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 10.0,
+                    childAspectRatio: 1.0,
                   ),
-                  onPressed: () => print(_buttonText),
-                  child: const Text(_buttonText),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: _verticalSpacing),
-          Row(
-            children: [
-              const SizedBox(width: 30),
-              SizedBox(
-                width: _buttonWidth,
-                height: _buttonHeight,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(_buttonColor),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)
-                      )
-                    )
-                  ),
-                  onPressed: () => print(_buttonText),
-                  child: const Text(_buttonText),
-                ),
-              ),
-              const SizedBox(width: _horizontalSpacing),
-              SizedBox(
-                width: _buttonWidth,
-                height: _buttonHeight,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(_buttonColor),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)
-                      )
-                    )
-                  ),
-                  onPressed: () => print(_buttonText),
-                  child: const Text(_buttonText),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: _verticalSpacing),
-          Row(
-            children: [
-              const SizedBox(width: 30),
-              SizedBox(
-                width: _buttonWidth,
-                height: _buttonHeight,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(_buttonColor),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)
-                      )
-                    )
-                  ),
-                  onPressed: () => print(_buttonText),
-                  child: const Text(_buttonText),
-                ),
-              ),
-              const SizedBox(width: _horizontalSpacing),
-              SizedBox(
-                width: _buttonWidth,
-                height: _buttonHeight,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(_buttonColor),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)
-                      )
-                    )
-                  ),
-                  onPressed: () => print(_buttonText),
-                  child: const Text(_buttonText),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 80),
           SizedBox(
@@ -162,9 +109,10 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => const CreateTaskPage()),
                 );
               },
-              child: const Text("Crée une tâche"),
+              child: Text(AllVariables.createTask),
             ),
-          )
+          ),
+          const SizedBox(height: 80),
         ],
       )
     );

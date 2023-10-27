@@ -1,8 +1,9 @@
-const BotClient = require('./myBot.js');
+const BotClient = require('../myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
+const fs = require('fs');
 require('dotenv').config();
 
 async function callReactionDiscord(area) {
@@ -27,7 +28,7 @@ function listMessage() {
           author: message.author.tag,
           content: message.content,
         }));
-        res.json(messagesArray);
+        fs.writeFileSync('messages.json', JSON.stringify(messagesArray));
       }).catch(error => {
         console.error("Error: " + error);
       });
