@@ -1,5 +1,5 @@
 {
-    "name": "spotify ",
+    "name": "spotify",
     "actions": [
         {
             "name": "check_new_saved_track",
@@ -17,7 +17,7 @@
     "reactions": [
         {
             "name": "createPlaylist",
-            "description": "Create a playlist with the given name, the given description and if it's public or not ",
+            "description": "Create a playlist with the given name, the given description and if it's public or not",
             "parametter": [
                 "name",
                 "description",
@@ -26,7 +26,7 @@
         },
         {
             "name": "add_items_to_playlist",
-            "description": "add the given music to the given playlist ",
+            "description": "add the given music to the given playlist",
             "parametter": [
                 "playlist_id",
                 "track_id"
@@ -34,69 +34,69 @@
         },
         {
             "name": "add_track_to_queue",
-            "description": "add the given track to the list of the music in the player (premium only) ",
+            "description": "add the given track to the list of the music in the player (premium only)",
             "parametter": [
                 "track_id"
             ]
         },
         {
             "name": "set_volume",
-            "description": "set the volume in the player with the given value (premium only) ",
+            "description": "set the volume in the player with the given value (premium only)",
             "parametter": [
                 "volume"
             ]
         },
         {
             "name": "start_song",
-            "description": "start the current song in the queue (premium only) ",
+            "description": "start the current song in the queue (premium only)",
             "parametter": []
         },
         {
             "name": "pause_song",
-            "description": "pause the current song in the queue (premium only) ",
+            "description": "pause the current song in the queue (premium only)",
             "parametter": []
         },
         {
             "name": "next_song",
-            "description": "launch the next song in the queue (premium only) ",
+            "description": "launch the next song in the queue (premium only)",
             "parametter": []
         },
         {
             "name": "previous_song",
-            "description": "launch the previous song in the queue (premium only) ",
+            "description": "launch the previous song in the queue (premium only)",
             "parametter": []
         },
         {
             "name": "follow_playlist",
-            "description": "follow the given playlist ",
+            "description": "follow the given playlist",
             "parametter": [
                 "playlist_id"
             ]
         },
         {
             "name": "unfollow_playlist",
-            "description": "unfollow the given playlist ",
+            "description": "unfollow the given playlist",
             "parametter": [
                 "playlist_id"
             ]
         },
         {
             "name": "remove_saved_track",
-            "description": "remove given track ",
+            "description": "remove given track",
             "parametter": [
                 "track_id"
             ]
         },
         {
             "name": "save_show",
-            "description": "save given show ",
+            "description": "save given show",
             "parametter": [
                 "show_id"
             ]
         },
         {
             "name": "remove_saved_show",
-            "description": "remove given saved show ",
+            "description": "remove given saved show",
             "parametter": [
                 "show_id"
             ]
