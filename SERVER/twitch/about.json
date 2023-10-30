@@ -1,0 +1,21 @@
+{
+    "name": "twitch",
+    "actions": [
+        {
+            "name": "check_new_follow",
+            "description": "Check if we follow a new channel",
+            "parametter": [
+                "access_token"
+            ]
+        }
+    ],
+    "reactions": [
+        {
+            "name": "send_mail",
+            "description": "send a mail to a specific mail address",
+            "parametter": [
+                "message"
+            ]
+        }
+    ]
+}
