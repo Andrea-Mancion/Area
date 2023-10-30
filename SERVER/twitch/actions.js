@@ -55,6 +55,7 @@ async function check_new_follow(areaContent) {
     } else {
         if (recup_Total < test.total) {
             console.log("NOUVEAU FOLLOW");
+            recup_Total = test.total;
         } else
             console.log("PAS DE NOUVEAU FOLLOW");
     }

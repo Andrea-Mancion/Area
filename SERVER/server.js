@@ -94,6 +94,39 @@ app.post('/login', (req, res) => {
     });
 });
 
+async function checkNewFollow() {
+  try {
+    const response = await axios.get(`https://api.twitch.tv/helix/users?login=ferius19`, {
+      headers: {
+        'Client-ID': process.env.TWITCH_CLIENT,
+      },
+    });
+
+    if (response.status === 200) {
+      broadcast_id = response.data.data[0].id;
+      console.log("BROADCAST: " + broadcast_id);
+    } else
+      console.log("FAILED");
+
+    const reponse = await axios.create({
+      baseURL: 'https://api.twitch.tv/helix',
+      headers: {
+        'Client-ID': process.env.TWITCH_CLIENT,
+        'Authorization': `Bearer ${access_token_twitch}`,
+      },
+    }).get('/channels/followers', {
+      param: {
+        broadcaster_id: broadcast_id,
+      },
+    });
+    counter = counter + 1;
+    return reponse.data;
+  } catch (error) {
+    console.log("ERROR GETTING FOLLOWERS CHANNELS");
+    console.log(error);
+  }
+}
+
 
 // Page de succès (vous pouvez créer cette page selon vos besoins)
 app.get('/success', (req, res) => {
@@ -108,8 +141,9 @@ app.get('/success', (req, res) => {
   var my_access_token
   var my_refresh_token
   var access_token_twitch;
-  var user_id_twitch;
   var recup_Total;
+  var broadcast_id;
+  var counter = 0;
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -159,36 +193,49 @@ app.get('/success', (req, res) => {
     'Twitch': callReactionTwitch,
   }
 
-  // app.get('/auth/twitch', (req, res) => {
-  //   const twitchURL = `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT}&redirect_uri=http://localhost:3000/auth/twitch/callback&response_type=code&scope=user:read:email user:read:follows`;
-  //   res.redirect(twitchURL);
-  // });
+  app.get('/auth/twitch', (req, res) => {
+    const twitchURL = `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT}&redirect_uri=http://localhost:3000/auth/twitch/callback&response_type=code&scope=user:read:email user:read:follows moderator:read:followers`;
+    res.redirect(twitchURL);
+  });
 
-  // app.get('/auth/twitch/callback', (req, res) => {
-  //   const code = req.query.code;
-  //   const tokenURL = 'https://id.twitch.tv/oauth2/token';
+  app.get('/auth/twitch/callback', (req, res) => {
+    const code = req.query.code;
+    const tokenURL = 'https://id.twitch.tv/oauth2/token';
 
-  //   const data = {
-  //     client_id: process.env.TWITCH_CLIENT,
-  //     client_secret: process.env.TWITCH_SECRET,
-  //     code,
-  //     grant_type: 'authorization_code',
-  //     redirect_uri: 'http://localhost:3000/auth/twitch/callback',
-  //   };
+    const data = {
+      client_id: process.env.TWITCH_CLIENT,
+      client_secret: process.env.TWITCH_SECRET,
+      code,
+      grant_type: 'authorization_code',
+      redirect_uri: 'http://localhost:3000/auth/twitch/callback',
+    };
 
-  //   axios.post(tokenURL, data).then((response) => {
-  //     if (response.status === 200) {
-  //       access_token_twitch = response.data.access_token;
+    axios.post(tokenURL, data).then((response) => {
+      if (response.status === 200) {
+        access_token_twitch = response.data.access_token;
 
-  //       console.log("OKKK");
-  //       res.render('auth/successTwitch');
-  //     } else
-  //       res.redirect('/auth/error');
-  //   }).catch((error) => {
-  //     console.log("NOOOOO");
-  //     console.log(error);
-  //   });
-  // });
+        console.log("OKKK");
+        res.render('auth/successTwitch');
+      } else
+        res.redirect('/auth/error');
+    }).catch((error) => {
+      console.log("NOOOOO");
+      console.log(error);
+    });
+  });
+
+  app.get('/getNew', async (req, res) => {
+    const test = await checkNewFollow();
+    if (counter === 1)
+      recup_Total = test.total;
+    else {
+      if (recup_Total < test.total) {
+        console.log("NOUVEAU FOLLOWING");
+        recup_Total = test.total;
+      } else
+        console.log("PAS DE NOUVEAU FOLLOWING");
+    }
+  });
 });
 
 // Démarrer le serveur sur le port 3000
