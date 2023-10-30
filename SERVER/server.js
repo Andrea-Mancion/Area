@@ -21,6 +21,9 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 // Middleware pour gérer les données POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+var access_token_twitch;
+var counter = 0;
+var broadcast_id;
 
 // Route pour l'inscription (register)
 app.get('/register', (req, res) => {
@@ -94,40 +97,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-async function checkNewFollow() {
-  try {
-    const response = await axios.get(`https://api.twitch.tv/helix/users?login=ferius19`, {
-      headers: {
-        'Client-ID': process.env.TWITCH_CLIENT,
-      },
-    });
-
-    if (response.status === 200) {
-      broadcast_id = response.data.data[0].id;
-      console.log("BROADCAST: " + broadcast_id);
-    } else
-      console.log("FAILED");
-
-    const reponse = await axios.create({
-      baseURL: 'https://api.twitch.tv/helix',
-      headers: {
-        'Client-ID': process.env.TWITCH_CLIENT,
-        'Authorization': `Bearer ${access_token_twitch}`,
-      },
-    }).get('/channels/followers', {
-      param: {
-        broadcaster_id: broadcast_id,
-      },
-    });
-    counter = counter + 1;
-    return reponse.data;
-  } catch (error) {
-    console.log("ERROR GETTING FOLLOWERS CHANNELS");
-    console.log(error);
-  }
-}
-
-
 // Page de succès (vous pouvez créer cette page selon vos besoins)
 app.get('/success', (req, res) => {
   app.use(session({
@@ -140,10 +109,7 @@ app.get('/success', (req, res) => {
   var userProfile;
   var my_access_token
   var my_refresh_token
-  var access_token_twitch;
   var recup_Total;
-  var broadcast_id;
-  var counter = 0;
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -225,16 +191,7 @@ app.get('/success', (req, res) => {
   });
 
   app.get('/getNew', async (req, res) => {
-    const test = await checkNewFollow();
-    if (counter === 1)
-      recup_Total = test.total;
-    else {
-      if (recup_Total < test.total) {
-        console.log("NOUVEAU FOLLOWING");
-        recup_Total = test.total;
-      } else
-        console.log("PAS DE NOUVEAU FOLLOWING");
-    }
+    console.log("GET NEW");
   });
 });
 
