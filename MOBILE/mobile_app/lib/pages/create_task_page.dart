@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/home_page.dart';
-import 'package:mobile_app/pages/if_this_page.dart';
-import 'package:mobile_app/pages/then_that_page.dart';
+import 'package:mobile_app/pages/all_service_page.dart';
+// import 'package:mobile_app/pages/then_that_page.dart';
 import 'package:mobile_app/variable.dart';
 import 'package:mobile_app/send_information_to_server.dart';
 
@@ -15,6 +15,7 @@ class CreateTaskPage extends StatefulWidget {
 class _CreateTaskPageState extends State<CreateTaskPage> {
   String whatPrintIf = "";
   String whatPrintThen = "";
+
   @override
   Widget build(BuildContext context) {
     if (AllVariables.action == "") {
@@ -51,7 +52,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const IfThisPage()),
+                      MaterialPageRoute(builder: (context) => AllServicePage(isAction: true)),
                     );
                   },
                   child: Text("Si \"$whatPrintIf\"",
@@ -80,7 +81,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ThenThatPage()),
+                      MaterialPageRoute(builder: (context) => AllServicePage(isAction: false)),
                     );
                   },
                   child: Text("Fais \"$whatPrintThen\"",
