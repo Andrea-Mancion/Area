@@ -31,7 +31,7 @@ class _SpotifyActionPageState extends State<SpotifyActionPage> {
                 color: const Color.fromRGBO(30, 215, 96, 1),
                 child: Center(
                   child: Image.asset(
-                    'assets/images/spotify.png.png',
+                    AllVariables.imageSpotify,
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
