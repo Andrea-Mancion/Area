@@ -21,6 +21,13 @@
             "parametter": [
                 "access_token"
             ]
+        },
+        {
+            "name": "get_video",
+            "description": "Get if il y a une nouvelle video",
+            "parametter": [
+                "access_token"
+            ]
         }
     ],
     "reactions": [

@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 var access_token_twitch;
 var counter = 0;
+var user_id;
 var broadcast_id;
 
 // Route pour l'inscription (register)
