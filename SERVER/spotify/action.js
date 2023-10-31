@@ -39,7 +39,7 @@ async function callActionSpotify(area, nbReact, reaction_map) {
         }
     }
     if (action_Name == "check_new_episode") {
-        const newEpisode = await checkNewEpisode(area.action_access_token, area.action_Param);
+        const newEpisode = await checkNewEpisode(area.action_access_token, area.action_Param.show_id);
         if (newEpisode) {
             await reaction_map[area.reaction_service_Name](area);
         }
