@@ -4,6 +4,8 @@ import 'package:mobile_app/pages/all_service_page.dart';
 // import 'package:mobile_app/pages/then_that_page.dart';
 import 'package:mobile_app/variable.dart';
 import 'package:mobile_app/send_information_to_server.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CreateTaskPage extends StatefulWidget {
   const CreateTaskPage({super.key});
@@ -16,8 +18,22 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   String whatPrintIf = "";
   String whatPrintThen = "";
 
+  void getAllAction() async{
+    final response = await http.get(
+      Uri.parse("http://10.19.255.75:3000/about.json)"),
+    );
+    if (response.statusCode == 200) {
+      print('GET request successful');
+    } else {
+      print('GET request failed with status: ${response.statusCode}');
+    }
+    final reponse = jsonDecode(response.body);
+    print("aee =  ${reponse.body}");
+  }
+
   @override
   Widget build(BuildContext context) {
+    getAllAction();
     if (AllVariables.action == "") {
       whatPrintIf = "...";
     } else {

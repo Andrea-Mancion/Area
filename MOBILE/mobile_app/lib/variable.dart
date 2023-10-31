@@ -22,6 +22,7 @@ class AllVariables {
   static const String spotifyAction3 = "test";
   static const String spotifyAction4 = "test";
   static const String spotifyAction5 = "Merci Aurélien et Antoine";
+  static const String spotifyAction6 = "c'est l'anniv d'andrea";
   static const String spotifyReaction1 = "Add Items To Playlist";
   static const String spotifyReaction2 = "Créer une playlist";
   static const String discordAction1 = "météo_heure";
@@ -45,7 +46,7 @@ class AllVariables {
   static String imageSpotify = "assets/images/Logo_Spotify.png";
   static String imageTwitch = "assets/images/Logo_Twitch.png";
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
-  static List<String> spotifyAction = [spotifyAction1, spotifyAction2, spotifyAction3, spotifyAction4, spotifyAction5];
+  static List<String> spotifyAction = [spotifyAction1, spotifyAction2, spotifyAction3, spotifyAction4, spotifyAction5, spotifyAction6];
   static List<String> spotifyReaction = [spotifyReaction1, spotifyReaction2];
   static List<String> deezerAction = [];
   static List<String> deezerReaction = [];
@@ -76,4 +77,6 @@ class Service {
   String image = '';
   List<String> allAction = [];
   List<String> allReaction = [];
+  List<String> actionParameters = [];
+  List<String> reactionParameters = [];
 }
