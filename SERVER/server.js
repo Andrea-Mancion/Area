@@ -12,6 +12,7 @@ const cors = require('cors');
 const { verify } = require('crypto');
 let { callActionDiscord } = require('./discord/actions.js');
 const { callReactionDiscord } = require('./discord/reactions.js');
+const { callActionGithub } = require('./github/actions.js');
 const BotClient = require('./discord/myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
@@ -112,7 +113,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-
 // Page de succès (vous pouvez créer cette page selon vos besoins)
 app.get('/success', (req, res) => {
   app.use(session({
@@ -184,6 +184,7 @@ app.get('/success', (req, res) => {
 const action_map = {
   'Spotify': callActionSpotify,
   'Discord': callActionDiscord,
+  'Github': callActionGithub,
 }
 
 const reaction_map = {
