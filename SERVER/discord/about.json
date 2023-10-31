@@ -1,0 +1,36 @@
+{
+    "name": "discord",
+    "actions": [
+        {
+            "name": "weather_hour",
+            "description": "Get the weather at a certain hour",
+            "parametter": [
+                "hours"
+            ]
+        },
+        {
+            "name": "weather_diff",
+            "description": "Get the weather difference when there is a big difference",
+            "parametter": []
+        }
+    ],
+    "reactions": [
+        {
+            "name": "list_message",
+            "description": "list all the message in a channel",
+            "parametter": []
+        },
+        {
+            "name": "send_message",
+            "description": "send a message in a channel",
+            "parametter": [
+                "message"
+            ]
+        },
+        {
+            "name": "send_weather",
+            "description": "send the weather in a channel",
+            "parametter": []
+        }
+    ]
+}

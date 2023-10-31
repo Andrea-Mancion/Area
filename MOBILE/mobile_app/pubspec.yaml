@@ -39,6 +39,8 @@ dependencies:
   flutter_web_auth: any
   webview_flutter: any
   webview_flutter_android: any
+  url_launcher: any
+  crypto: any
 
 dev_dependencies:
   flutter_test:

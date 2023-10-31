@@ -4,6 +4,7 @@ class AllVariables {
   static String reaction = "";
   static String action = "";
   static String accessTokenSpotify = '';
+  static String discordAccessToken = '';
   static var actionDescription = <String, dynamic>{
 
   };
@@ -23,6 +24,8 @@ class AllVariables {
   static const String spotifyAction5 = "Merci Aurélien et Antoine";
   static const String spotifyReaction1 = "Add Items To Playlist";
   static const String spotifyReaction2 = "Créer une playlist";
+  static const String discordAction1 = "météo_heure";
+  static const String discordAction2 = "La météo change";
   static final TextEditingController spotifyCreatePlaylistReactionName = TextEditingController();
   static final TextEditingController spotifyCreatePlaylistReactionDescription = TextEditingController();
   static final TextEditingController spotifyCreatePlaylistReactionPrivate = TextEditingController();

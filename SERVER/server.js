@@ -6,12 +6,22 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-let { callAction, spotifyVariables, nbreact, addNewVariables } = require('./spotify/action.js');
+let { callActionSpotify, addNewVariables, nbreact } = require('./spotify/action.js');
+const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
+const { verify } = require('crypto');
+let { callActionDiscord } = require('./discord/actions.js');
+const { callReactionDiscord } = require('./discord/reactions.js');
+const BotClient = require('./discord/myBot.js');
+const DiscordStrategy = require('passport-discord').Strategy;
+const axios = require('axios');
+const cron = require('node-cron');
+const { time } = require('console');
+require('dotenv').config();
+const fs = require('fs');
 
-const GOOGLE_CLIENT_ID = '444052914844-03578lm9fm3qvk5g9od06b089ebepgiq.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
 var userProfile;
+let previousWeatherData = null;
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +32,6 @@ app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les 
 // Middleware pour gérer les données POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 let area = [];
 // Route pour l'inscription (register)
 app.get('/register', (req, res) => {
@@ -130,8 +139,8 @@ app.get('/success', (req, res) => {
   });
 
   passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3000/auth/google/callback"
   },
     function (accessToken, refreshToken, profile, done) {
@@ -142,6 +151,17 @@ app.get('/success', (req, res) => {
     }
   ));
 
+  // passport.use(new DiscordStrategy({
+  //     clientID: process.env.DISCORD_CLIENT_ID,
+  //     clientSecret: process.env.DISCORD_CLIENT_SECRET,
+  //     callbackURL: "http://localhost:3000/auth/discord/callback",
+  //     scope: ['identify', 'guilds']
+  //   },
+  //   function(accessToken, refreshToken, profile, done) {
+  //     return done(null, profile);
+  //   }
+  // ));
+
   app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 
@@ -151,34 +171,110 @@ app.get('/success', (req, res) => {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
+
+  // app.get('/auth/discord', passport.authenticate('discord'));
+
+  // app.get('/auth/discord/callback',
+  //   passport.authenticate('discord', { failureRedirect: '/auth/error' }),
+  //   function(req, res) {
+  //     res.redirect('/messages');
+  //   });
 });
+
+const action_map = {
+  'Spotify': callActionSpotify,
+  'Discord': callActionDiscord,
+}
+
+const reaction_map = {
+  'Spotify': spotify_reaction,
+  'Discord': callReactionDiscord,
+}
+
+app.get("/about.json", (req, res) => {
+  services = [];
+  //check all folder to see if there is a about.json file and if there is, add it to the array
+  fs.readdirSync('./').forEach(file => {
+    if (fs.existsSync('./' + file + '/about.json')) {
+      services.push(require('./' + file + '/about.json'));
+    }
+  });
+  // host_ip  indicates the IP address of the client performing the HTTP request
+  host_ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
+  about = {
+    "client": {
+      "host": host_ip,
+    },
+    "server": {
+      "current_time": Date.now(),
+      "services": services
+    }
+  };
+  res.send(about);
+});
+
+function verify_variable(area) {
+  if (area.length == 0) {
+    console.log("size");
+    return false;
+  }
+  if (area.action_service_Name == "" || area.reaction_service_Name == "" || area.action_Name == "" || area.reaction_Param == "" || area.access_token == "" || area.user_id == "") {
+    if (area.action_service_Name == "") {
+      console.log("action_service_Name");
+    }
+    if (area.reaction_service_Name == "") {
+      console.log("reaction_service_Name");
+    }
+    if (area.action_Name == "") {
+      console.log("action_Name");
+    }
+    if (area.reaction_Param == "") {
+      console.log("reaction_Param");
+    }
+    if (area.access_token == "") {
+      console.log("access_token");
+    }
+    if (area.user_id == "") {
+      console.log("user_id");
+    }
+    return false;
+  }
+  return true;
+}
 
 app.post('/create_action', (req, res) => {
   const {
-    service_Name,
+    action_service_Name,
+    reaction_service_Name,
     action_Name,
     reaction_Name,
     action_Param,
     reaction_Param,
-    access_token,
+    action_access_token,
+    reaction_access_token,
     user_id
   } = req.body;
 
   // Créez un nouvel objet pour chaque entrée et ajoutez-le au tableau
   const newAreaObject = {
-    service_Name,
+    action_service_Name,
+    reaction_service_Name,
     action_Name,
     reaction_Name,
     action_Param,
     reaction_Param,
-    access_token,
+    action_access_token,
+    reaction_access_token,
     user_id
   };
   area.push(newAreaObject);
-  // spotifyVariables.push(newAreaObject);
+  console.log(area);
   addNewVariables();
-  x = spotifyVariables.length - 1;
-  setInterval(() => callAction(newAreaObject, x), 3000);
+  if (!verify_variable(newAreaObject)) {
+    res.status(400).json({ error: 'Error creating action' });
+    return;
+  }
+  setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
 
   /*

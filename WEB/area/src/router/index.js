@@ -2,13 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import ActionReactionView from '../views/ActionReactionView.vue'
+import ActionReactionView from '../views/ActionReaction/ActionReactionView.vue'
 import ServiceView from '../views/ServiceView.vue'
-import ActionApplicationListView from '../views/ActionApplicationListView.vue'
-import ReactionApplicationListView from '../views/ReactionApplicationListView.vue'
+import ActionServiceListView from '../views/ActionReaction/Action/ActionServiceListView.vue'
+import ActionListView from '../views/ActionReaction/Action/ActionListView.vue'
+import ActionParamsView from '../views/ActionReaction/Action/ActionParamsView.vue'
+import ReactionServiceListView from '../views/ActionReaction/Reaction/ReactionServiceListView.vue'
+import ReactionListView from '../views/ActionReaction/Reaction/ReactionListView.vue'
+import ReactionParamsView from '../views/ActionReaction/Reaction/ReactionParamsView.vue'
 import SignInView from '../views/SignInView.vue'
-import OAuthLogin from '../components/OAuthLogin.vue'
-import OAuthCallback from '../components/OAuthCallback.vue'
+import OAuthLogin from '../views/OAuth2/OAuthLoginView.vue'
+import OAuthCallback from '../views/OAuth2/OAuthCallbackView.vue'
 
 Vue.use(VueRouter)
 
@@ -34,14 +38,38 @@ const routes = [
     component: ServiceView,
   },
   {
-    path: '/action-application-list',
-    name: 'action-application-list',
-    component: ActionApplicationListView,
+    path: '/action-service-list',
+    name: 'action-service-list',
+    component: ActionServiceListView,
   },
   {
-    path: '/reaction-application-list',
-    name: 'reaction-application-list',
-    component: ReactionApplicationListView,
+    path: '/action-list',
+    name: 'action-list',
+    component: ActionListView,
+    props: true,
+  },
+  {
+    path: '/action-params',
+    name: 'action-params',
+    component: ActionParamsView,
+    props: true,
+  },
+  {
+    path: '/reaction-service-list',
+    name: 'reaction-service-list',
+    component: ReactionServiceListView,
+  },
+  {
+    path: '/reaction-list',
+    name: 'reaction-list',
+    component: ReactionListView,
+    props: true,
+  },
+  {
+    path: '/reaction-params',
+    name: 'reaction-params',
+    component: ReactionParamsView,
+    props: true,
   },
   {
     path: '/sign-in',
@@ -50,7 +78,7 @@ const routes = [
   },
   {
     path: '/oauth-login',
-    name: 'oauth-logi',
+    name: 'oauth-login',
     component: OAuthLogin
   },
   {
