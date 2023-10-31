@@ -191,7 +191,7 @@ app.get('/success', (req, res) => {
   });
 
   app.get('/getNew', async (req, res) => {
-    console.log("GET NEW");
+    console.log("OKLKKKKNBGFJVHKCT");
   });
 });
 

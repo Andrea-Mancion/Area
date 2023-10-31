@@ -14,6 +14,13 @@
             "parametter": [
                 "access_token"
             ]
+        },
+        {
+            "name": "get_schedule",
+            "description": "Get le calendrier d'un streamer",
+            "parametter": [
+                "access_token"
+            ]
         }
     ],
     "reactions": [

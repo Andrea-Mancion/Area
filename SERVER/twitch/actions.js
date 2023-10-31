@@ -6,6 +6,7 @@ var counter = 0;
 var counter_twitch = 0;
 var recup_Total;
 var broadcast_id;
+var broadcast_id_schedule;
 var recup_Total_twitch;
 
 async function callActionTwitch(area) {
@@ -16,6 +17,10 @@ async function callActionTwitch(area) {
     }
     if (action_Name == "check_new_followers") {
         if (check_new_followers(area.action_Param))
+            await callReactionTwitch(area);
+    }
+    if (action_Name == "get_schedule") {
+        if (get_schedule(area.action_Param))
             await callReactionTwitch(area);
     }
 }
@@ -84,6 +89,7 @@ async function checkNewFollow(access_token_twitch) {
       broadcast_id = response.data.data[0].id;
     } else
       console.log("FAILED");
+
     const reponse = await axios.create({
       baseURL: 'https://api.twitch.tv/helix',
       headers: {
@@ -105,7 +111,6 @@ async function checkNewFollow(access_token_twitch) {
 
 async function check_new_followers(areaContent) {
   const test = await checkNewFollow(areaContent.access_token);
-    console.log("TOTAL: " + test.total);
     if (counter === 1)
       recup_Total_twitch = test.total;
     else {
@@ -118,6 +123,43 @@ async function check_new_followers(areaContent) {
       } else
         console.log("PAS DE NOUVEAU FOLLOWING");
     }
+}
+
+async function getStreamerSchedule(access_token_twitch) {
+  try {
+    const response = await axios.get(`https://api.twitch.tv/helix/users?login=squeezie`, {
+      headers: {
+        'Client-ID': process.env.TWITCH_CLIENT,
+        'Authorization': `Bearer ${access_token_twitch}`,
+      },
+    });
+
+    if (response.status === 200) {
+      broadcast_id_schedule = response.data.data[0].id;
+    } else
+      console.log("FAILED");
+
+    const reponse = await axios.create({
+      baseURL: 'https://api.twitch.tv/helix',
+      headers: {
+        'Client-ID': process.env.TWITCH_CLIENT,
+        'Authorization': `Bearer ${access_token_twitch}`,
+      },
+    }).get('/schedule', {
+      params: {
+        broadcaster_id: broadcast_id_schedule,
+      },
+    });
+    return response.data.data.segments;
+  } catch (error) {
+    console.log("ERROR GETTING SCHEDULE");
+    console.log(error);
+  }
+}
+
+async function get_schedule(areaContent) {
+  const test = await getStreamerSchedule(areaContent.access_token);
+  console.log("RESULT: " + test);
 }
 
 module.exports = { callActionTwitch };
