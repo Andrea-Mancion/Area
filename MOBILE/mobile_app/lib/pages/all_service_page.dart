@@ -11,19 +11,11 @@ const double verticaleSpace = 50;
 const double horizontalSpace = 30;
 
 class AllServicePage extends StatefulWidget {
-  AllServicePage({
+  const AllServicePage({
     super.key,
     required this.isAction,
   });
-  final Service spotify = Service(AllVariables.imageSpotify, AllVariables.spotifyAction, AllVariables.spotifyReaction);
-  final Service deezer = Service(AllVariables.imageDeezer, AllVariables.deezerAction, AllVariables.deezerReaction);
-  final Service discord = Service(AllVariables.imageDiscord, AllVariables.discordAction, AllVariables.discordReaction);
-  final Service github = Service(AllVariables.imageGithub, AllVariables.githubAction, AllVariables.githubReaction);
-  final Service google = Service(AllVariables.imageGoogle, AllVariables.googleAction, AllVariables.googleReaction);
-  final Service twitch = Service(AllVariables.imageTwitch, AllVariables.twitchAction, AllVariables.twitchReaction);
-  final Service yahoo = Service(AllVariables.imageYahoo, AllVariables.yahooAction, AllVariables.yahooReaction);
   final bool isAction;
-
   @override
   State<AllServicePage> createState() => AllServicePageState();
 }

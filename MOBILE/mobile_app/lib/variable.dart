@@ -46,37 +46,23 @@ class AllVariables {
   static String imageSpotify = "assets/images/Logo_Spotify.png";
   static String imageTwitch = "assets/images/Logo_Twitch.png";
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
-  static List<String> spotifyAction = [];
-  static List<String> spotifyReaction = [];
-  static List<String> deezerAction = [];
-  static List<String> deezerReaction = [];
-  static List<String> discordAction = [];
-  static List<String> discordReaction = [];
-  static List<String> githubAction = [];
-  static List<String> githubReaction = [];
-  static List<String> googleAction = [];
-  static List<String> googleReaction = [];
-  static List<String> twitchAction = [];
-  static List<String> twitchReaction = [];
-  static List<String> yahooAction = [];
-  static List<String> yahooReaction = [];
 }
-Service spotify = Service(AllVariables.imageSpotify, AllVariables.spotifyAction, AllVariables.spotifyReaction);
-Service deezer = Service(AllVariables.imageDeezer, AllVariables.deezerAction, AllVariables.deezerReaction);
-Service discord = Service(AllVariables.imageDiscord, AllVariables.discordAction, AllVariables.discordReaction);
-Service github = Service(AllVariables.imageGithub, AllVariables.githubAction, AllVariables.githubReaction);
-Service google = Service(AllVariables.imageGoogle, AllVariables.googleAction, AllVariables.googleReaction);
-Service twitch = Service(AllVariables.imageTwitch, AllVariables.twitchAction, AllVariables.twitchReaction);
-Service yahoo = Service(AllVariables.imageYahoo, AllVariables.yahooAction, AllVariables.yahooReaction);
+Service spotify = Service(AllVariables.imageSpotify);
+Service deezer = Service(AllVariables.imageDeezer);
+Service discord = Service(AllVariables.imageDiscord);
+Service github = Service(AllVariables.imageGithub);
+Service google = Service(AllVariables.imageGoogle);
+Service twitch = Service(AllVariables.imageTwitch);
+Service yahoo = Service(AllVariables.imageYahoo);
 class Service {
   Service(
     this.image,
-    this.allAction,
-    this.allReaction,
   );
   String image = '';
   List<String> allAction = [];
   List<String> allReaction = [];
+  List<String> allActionDescription = [];
+  List<String> allReactionDescription = [];
   List<String> actionParameters = [];
   List<String> reactionParameters = [];
 }

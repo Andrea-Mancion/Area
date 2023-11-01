@@ -29,57 +29,117 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       final reponse = jsonDecode(response.body);
       for (var service in reponse['server']['services']) {
         String serviceName = service['name'];
+        // get Actions
         for (var action in service['actions']) {
           String actionName = action['name'];
           switch (serviceName) {
             case 'deezer':
-              AllVariables.deezerAction.add(actionName);
+              deezer.allAction.add(actionName);
               break;
             case 'discord':
-              AllVariables.discordAction.add(actionName);
+              discord.allAction.add(actionName);
               break;
             case 'github':
-              AllVariables.githubAction.add(actionName);
+              github.allAction.add(actionName);
               break;
             case 'google':
-              AllVariables.googleAction.add(actionName);
+              google.allAction.add(actionName);
               break;
             case 'spotify':
-              AllVariables.spotifyAction.add(actionName);
+              spotify.allAction.add(actionName);
               break;
             case 'twitch':
-              AllVariables.twitchAction.add(actionName);
+              twitch.allAction.add(actionName);
               break;
             case 'yahoo':
-              AllVariables.yahooAction.add(actionName);
+              yahoo.allAction.add(actionName);
               break;
             default:
               break;
           }
         }
+        //get Reactions
         for (var reaction in service['reactions']) {
           String reactionName = reaction['name'];
           switch (serviceName) {
             case 'deezer':
-              AllVariables.deezerReaction.add(reactionName);
+              deezer.allReaction.add(reactionName);
               break;
             case 'discord':
-              AllVariables.discordReaction.add(reactionName);
+              discord.allReaction.add(reactionName);
               break;
             case 'github':
-              AllVariables.githubReaction.add(reactionName);
+              github.allReaction.add(reactionName);
               break;
             case 'google':
-              AllVariables.googleReaction.add(reactionName);
+              google.allReaction.add(reactionName);
               break;
             case 'spotify':
-              AllVariables.spotifyReaction.add(reactionName);
+              spotify.allReaction.add(reactionName);
               break;
             case 'twitch':
-              AllVariables.twitchReaction.add(reactionName);
+              twitch.allReaction.add(reactionName);
               break;
             case 'yahoo':
-              AllVariables.yahooReaction.add(reactionName);
+              yahoo.allReaction.add(reactionName);
+              break;
+            default:
+              break;
+          }
+        }
+        // get Action Description
+        for (var action in service['actions']) {
+          String actionDescription = action['description'];
+          switch (serviceName) {
+            case 'deezer':
+              deezer.allActionDescription.add(actionDescription);
+              break;
+            case 'discord':
+              discord.allActionDescription.add(actionDescription);
+              break;
+            case 'github':
+              github.allActionDescription.add(actionDescription);
+              break;
+            case 'google':
+              google.allActionDescription.add(actionDescription);
+              break;
+            case 'spotify':
+              spotify.allActionDescription.add(actionDescription);
+              break;
+            case 'twitch':
+              twitch.allActionDescription.add(actionDescription);
+              break;
+            case 'yahoo':
+              yahoo.allActionDescription.add(actionDescription);
+              break;
+            default:
+              break;
+          }
+        }
+        // get Reaction Description
+        for (var reaction in service['reactions']) {
+          String reactionDescription = reaction['description'];
+          switch (serviceName) {
+            case 'deezer':
+              deezer.allReactionDescription.add(reactionDescription);
+              break;
+            case 'discord':
+              discord.allReactionDescription.add(reactionDescription);
+              break;
+            case 'github':
+              github.allReactionDescription.add(reactionDescription);
+              break;
+            case 'google':
+              google.allReactionDescription.add(reactionDescription);
+              break;
+            case 'spotify':
+              spotify.allReactionDescription.add(reactionDescription);
+              break;
+            case 'twitch':
+              twitch.allReactionDescription.add(reactionDescription);
+              break;
+            case 'yahoo':
+              yahoo.allReactionDescription.add(reactionDescription);
               break;
             default:
               break;
