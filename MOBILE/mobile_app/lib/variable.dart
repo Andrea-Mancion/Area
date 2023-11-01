@@ -46,8 +46,8 @@ class AllVariables {
   static String imageSpotify = "assets/images/Logo_Spotify.png";
   static String imageTwitch = "assets/images/Logo_Twitch.png";
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
-  static List<String> spotifyAction = [spotifyAction1, spotifyAction2, spotifyAction3, spotifyAction4, spotifyAction5, spotifyAction6];
-  static List<String> spotifyReaction = [spotifyReaction1, spotifyReaction2];
+  static List<String> spotifyAction = [];
+  static List<String> spotifyReaction = [];
   static List<String> deezerAction = [];
   static List<String> deezerReaction = [];
   static List<String> discordAction = [];

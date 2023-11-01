@@ -20,7 +20,10 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   void getAllAction() async{
     final response = await http.get(
-      Uri.parse("http://10.19.255.75:3000/about.json)"),
+      Uri.parse("http://10.19.255.70:3000/about.json"),
+       headers: {
+      'Content-Type': 'application/json; charset=UTF-8'
+      },
     );
     if (response.statusCode == 200) {
       print('GET request successful');
@@ -28,7 +31,71 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       print('GET request failed with status: ${response.statusCode}');
     }
     final reponse = jsonDecode(response.body);
-    print("aee =  ${reponse.body}");
+    print("---aee =  ${reponse.toString()}---");
+
+    for (var service in reponse['server']['services']) {
+      String serviceName = service['name'];
+      for (var action in service['actions']) {
+        String actionName = action['name'];
+        switch (serviceName) {
+          case 'deezer':
+            AllVariables.deezerAction.add(actionName);
+            break;
+          case 'discord':
+            AllVariables.discordAction.add(actionName);
+            break;
+          case 'github':
+            AllVariables.githubAction.add(actionName);
+            break;
+          case 'google':
+            AllVariables.googleAction.add(actionName);
+            break;
+          case 'spotify':
+            AllVariables.spotifyAction.add(actionName);
+            break;
+          case 'twitch':
+            AllVariables.twitchAction.add(actionName);
+            break;
+          case 'yahoo':
+            AllVariables.yahooAction.add(actionName);
+            break;
+          default:
+            break;
+        }
+        if (serviceName == 'deezer') {
+        } else if (serviceName == 'discord') {
+          AllVariables.discordAction.add(actionName);
+        }
+      }
+      for (var reaction in service['reactions']) {
+        String reactionName = reaction['name'];
+        switch (serviceName) {
+          case 'deezer':
+            AllVariables.deezerReaction.add(reactionName);
+            break;
+          case 'discord':
+            AllVariables.discordReaction.add(reactionName);
+            break;
+          case 'github':
+            AllVariables.githubReaction.add(reactionName);
+            break;
+          case 'google':
+            AllVariables.googleReaction.add(reactionName);
+            break;
+          case 'spotify':
+            AllVariables.spotifyReaction.add(reactionName);
+            break;
+          case 'twitch':
+            AllVariables.twitchReaction.add(reactionName);
+            break;
+          case 'yahoo':
+            AllVariables.yahooReaction.add(reactionName);
+            break;
+          default:
+            break;
+        }
+      }
+    }
   }
 
   @override
