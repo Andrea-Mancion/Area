@@ -31,6 +31,13 @@
             "name": "send_weather",
             "description": "send the weather in a channel",
             "parametter": []
+        },
+        {
+            "name": "send_mail",
+            "description": "send a message by mail",
+            "parametter": [
+                " message "
+            ]
         }
     ]
 }
