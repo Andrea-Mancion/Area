@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: ./SERVER
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    networks:
+      - local
+    volumes:
+      - ./empty.env:/SERVER/.env
+
+  mobile:
+    build:
+      context: ./MOBILE/mobile_app
+    depends_on:
+      - server
+    volumes:
+      - common:/apk
+
+  web:
+    build:
+      context: ./WEB/area
+    depends_on:
+      - server
+      - mobile
+    ports:
+      - "8080:8080"
+    volumes:
+      - common:/apk
+
+  db:
+    image: postgres:latest
+    env_file:
+      - ./SERVER/.env
+    environment:
+      POSTGRES_DB: gfg_db
+      POSTGRES_USER: Ferius
+      POSTGRES_PASSWORD: Ferius1901
+    networks:
+      - local
+
+
+networks:
+  local:
+
+volumes:
+  common:
