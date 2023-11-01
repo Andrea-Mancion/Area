@@ -29,6 +29,10 @@ async function callActionTwitch(area) {
       if (get_video(area.action_Param))
         await callReactionTwitch(area);
     }
+    if (action_Name == "get_stream") {
+      if (get_stream(area.action_Param))
+        await callReactionTwitch(area);
+    }
 }
 
 async function getFollowedChannel(access_token_twitch) {
@@ -217,6 +221,35 @@ async function get_video(areaContent) {
       } else
         console.log("PAS DE CHANGEMENT");
     }
+}
+
+async function getStream(access_token_twitch) {
+  try {
+    const reponse = await axios.create({
+      baseURL: 'https://api.twitch.tv/helix',
+      headers: {
+        'Client-ID': process.env.TWITCH_CLIENT,
+        'Authorization': `Bearer ${access_token_twitch}`,
+      },
+    }).get('/streams', {
+      params: {
+        user_login: 'ferius19',
+      },
+    });
+
+    return reponse.data.data;
+  } catch (error) {
+    console.log("ERROR GETTING STREAM");
+    console.log(error);
+  }
+}
+
+async function get_stream(areaContent) {
+  const test = await getStream(areaContent.access_token);
+    if (test.length == 0)
+      console.log("OFFLINE");
+    else
+      console.log("ONLINE");
 }
 
 module.exports = { callActionTwitch };

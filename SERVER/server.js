@@ -4,7 +4,6 @@ const indexApp = require('./index');
 const session = require('express-session');
 const { Pool } = require('pg');
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const axios = require('axios');
 const { token } = require('morgan');
 let { callActionTwitch } = require('./twitch/actions.js');
@@ -128,29 +127,29 @@ app.get('/success', (req, res) => {
     cb(null, obj);
   });
 
-  passport.use(new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
-      scope: ['profile', 'email', 'https://www.googleapis.com/auth/gmail.readonly'],
-    },
-    function(accessToken, refreshToken, profile, done) {
-        userProfile=profile;
-        my_access_token = accessToken;
-        my_refresh_token = refreshToken;
-        return done(null, userProfile);
-    }
-  ));
+  // passport.use(new GoogleStrategy({
+  //     clientID: process.env.GOOGLE_CLIENT_ID,
+  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  //     callbackURL: "http://localhost:3000/auth/google/callback",
+  //     scope: ['profile', 'email', 'https://www.googleapis.com/auth/gmail.readonly'],
+  //   },
+  //   function(accessToken, refreshToken, profile, done) {
+  //       userProfile=profile;
+  //       my_access_token = accessToken;
+  //       my_refresh_token = refreshToken;
+  //       return done(null, userProfile);
+  //   }
+  // ));
 
-  app.get('/auth/google',
-    passport.authenticate('google', { scope : ['profile', 'email'] }));
+  // app.get('/auth/google',
+  //   passport.authenticate('google', { scope : ['profile', 'email'] }));
 
-  app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/auth/error' }),
-    function(req, res) {
-      // Successful authentication, redirect success.
-      res.redirect('/auth/success');
-    });
+  // app.get('/auth/google/callback',
+  //   passport.authenticate('google', { failureRedirect: '/auth/error' }),
+  //   function(req, res) {
+  //     // Successful authentication, redirect success.
+  //     res.redirect('/auth/success');
+  //   });
 
   const action_map = {
     'Twitch': callActionTwitch,
@@ -160,40 +159,36 @@ app.get('/success', (req, res) => {
     'Twitch': callReactionTwitch,
   }
 
-  app.get('/auth/twitch', (req, res) => {
-    const twitchURL = `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT}&redirect_uri=http://localhost:3000/auth/twitch/callback&response_type=code&scope=user:read:email user:read:follows moderator:read:followers`;
-    res.redirect(twitchURL);
-  });
+  // app.get('/auth/twitch', (req, res) => {
+  //   const twitchURL = `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT}&redirect_uri=http://localhost:3000/auth/twitch/callback&response_type=code&scope=user:read:email user:read:follows moderator:read:followers`;
+  //   res.redirect(twitchURL);
+  // });
 
-  app.get('/auth/twitch/callback', (req, res) => {
-    const code = req.query.code;
-    const tokenURL = 'https://id.twitch.tv/oauth2/token';
+  // app.get('/auth/twitch/callback', (req, res) => {
+  //   const code = req.query.code;
+  //   const tokenURL = 'https://id.twitch.tv/oauth2/token';
 
-    const data = {
-      client_id: process.env.TWITCH_CLIENT,
-      client_secret: process.env.TWITCH_SECRET,
-      code,
-      grant_type: 'authorization_code',
-      redirect_uri: 'http://localhost:3000/auth/twitch/callback',
-    };
+  //   const data = {
+  //     client_id: process.env.TWITCH_CLIENT,
+  //     client_secret: process.env.TWITCH_SECRET,
+  //     code,
+  //     grant_type: 'authorization_code',
+  //     redirect_uri: 'http://localhost:3000/auth/twitch/callback',
+  //   };
 
-    axios.post(tokenURL, data).then((response) => {
-      if (response.status === 200) {
-        access_token_twitch = response.data.access_token;
+  //   axios.post(tokenURL, data).then((response) => {
+  //     if (response.status === 200) {
+  //       access_token_twitch = response.data.access_token;
 
-        console.log("OKKK");
-        res.render('auth/successTwitch');
-      } else
-        res.redirect('/auth/error');
-    }).catch((error) => {
-      console.log("NOOOOO");
-      console.log(error);
-    });
-  });
-
-  app.get('/getNew', async (req, res) => {
-    console.log("OKLKKKKNBGFJVHKCT");
-  });
+  //       console.log("OKKK");
+  //       res.render('auth/successTwitch');
+  //     } else
+  //       res.redirect('/auth/error');
+  //   }).catch((error) => {
+  //     console.log("NOOOOO");
+  //     console.log(error);
+  //   });
+  // });
 });
 
 // Démarrer le serveur sur le port 3000
