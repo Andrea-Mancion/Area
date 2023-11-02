@@ -19,18 +19,17 @@ class ServicePage extends StatefulWidget {
 class _ServicePageState extends State<ServicePage> {
   @override
   Widget build(BuildContext context) {
-    return  ServicePageBannerAndButton(serviceImage: widget.service.image, serviceTrigger: widget.isAction ? widget.service.allActionDescription : widget.service.allReactionDescription, serviceTriggerBack: widget.isAction ? widget.service.allAction : widget.service.allReaction, key: UniqueKey());
+    print(widget.service.allAction[0].name);
+    return  ServicePageBannerAndButton(serviceImage: widget.service.image, serviceTrigger: widget.isAction ? widget.service.allAction : widget.service.allReaction, key: UniqueKey());
   }
 }
 
 class ServicePageBannerAndButton extends StatelessWidget {
   final String serviceImage;
-  final List<String> serviceTrigger;
-  final List<String> serviceTriggerBack;
+  final List<ActionReaction> serviceTrigger;
   const ServicePageBannerAndButton({
     required this.serviceImage,
     required this.serviceTrigger,
-    required this.serviceTriggerBack,
     super.key,
   });
 
@@ -46,7 +45,7 @@ class ServicePageBannerAndButton extends StatelessWidget {
           children: [
             ServicePageBanner(image: serviceImage, key: UniqueKey()),
             const SizedBox(height: 50),
-            ServicePageButton(trigger: serviceTrigger, nbTrigger: serviceTrigger.length, triggerBack: serviceTriggerBack, key: UniqueKey())
+            ServicePageButton(trigger: serviceTrigger, nbTrigger: serviceTrigger.length, key: UniqueKey())
           ],
         ),
       )
@@ -82,13 +81,11 @@ class ServicePageBanner extends StatelessWidget {
 }
 
 class ServicePageButton extends StatelessWidget {
-  final List<String> trigger;
-  final List<String> triggerBack;
+  final List<ActionReaction> trigger;
   final int nbTrigger;
   const ServicePageButton({
     required this.trigger,
     required this.nbTrigger,
-    required this.triggerBack,
     required Key key,
   }) : super(key: key);
 
@@ -111,12 +108,13 @@ class ServicePageButton extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      print(triggerBack[index]);
+                      print(trigger[index].name);
+                      print(trigger[index].parameters);
                       // Navigator.push(context,
                       // MaterialPageRoute(builder: (context) => const HomePage()),
                       // );
                     },
-                    child: Text(trigger[index])
+                    child: Text(trigger[index].description)
                   );
                 },
                 childCount: nbTrigger,

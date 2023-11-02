@@ -46,6 +46,7 @@ class AllVariables {
   static String imageSpotify = "assets/images/Logo_Spotify.png";
   static String imageTwitch = "assets/images/Logo_Twitch.png";
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
+  static List<String> allServices = ["Deezer", "Discord", "Github", "Google", "Spotify", "Twitch", "Yahoo"];
 }
 Service spotify = Service(AllVariables.imageSpotify);
 Service deezer = Service(AllVariables.imageDeezer);
@@ -59,10 +60,18 @@ class Service {
     this.image,
   );
   String image = '';
-  List<String> allAction = [];
-  List<String> allReaction = [];
-  List<String> allActionDescription = [];
-  List<String> allReactionDescription = [];
-  List<String> actionParameters = [];
-  List<String> reactionParameters = [];
+  List<ActionReaction> allAction = [];
+  List<ActionReaction> allReaction = [];
+  List<String> tmp = [];
+}
+
+class ActionReaction {
+  ActionReaction(
+    this.name,
+    this.description,
+    this.parameters,
+  );
+  String name = '';
+  String description = '';
+  List<dynamic> parameters = [];
 }
