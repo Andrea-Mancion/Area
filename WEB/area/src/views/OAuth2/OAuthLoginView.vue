@@ -58,7 +58,7 @@ export default {
         const authUrl = "https://id.twitch.tv/oauth2/authorize";
         const clientId = process.env.TWITCH_CLIENT_ID;
         const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
-        const scopes = "";
+        const scopes = "user:read:email user:read:follows moderator:read:followers";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes
         )}`;
@@ -80,7 +80,7 @@ export default {
         const authUrl = "https://github.com/login/oauth/authorize";
         const clientId = process.env.GITHUB_CLIENT_ID;
         const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
-        const scopes = "";
+        const scopes = "user";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes
         )}`;

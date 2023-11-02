@@ -260,6 +260,12 @@ export default new Vuex.Store({
     getDiscordToken(state) {
       return state.Services.Discord.AuthentificationTokens;
     },
+    getTwitchToken(state) {
+      return state.Services.Twitch.AuthentificationTokens;
+    },
+    getGitHubToken(state) {
+      return state.Services.GitHub.AuthentificationTokens;
+    },
     getSavedAction(state) {
       return state.Action;
     },
@@ -283,8 +289,14 @@ export default new Vuex.Store({
     setSpotifyToken(state, token) {
       state.Services.Spotify.AuthentificationTokens = token;
     },
+    setTwitchToken(state, token) {
+      state.Services.Twitch.AuthentificationTokens = token;
+    },
     setDiscordToken(state, token) {
       state.Services.Discord.AuthentificationTokens = token;
+    },
+    setGitHubToken(state, token) {
+      state.Services.GitHub.AuthentificationTokens = token;
     },
     setSavedAction(state, action) {
       state.Action = action;
