@@ -17,11 +17,13 @@ const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
+const crypto = require('crypto');
 require('dotenv').config();
 const fs = require('fs');
 
 var userProfile;
 let previousWeatherData = null;
+var access_token_deezer;
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -112,6 +114,44 @@ app.post('/login', (req, res) => {
     });
 });
 
+async function sendPlaylist() {
+  try {
+    const nameSong = "Je m'excuse";
+    var idSong;
+
+    const response = await axios.get(`https://api.deezer.com/search?q=${nameSong}&limit=1&output=json`, {
+      headers: {
+        'x-api-key': access_token_deezer,
+      }
+    });
+
+    if (response.status === 200) {
+      if (response.data.data[0]) {
+        idSong = response.data.data[0].id;
+      } else
+        console.log("FAILED TO response.data.data[0]");
+    } else
+      console.log("FAILED TO GET SONG ID");
+
+    const reponse = await axios.post(`https://api.deezer.com/playlist/${process.env.DEEZER_PLAYLIST}/tracks`, null, {
+      params: {
+        songs: idSong,
+      },
+      headers: {
+        'Authorization': `Bearer ${access_token_deezer}`,
+      },
+    });
+
+    if (reponse.status === 200) {
+      console.log(reponse);
+      console.log("SUCCESS");
+    } else
+      console.log("FAILED TO ADD SONG TO PLAYLIST");
+  } catch (error) {
+    console.log("ERROR");
+    console.log(error);
+  }
+}
 
 // Page de succès (vous pouvez créer cette page selon vos besoins)
 app.get('/success', (req, res) => {
@@ -172,13 +212,59 @@ app.get('/success', (req, res) => {
       res.redirect('/auth/success');
     });
 
-  // app.get('/auth/discord', passport.authenticate('discord'));
+  app.get('/getReset', async (req, res) => {
+    const response = await axios.get('https://api.deezer.com/user/me', {
+      headers: {
+        'Authorization': `Bearer ${access_token_deezer}`,
+      },
+    });
 
-  // app.get('/auth/discord/callback',
-  //   passport.authenticate('discord', { failureRedirect: '/auth/error' }),
-  //   function(req, res) {
-  //     res.redirect('/messages');
-  //   });
+    if (response.status === 200) {
+      console.log("RESSEEEEEEEET");
+      console .log(response.data);
+    } else {
+      console.log("FAILED TO RESET");
+    }
+    const state = crypto.randomBytes(32).toString('hex');
+    req.session.oauthState = state;
+    const deezerURL = `https://connect.deezer.com/oauth/auth.php?app_id=${process.env.DEEZER_ID}&redirect_uri=http://localhost:3000/auth/deezer/callback&perms=basic_access,email,manage_library,manage_community&state=${state}`;
+    res.redirect(deezerURL);
+  });
+
+  app.get('/auth/deezer', (req, res) => {
+    const state = crypto.randomBytes(32).toString('hex');
+    req.session.oauthState = state;
+    const deezerURL = `https://connect.deezer.com/oauth/auth.php?app_id=${process.env.DEEZER_ID}&redirect_uri=http://localhost:3000/auth/deezer/callback&perms=basic_access,email,manage_library,manage_community&state=${state}`;
+    res.redirect(deezerURL);
+  });
+
+  app.get('/auth/deezer/callback', (req, res) => {
+     const code = req.query.code;
+     const tokenURL = 'https://connect.deezer.com/oauth/access_token.php';
+
+     const data = {
+        app_id: process.env.DEEZER_ID,
+        secret: process.env.DEEZER_SECRET,
+        code,
+     };
+
+     axios.post(tokenURL, null, { params: data }).then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        access_token_deezer = response.data.match(/access_token=([^&]+)/)[1];
+        res.render('auth/successDeezer');
+      } else
+        res.redirect('/auth/error');
+     }).catch((error) => {
+        console.log("ERRRRRRRRROOOOEOEOEOEOEOEO deezEER");
+        console.log(error);
+     });
+  });
+
+  app.get('/getNew', async (req, res) => {
+    await sendPlaylist();
+    console.log("HHHHDHDDHDHDH");
+  });
 });
 
 const action_map = {
