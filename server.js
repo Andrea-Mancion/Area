@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-let { callActionSpotify, addNewVariables, nbreact } = require('./spotify/action.js');
+let { callActionSpotify, addNewVariables, nbreact} = require('./spotify/action.js');
 const { spotify_reaction } = require('./spotify/reaction.js');
 const cors = require('cors');
 const { verify } = require('crypto');
@@ -18,7 +18,6 @@ const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
 require('dotenv').config();
-const fs = require('fs');
 
 var userProfile;
 let previousWeatherData = null;
@@ -139,15 +138,15 @@ app.get('/success', (req, res) => {
   });
 
   passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
-  },
-    function (accessToken, refreshToken, profile, done) {
-      userProfile = profile;
-      console.log(accessToken);
-      console.log(profile.id);
-      return done(null, userProfile);
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        userProfile=profile;
+        console.log(accessToken);
+        console.log(profile.id);
+        return done(null, userProfile);
     }
   ));
 
@@ -190,28 +189,6 @@ const reaction_map = {
   'Spotify': spotify_reaction,
   'Discord': callReactionDiscord,
 }
-
-app.get("/about.json", (req, res) => {
-  services = [];
-  //check all folder to see if there is a about.json file and if there is, add it to the array
-  fs.readdirSync('./').forEach(file => {
-    if (fs.existsSync('./' + file + '/about.json')) {
-      services.push(require('./' + file + '/about.json'));
-    }
-  });
-  // host_ip  indicates the IP address of the client performing the HTTP request
-  host_ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
-  about = {
-    "client": {
-      "host": host_ip,
-    },
-    "server": {
-      "current_time": Date.now(),
-      "services": services
-    }
-  };
-  res.send(about);
-});
 
 function verify_variable(area) {
   if (area.length == 0) {
@@ -271,12 +248,12 @@ app.post('/create_action', (req, res) => {
   console.log(area);
   addNewVariables();
   if (!verify_variable(newAreaObject)) {
-    res.status(400).json({ error: 'Error creating action' });
+    res.status(500).json({ error: 'Error creating action' });
     return;
   }
   setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
-
+  res.sendStatus(200);
   /*
     pool.connect()
       .then(client => {
