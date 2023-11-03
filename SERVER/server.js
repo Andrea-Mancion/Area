@@ -213,18 +213,6 @@ app.get('/success', (req, res) => {
     });
 
   app.get('/getReset', async (req, res) => {
-    const response = await axios.get('https://api.deezer.com/user/me', {
-      headers: {
-        'Authorization': `Bearer ${access_token_deezer}`,
-      },
-    });
-
-    if (response.status === 200) {
-      console.log("RESSEEEEEEEET");
-      console .log(response.data);
-    } else {
-      console.log("FAILED TO RESET");
-    }
     const state = crypto.randomBytes(32).toString('hex');
     req.session.oauthState = state;
     const deezerURL = `https://connect.deezer.com/oauth/auth.php?app_id=${process.env.DEEZER_ID}&redirect_uri=http://localhost:3000/auth/deezer/callback&perms=basic_access,email,manage_library,manage_community&state=${state}`;
