@@ -13,17 +13,21 @@ const cors = require('cors');
 const { verify } = require('crypto');
 let { callActionDiscord } = require('./discord/actions.js');
 const { callReactionDiscord } = require('./discord/reactions.js');
+const { callActionGithub } = require('./github/actions.js');
 const BotClient = require('./discord/myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
-const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
-const crypto = require('crypto');
-require('dotenv').config();
 const fs = require('fs');
 
 var userProfile;
 let previousWeatherData = null;
+const axios = require('axios');
+const { token } = require('morgan');
+let { callActionTwitch } = require('./twitch/actions.js');
+const { callReactionTwitch } = require('./twitch/reactions.js');
+require('dotenv').config();
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -122,6 +126,11 @@ app.get('/success', (req, res) => {
     secret: 'SECRET'
   }));
   res.render('pages/auth');
+  const passport = require('passport');
+  var userProfile;
+  var my_access_token
+  var my_refresh_token
+  var recup_Total;
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -178,11 +187,14 @@ const action_map = {
   'Spotify': callActionSpotify,
   'Discord': callActionDiscord,
   'Deezer': callActionDeezer,
+  'Github': callActionGithub,
+  'Twitch': callActionTwitch,
 }
 
 const reaction_map = {
   'Spotify': spotify_reaction,
   'Discord': callReactionDiscord,
+  'Twitch': callReactionTwitch,
 }
 
 app.get("/about.json", (req, res) => {
