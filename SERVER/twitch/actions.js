@@ -71,7 +71,7 @@ async function getFollowedChannel(access_token_twitch) {
 }
 
 async function check_new_follow(areaContent) {
-    const test = await getFollowedChannel(areaContent.access_token);
+    const test = await getFollowedChannel(areaContent.action_access_token);
     if (counter === 1) {
         recup_Total = test.total;
     } else {
@@ -120,7 +120,7 @@ async function checkNewFollow(access_token_twitch) {
 }
 
 async function check_new_followers(areaContent) {
-  const test = await checkNewFollow(areaContent.access_token);
+  const test = await checkNewFollow(areaContent.action_access_token);
     if (counter_twitch === 1)
       recup_Total_twitch = test.total;
     else {
@@ -168,7 +168,7 @@ async function getStreamerSchedule(access_token_twitch) {
 }
 
 async function get_schedule(areaContent) {
-  const test = await getStreamerSchedule(areaContent.access_token);
+  const test = await getStreamerSchedule(areaContent.action_access_token);
   console.log("RESULT: " + test);
 }
 
@@ -208,7 +208,7 @@ async function get_videos(access_token_twitch) {
 }
 
 async function get_video(areaContent) {
-  const test = await get_videos(areaContent.access_token);
+  const test = await get_videos(areaContent.action_access_token);
     if (counter_video == 1)
       recup_Total_video = Object.keys(test).length;
     else {
@@ -245,7 +245,7 @@ async function getStream(access_token_twitch) {
 }
 
 async function get_stream(areaContent) {
-  const test = await getStream(areaContent.access_token);
+  const test = await getStream(areaContent.action_access_token);
     if (test.length == 0)
       console.log("OFFLINE");
     else
