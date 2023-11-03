@@ -1,0 +1,16 @@
+{
+    "name": "dailymotion",
+    "actions": [
+    ],
+    "reactions": [
+        {
+            "name": "create_playlist",
+            "description": "Crée une playliste avec le nom, la description et la visibilité donnée",
+            "parametter": [
+                "playlist_name",
+                "playlist_description",
+                "playlist_visibility"
+            ]
+        }
+    ]
+}

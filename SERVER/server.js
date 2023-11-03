@@ -15,6 +15,8 @@ let { callActionDiscord } = require('./discord/actions.js');
 const { callReactionDiscord } = require('./discord/reactions.js');
 const { callActionGithub } = require('./github/actions.js');
 const BotClient = require('./discord/myBot.js');
+const { callActiondailymotion } = require('./dailymotion/action.js');
+const { callReactiondailymotion } = require('./dailymotion/reaction.js')
 const DiscordStrategy = require('passport-discord').Strategy;
 const cron = require('node-cron');
 const { time } = require('console');
@@ -189,12 +191,14 @@ const action_map = {
   'Deezer': callActionDeezer,
   'Github': callActionGithub,
   'Twitch': callActionTwitch,
+  'dailymotion': callActiondailymotion,
 }
 
 const reaction_map = {
   'Spotify': spotify_reaction,
   'Discord': callReactionDiscord,
   'Twitch': callReactionTwitch,
+  'dailymotion': callReactiondailymotion,
 }
 
 app.get("/about.json", (req, res) => {
