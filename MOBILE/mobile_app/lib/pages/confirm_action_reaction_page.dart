@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/pages/create_task_page.dart';
 import 'package:mobile_app/variable.dart';
 
 class ConfimActionReactionPage extends StatefulWidget {
   final ActionReaction trigger;
+  final Service service;
+  final bool isAction;
   const ConfimActionReactionPage(
     this.trigger,
+    this.service,
+    this.isAction,
     {super.key}
   );
 
@@ -20,20 +25,28 @@ class _ConfimActionReactionPageState extends State<ConfimActionReactionPage> {
         title: const Text("Confirm Action Reaction"),
       ),
       body:
-       ConfirmFeildParamActionReaction(widget.trigger, key: UniqueKey()),
+       ConfirmFeildParamActionReaction(widget.trigger, widget.service, widget.isAction, key: UniqueKey()),
     );
   }
 }
 
 class ConfirmFeildParamActionReaction extends StatelessWidget {
   final ActionReaction trigger;
-  const ConfirmFeildParamActionReaction(
+  final Service service;
+  final bool isAction;
+  ConfirmFeildParamActionReaction(
     this.trigger,
+    this.service,
+    this.isAction,
     {super.key}
   );
-
+  final List<TextEditingController> params = [];
   @override
   Widget build(BuildContext context) {
+    for (var i = 0; i < trigger.parameters.length; i++) {
+      params.add(TextEditingController());
+    }
+    print("is action : $isAction");
     return Column(
       children: [
         Expanded(
@@ -43,7 +56,18 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
                 SliverGrid(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      return TextFeildParam(trigger.parameters[index]);
+                      return SizedBox(
+                        width: 50,
+                        child: TextField(
+                          controller: params[index],
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                            ),
+                            labelText: trigger.parameters[index],
+                          ),
+                        ),
+                      );
                     },
                     childCount: trigger.parameters.length,
                   ),
@@ -57,30 +81,52 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
             )
           ),
         ),
+        ElevatedButton(
+          onPressed: () {
+            for (var i = 0; i < trigger.parameters.length; i++) {
+              if (params[i].text == "") {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("Mauvais Paramètre"),
+                    content: Text("Le paramètre ${trigger.parameters[i]} est vide"),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("OK"),
+                      ),
+                    ]
+                  )
+                );
+              }
+            }
+            if (isAction) {
+              for (var i = 0; i < trigger.parameters.length; i++) {
+                AllVariables.controllersAction.add(params[i].text);
+              }
+              AllVariables.action = trigger.name;
+              AllVariables.actionPrint = trigger.description;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreateTaskPage()),
+              );
+            } else {
+              for (var i = 0; i < trigger.parameters.length; i++) {
+                AllVariables.controllersReaction.add(params[i].text);
+              }
+              AllVariables.reaction = trigger.name;
+              AllVariables.reactionPrint = trigger.description;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreateTaskPage()),
+              );
+            }
+          },
+          child: const Text("Confirm"),
+        )
       ],
-    );
-  }
-}
-
-class TextFeildParam extends StatelessWidget {
-  final String text;
-  const TextFeildParam(
-    this.text,
-    {super.key}
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 50,
-      child: TextField(
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          labelText: text,
-        ),
-      ),
     );
   }
 }
