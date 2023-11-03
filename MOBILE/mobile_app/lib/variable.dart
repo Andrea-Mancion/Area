@@ -40,6 +40,9 @@ class AllVariables {
   static String imageSpotify = "assets/images/Logo_Spotify.png";
   static String imageTwitch = "assets/images/Logo_Twitch.png";
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
+  static List<String> controllersAction = [];
+  static List<String> controllersReaction = [];
+
 }
 Service spotify = Service(AllVariables.imageSpotify, "Spotify");
 Service deezer = Service(AllVariables.imageDeezer, "Deezer");
@@ -73,5 +76,4 @@ class ActionReaction {
   String name = '';
   String description = '';
   List<dynamic> parameters = [];
-  List<TextEditingController> controllers = [];
 }
