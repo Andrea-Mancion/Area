@@ -9,14 +9,14 @@
             <p>Verif your mail :</p>
             <b-form-input placeholder="Mail" v-model="MailDataVerif" type="mail"></b-form-input>
             <b-alert v-model="ShowMailAlert" variant="danger" dismissible>
-                The emails are not identical !
+                Emails are not identical !
             </b-alert>
             <p>Enter your Password :</p>
             <b-form-input placeholder="Password" v-model="PassData" type="password"></b-form-input>
             <p>Verif your Password :</p>
             <b-form-input placeholder="Password" v-model="PassDataVerif" type="password"></b-form-input>
             <b-alert v-model="ShowPassAlert" variant="danger" dismissible>
-                The password are not identical !
+                Passwords are not identical !
             </b-alert>
             <br>
             <b-button @click="VerifRegister" variant="info">Register</b-button>
@@ -46,6 +46,8 @@ export default {
         VerifRegister() {
             if (this.PassData != this.PassDataVerif)
                 this.ShowPassAlert = true;
+            if (this.MailData != this.MailDataVerif)
+                this.ShowMailAlert = true;
             else {
                 this.loginData.password = this.PassData;
                 this.loginData.username = this.MailData;
