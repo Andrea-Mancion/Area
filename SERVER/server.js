@@ -14,7 +14,6 @@ let { callActionDiscord } = require('./discord/actions.js');
 const { callReactionDiscord } = require('./discord/reactions.js');
 const BotClient = require('./discord/myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
-const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
 const fs = require('fs');
