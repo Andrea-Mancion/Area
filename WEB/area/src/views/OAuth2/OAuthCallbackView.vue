@@ -96,14 +96,14 @@ export default {
         .catch((error) => {
           console.error("Erreur lors de l'échange du code d'autorisation : ", error);
         });
-    } else if (this.$route.query.service === "Yahoo") {
-      // Gestion de l'authentification pour Yahoo
-      const clientId = process.env.YAHOO_CLIENT_ID;
-      const clientSecret = process.env.YAHOO_CLIENT_SECRET;
-      const redirectUri = `http://localhost:8080/oauth-callback?service=Yahoo`;
+    } else if (this.$route.query.service === "Dailymotion") {
+      // Gestion de l'authentification pour Dailymotion
+      const clientId = process.env.DAILYMOTION_CLIENT_ID;
+      const clientSecret = process.env.DAILYMOTION_CLIENT_SECRET;
+      const redirectUri = `http://localhost:8080/oauth-callback?service=Dailymotion`;
 
       axios
-        .post("https://api.login.yahoo.com/oauth2/get_token", null, {
+        .post("https://api.dailymotion.com/oauth/token", null, {
           params: {
             client_id: clientId,
             client_secret: clientSecret,
@@ -117,8 +117,8 @@ export default {
         })
         .then((response) => {
           const accessToken = response.data.access_token;
-          Cookies.set("Yahoo_access_token", accessToken, { expires: 7, secure: true });
-          this.$store.commit("setYahooToken", accessToken);
+          Cookies.set("Dailymotion_access_token", accessToken, { expires: 7, secure: true });
+          this.$store.commit("setDailymotionToken", accessToken);
           this.$router.push("/action-reaction");
         })
         .catch((error) => {

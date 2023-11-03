@@ -65,10 +65,10 @@ export default {
         )}`;
         window.location.href = oauthRedirectUrl;
       }
-      if (this.serviceName == "Yahoo") {
+      if (this.serviceName == "Dailymotion") {
         this.$store.state.TryToLogTo = this.serviceName;
-        const authUrl = "https://api.login.yahoo.com/oauth2/request_auth";
-        const clientId = process.env.YHAOO_CLIENT_ID;
+        const authUrl = "https://www.dailymotion.com/oauth/authorize";
+        const clientId = process.env.DAILYMOTION_CLIENT_ID;
         const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(

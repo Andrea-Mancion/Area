@@ -16,7 +16,7 @@ export default new Vuex.Store({
     Services: {
       Spotify: {
         Name: 'Spotify',
-        ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/2048px-Spotify_App_Logo.svg.png',
+        ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/1024px-Spotify_logo_without_text.svg.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
@@ -132,7 +132,7 @@ export default new Vuex.Store({
       },
       Discord: {
         Name: 'Discord',
-        ImageLink: 'https://m1.quebecormedia.com/emp/emp/discord31fa7044-2286-4838-be61-a8fb7db67d6e_ORIGINAL.jpg?impolicy=crop-resize&x=0&y=0&w=0&h=0&width=925',
+        ImageLink: 'https://logodownload.org/wp-content/uploads/2017/11/discord-logo-4-1.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
@@ -171,39 +171,9 @@ export default new Vuex.Store({
           },
         },
       },
-      Deezer: {
-        Name: 'Deezer',
-        ImageLink: 'https://assets.stickpng.com/images/6297981ce01809629f11358d.png',
-        IsLog: false,
-        AuthentificationTokens: '',
-        Actions: {
-        },
-        Reactions: {
-        },
-      },
-      GitHub: {
-        Name: 'GitHub',
-        ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Font_Awesome_5_brands_github.svg/1200px-Font_Awesome_5_brands_github.svg.png',
-        IsLog: false,
-        AuthentificationTokens: '',
-        Actions: {
-        },
-        Reactions: {
-        },
-      },
-      Yahoo: {
-        Name: 'Yahoo',
-        ImageLink: 'https://s.yimg.com/cv/apiv2/social/images/yahoo_default_logo.png',
-        IsLog: false,
-        AuthentificationTokens: '',
-        Actions: {
-        },
-        Reactions: {
-        },
-      },
       Twitch: {
         Name: 'Twitch',
-        ImageLink: 'https://play-lh.googleusercontent.com/QLQzL-MXtxKEDlbhrQCDw-REiDsA9glUH4m16syfar_KVLRXlzOhN7tmAceiPerv4Jg',
+        ImageLink: 'https://assets.stickpng.com/images/629731e2ccf362a12fe7a5e1.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
@@ -259,6 +229,36 @@ export default new Vuex.Store({
           },
         },
       },
+      Deezer: {
+        Name: 'Deezer',
+        ImageLink: 'https://boost.latelierdecedric.com/wp-content/uploads/2017/12/deezer-logo-circle.png',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+        },
+        Reactions: {
+        },
+      },
+      GitHub: {
+        Name: 'GitHub',
+        ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Font_Awesome_5_brands_github.svg/1200px-Font_Awesome_5_brands_github.svg.png',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+        },
+        Reactions: {
+        },
+      },
+      Dailymotion: {
+        Name: 'Dailymotion',
+        ImageLink: 'https://static1.dmcdn.net/images/dailymotion-logo-ogtag-new.png.va3e30462476a82772',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+        },
+        Reactions: {
+        },
+      },
       Google: {
         Name: 'Google',
         ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png',
@@ -286,6 +286,9 @@ export default new Vuex.Store({
     },
     getDeezerToken(state) {
       return state.Services.Deezer.AuthentificationTokens;
+    },
+    getDailymotionToken(state) {
+      return state.Services.Dailymotion.AuthentificationTokens;
     },
     getSavedAction(state) {
       return state.Action;
@@ -321,6 +324,9 @@ export default new Vuex.Store({
     },
     setDeezerToken(state, token) {
       state.Services.Deezer.AuthentificationTokens = token;
+    },
+    setDailymotionToken(state, token) {
+      state.Services.Dailymotion.AuthentificationTokens = token;
     },
     setSavedAction(state, action) {
       state.Action = action;
