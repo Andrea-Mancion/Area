@@ -41,6 +41,29 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
     {super.key}
   );
   final List<TextEditingController> params = [];
+    bool checkEmptyfeild(context) {
+      for (var i = 0; i < trigger.parameters.length; i++) {
+        if (params[i].text == "") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text("Mauvais Paramètre"),
+              content: Text("Le paramètre ${trigger.parameters[i]} est vide"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("OK"),
+                ),
+              ]
+            )
+          );
+          return false;
+        }
+      }
+      return true;
+    }
   @override
   Widget build(BuildContext context) {
     for (var i = 0; i < trigger.parameters.length; i++) {
@@ -83,39 +106,28 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            for (var i = 0; i < trigger.parameters.length; i++) {
-              if (params[i].text == "") {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text("Mauvais Paramètre"),
-                    content: Text("Le paramètre ${trigger.parameters[i]} est vide"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("OK"),
-                      ),
-                    ]
-                  )
-                );
-              }
-            }
             if (isAction) {
+              if (!checkEmptyfeild(context)) {
+                return;
+              }
               for (var i = 0; i < trigger.parameters.length; i++) {
                 AllVariables.controllersAction.add(params[i].text);
               }
               AllVariables.action = trigger.name;
               AllVariables.actionPrint = trigger.description;
+              params.clear();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const CreateTaskPage()),
               );
             } else {
+              if (!checkEmptyfeild(context)) {
+                return;
+              }
               for (var i = 0; i < trigger.parameters.length; i++) {
                 AllVariables.controllersReaction.add(params[i].text);
               }
+              params.clear();
               AllVariables.reaction = trigger.name;
               AllVariables.reactionPrint = trigger.description;
               Navigator.push(
@@ -124,7 +136,7 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
               );
             }
           },
-          child: const Text("Confirm"),
+          child: const Text("Confirmer"),
         )
       ],
     );
