@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:mobile_app/pages/home_page.dart';
 import 'package:mobile_app/variable.dart';
-
+import 'package:mobile_app/pages/confirm_action_reaction_page.dart';
 class ServicePage extends StatefulWidget {
   final Service service;
   final bool isAction;
@@ -110,9 +110,9 @@ class ServicePageButton extends StatelessWidget {
                     onPressed: () {
                       print(trigger[index].name);
                       print(trigger[index].parameters);
-                      // Navigator.push(context,
-                      // MaterialPageRoute(builder: (context) => const HomePage()),
-                      // );
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ConfimActionReactionPage(trigger[index])),
+                      );
                     },
                     child: Text(trigger[index].description)
                   );
