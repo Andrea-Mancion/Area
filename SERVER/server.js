@@ -8,6 +8,7 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
 let { callActionSpotify, addNewVariables, nbreact } = require('./spotify/action.js');
 const { spotify_reaction } = require('./spotify/reaction.js');
+const { callActionDeezer } = require('./deezer/actions.js');
 const cors = require('cors');
 const { verify } = require('crypto');
 let { callActionDiscord } = require('./discord/actions.js');
@@ -180,19 +181,12 @@ app.get('/success', (req, res) => {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
-
-  // app.get('/auth/discord', passport.authenticate('discord'));
-
-  // app.get('/auth/discord/callback',
-  //   passport.authenticate('discord', { failureRedirect: '/auth/error' }),
-  //   function(req, res) {
-  //     res.redirect('/messages');
-  //   });
 });
 
 const action_map = {
   'Spotify': callActionSpotify,
   'Discord': callActionDiscord,
+  'Deezer': callActionDeezer,
   'Github': callActionGithub,
   'Twitch': callActionTwitch,
 }
