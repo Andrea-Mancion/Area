@@ -284,6 +284,9 @@ export default new Vuex.Store({
     getGitHubToken(state) {
       return state.Services.GitHub.AuthentificationTokens;
     },
+    getDeezerToken(state) {
+      return state.Services.Deezer.AuthentificationTokens;
+    },
     getSavedAction(state) {
       return state.Action;
     },
@@ -315,6 +318,9 @@ export default new Vuex.Store({
     },
     setGitHubToken(state, token) {
       state.Services.GitHub.AuthentificationTokens = token;
+    },
+    setDeezerToken(state, token) {
+      state.Services.Deezer.AuthentificationTokens = token;
     },
     setSavedAction(state, action) {
       state.Action = action;

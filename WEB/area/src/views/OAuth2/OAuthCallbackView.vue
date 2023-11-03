@@ -129,17 +129,12 @@ export default {
       // Gestion de l'authentification pour Deezer
       const clientId = process.env.DEEZER_CLIENT_ID;
       const clientSecret = process.env.DEEZER_CLIENT_SECRET;
-      const redirectUri = `http://localhost:8080/oauth-callback?service=Deezer`;
       axios
         .post("https://connect.deezer.com/oauth/access_token.php", null, {
           params: {
             app_id: clientId,
             secret: clientSecret,
             code: code,
-            redirect_uri: redirectUri,
-          },
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
           },
         })
         .then((response) => {

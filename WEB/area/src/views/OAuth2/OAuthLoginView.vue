@@ -80,40 +80,38 @@ export default {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://github.com/login/oauth/authorize";
         const clientId = process.env.GITHUB_CLIENT_ID;
-        const origin = "http://localhost:8080"
-        const state = "ezfrgerhn45526364"
+        const origin = "http://localhost:8080";
+        const state = "ezfrgerhn45526364";
         const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
         const scopes = "user";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&origin=${origin}&state=${state}&response_type=code&scope=${encodeURIComponent(
           scopes
         )}`;
         window.location.href = oauthRedirectUrl;
-      //   axios
-      //     .get(authUrl, null, {
-      //       params: {
-      //         clientId: clientId,
-      //         redirectUri: redirectUri,
-      //         scopes: scopes,
-      //       },
-      //       headers: {
-      //         "Access-Control-Allow-Origin": "*",
-      //         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      //       },
-      //     })
-      //     .then((response) => {
-      //       console.log(response);
-      //     })
-      //     .catch((error) => console.log(error));
+        //   axios
+        //     .get(authUrl, null, {
+        //       params: {
+        //         clientId: clientId,
+        //         redirectUri: redirectUri,
+        //         scopes: scopes,
+        //       },
+        //       headers: {
+        //         "Access-Control-Allow-Origin": "*",
+        //         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        //       },
+        //     })
+        //     .then((response) => {
+        //       console.log(response);
+        //     })
+        //     .catch((error) => console.log(error));
       }
       if (this.serviceName == "Deezer") {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://connect.deezer.com/oauth/auth.php";
-        const clientId = process.env.DEEZER_CLIENT_ID;
+        const app_id = process.env.DEEZER_CLIENT_ID;
         const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
-        const scopes = "";
-        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
-          scopes
-        )}`;
+        const perms = "basic_access,email,manage_library,manage_community";
+        const oauthRedirectUrl = `${authUrl}?app_id=${app_id}&redirect_uri=${redirectUri}&perms=${perms}`;
         window.location.href = oauthRedirectUrl;
       }
       if (this.serviceName == "Google") {
