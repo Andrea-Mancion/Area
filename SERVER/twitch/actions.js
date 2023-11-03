@@ -14,23 +14,23 @@ var recup_Total_video;
 async function callActionTwitch(area) {
     const action_Name = area.action_Name;
     if (action_Name == "check_new_follow") {
-        if (check_new_follow(area.action_Param))
+        if (check_new_follow(area.action_access_token))
             await callReactionTwitch(area);
     }
     if (action_Name == "check_new_followers") {
-        if (check_new_followers(area.action_Param))
+        if (check_new_followers(area.action_access_token))
             await callReactionTwitch(area);
     }
     if (action_Name == "get_schedule") {
-        if (get_schedule(area.action_Param))
+        if (get_schedule(area.action_access_token))
             await callReactionTwitch(area);
     }
     if (action_Name == "get_video") {
-      if (get_video(area.action_Param))
+      if (get_video(area.action_access_token))
         await callReactionTwitch(area);
     }
     if (action_Name == "get_stream") {
-      if (get_stream(area.action_Param))
+      if (get_stream(area.action_access_token))
         await callReactionTwitch(area);
     }
 }
@@ -71,7 +71,7 @@ async function getFollowedChannel(access_token_twitch) {
 }
 
 async function check_new_follow(areaContent) {
-    const test = await getFollowedChannel(areaContent.action_access_token);
+    const test = await getFollowedChannel(areaContent);
     if (counter === 1) {
         recup_Total = test.total;
     } else {
@@ -120,7 +120,7 @@ async function checkNewFollow(access_token_twitch) {
 }
 
 async function check_new_followers(areaContent) {
-  const test = await checkNewFollow(areaContent.action_access_token);
+  const test = await checkNewFollow(areaContent);
     if (counter_twitch === 1)
       recup_Total_twitch = test.total;
     else {
@@ -160,7 +160,8 @@ async function getStreamerSchedule(access_token_twitch) {
         broadcaster_id: broadcast_id_schedule,
       },
     });
-    return response.data.data.segments;
+
+    return JSON.stringify(reponse.data.data.segments);
   } catch (error) {
     console.log("ERROR GETTING SCHEDULE");
     console.log(error);
@@ -168,7 +169,7 @@ async function getStreamerSchedule(access_token_twitch) {
 }
 
 async function get_schedule(areaContent) {
-  const test = await getStreamerSchedule(areaContent.action_access_token);
+  const test = await getStreamerSchedule(areaContent);
   console.log("RESULT: " + test);
 }
 
@@ -208,7 +209,7 @@ async function get_videos(access_token_twitch) {
 }
 
 async function get_video(areaContent) {
-  const test = await get_videos(areaContent.action_access_token);
+  const test = await get_videos(areaContent);
     if (counter_video == 1)
       recup_Total_video = Object.keys(test).length;
     else {
@@ -245,7 +246,7 @@ async function getStream(access_token_twitch) {
 }
 
 async function get_stream(areaContent) {
-  const test = await getStream(areaContent.action_access_token);
+  const test = await getStream(areaContent);
     if (test.length == 0)
       console.log("OFFLINE");
     else
