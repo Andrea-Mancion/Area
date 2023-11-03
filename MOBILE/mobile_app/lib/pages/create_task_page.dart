@@ -134,7 +134,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AllServicePage(isAction: true)),
+                      MaterialPageRoute(builder: (context) => const AllServicePage(isAction: true)),
                     );
                   },
                   child: Text("Si \"$whatPrintIf\"",
@@ -163,7 +163,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AllServicePage(isAction: false)),
+                      MaterialPageRoute(builder: (context) => const AllServicePage(isAction: false)),
                     );
                   },
                   child: Text("Fais \"$whatPrintThen\"",
@@ -187,6 +187,12 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   context,
                   MaterialPageRoute(builder: (context) => const HomePage()),
                 );
+                AllVariables.controllersAction.clear();
+                AllVariables.controllersReaction.clear();
+                AllVariables.action = "";
+                AllVariables.actionPrint = "";
+                AllVariables.reaction = "";
+                AllVariables.reactionPrint = "";
               },
               child: const Text("Confirmer"),
             )

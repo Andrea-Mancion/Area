@@ -9,6 +9,7 @@ import 'package:mobile_app/pages/login_page.dart';
 import 'package:mobile_app/pages/service_page.dart';
 // import 'package:mobile_app/pages/login_page.dart';
 import 'package:mobile_app/variable.dart';
+
 void main() {
   /*Timer.periodic(Duration(seconds: 5), (Timer timer) {
     // Placez le code que vous souhaitez exécuter ici
@@ -18,7 +19,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,6 +5,10 @@ class AllVariables {
   static String action = "";
   static String accessTokenSpotify = '';
   static String discordAccessToken = '';
+  static String twitchAccessToken = '';
+  static String deezerAccessToken = '';
+  static String accessTokenYahoo = '';
+  static String accessTokenGoogle = '';
   static var actionDescription = <String, dynamic>{
 
   };
@@ -17,16 +21,6 @@ class AllVariables {
   static const double spaceBetweenButton = 30;
   static const double heightButton = 45;
   static const double widthButton = 220;
-  static const String spotifyAction1 = "Nouvelle musique enregistrée";
-  static const String spotifyAction2 = "Nouvel episode de podcast suivi";
-  static const String spotifyAction3 = "test";
-  static const String spotifyAction4 = "test";
-  static const String spotifyAction5 = "Merci Aurélien et Antoine";
-  static const String spotifyAction6 = "c'est l'anniv d'andrea";
-  static const String spotifyReaction1 = "Add Items To Playlist";
-  static const String spotifyReaction2 = "Créer une playlist";
-  static const String discordAction1 = "météo_heure";
-  static const String discordAction2 = "La météo change";
   static final TextEditingController spotifyCreatePlaylistReactionName = TextEditingController();
   static final TextEditingController spotifyCreatePlaylistReactionDescription = TextEditingController();
   static final TextEditingController spotifyCreatePlaylistReactionPrivate = TextEditingController();
@@ -46,23 +40,25 @@ class AllVariables {
   static String imageSpotify = "assets/images/Logo_Spotify.png";
   static String imageTwitch = "assets/images/Logo_Twitch.png";
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
-  static List<String> allServices = ["Deezer", "Discord", "Github", "Google", "Spotify", "Twitch", "Yahoo"];
 }
-Service spotify = Service(AllVariables.imageSpotify);
-Service deezer = Service(AllVariables.imageDeezer);
-Service discord = Service(AllVariables.imageDiscord);
-Service github = Service(AllVariables.imageGithub);
-Service google = Service(AllVariables.imageGoogle);
-Service twitch = Service(AllVariables.imageTwitch);
-Service yahoo = Service(AllVariables.imageYahoo);
+Service spotify = Service(AllVariables.imageSpotify, "Spotify");
+Service deezer = Service(AllVariables.imageDeezer, "Deezer");
+Service discord = Service(AllVariables.imageDiscord, "Discord");
+Service github = Service(AllVariables.imageGithub, "Github");
+Service google = Service(AllVariables.imageGoogle, "Google");
+Service twitch = Service(AllVariables.imageTwitch, "Twitch");
+Service yahoo = Service(AllVariables.imageYahoo, "Yahoo");
+
 class Service {
   Service(
     this.image,
+    this.name,
   );
   String image = '';
   List<ActionReaction> allAction = [];
   List<ActionReaction> allReaction = [];
   List<String> tmp = [];
+  String name = '';
 }
 
 class ActionReaction {
@@ -71,7 +67,11 @@ class ActionReaction {
     this.description,
     this.parameters,
   );
+  int nbParam(int index) {
+    return parameters.length;
+  }
   String name = '';
   String description = '';
   List<dynamic> parameters = [];
+  List<TextEditingController> controllers = [];
 }
