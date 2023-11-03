@@ -207,9 +207,41 @@ export default new Vuex.Store({
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
-          NewFollow: {
-            Name: 'new_follow',
-            IsParams: true,
+          CheckNewFollow: {
+            Name: 'check_new_follow',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+          CheckNewFollowers: {
+            Name: 'check_new_followers',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+          GetSchedule: {
+            Name: 'get_schedule',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+          GetVideo: {
+            Name: 'get_video',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+          GetStream: {
+            Name: 'get_stream',
+            IsParams: false,
             IsBoolParams: false,
             Params: {
               access_token: '',
@@ -217,10 +249,13 @@ export default new Vuex.Store({
           },
         },
         Reactions: {
-          SendNotif: {
-            Name: 'send_notif',
-            IsParams: false,
+          SendMail: {
+            Name: 'send_mail',
+            IsParams: true,
             IsBoolParams: false,
+            Params: {
+              message: '',
+            }
           },
         },
       },
@@ -235,23 +270,6 @@ export default new Vuex.Store({
         },
       },
     },
-
-
-    authentificationTokens: {
-      Spotify: '',
-    },
-    ActionsList: {
-      Spotify: {
-        Actions: ['check_new_episode', 'check_new_saved_track',],
-        ActionParams: {},
-      },
-    },
-    ReactionsList: {
-      Spotify: {
-        reactions: ['createPlaylist'],
-        ActionParams: {},
-      }
-    }
   },
   getters: {
     getSpotifyToken(state) {

@@ -11,6 +11,7 @@ export default {
   mounted() {
     // Récupérez le code d'autorisation de l'URL
     const code = this.$route.query.code;
+    console.log(code);
     // Utilisez Axios pour échanger le code d'autorisation contre un jeton d'accès
     if (this.$route.query.service == "Spotify") {
       axios
@@ -18,6 +19,7 @@ export default {
           params: {
             code: code,
             client_id: "fdbe5e5dbe5c42b680efb3ab1d3574af",
+            origin: "http://localhost:8080",
             client_secret: process.env.SPOTIFY_CLIENT_SECRET,
             redirect_uri: `http://localhost:8080/oauth-callback?service=Spotify`,
             grant_type: "authorization_code",

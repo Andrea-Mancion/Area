@@ -112,6 +112,8 @@ export default {
         this.createActRecData.action_access_token = this.$store.state.Services[this.$store.getters.getServiceActionSelected].AuthentificationTokens;
         this.createActRecData.reaction_access_token = this.$store.state.Services[this.$store.getters.getServiceReactionSelected].AuthentificationTokens;
         this.createActRecData.user_id = "test";
+        if (this.createActRecData.action_service_Name == "Twitch")
+          this.createActRecData.action_Param.access_token = this.$store.state.Services[this.$store.getters.getServiceActionSelected].AuthentificationTokens;
     },
   },
 };
