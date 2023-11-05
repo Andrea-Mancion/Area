@@ -44,9 +44,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             case 'github':
               github.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
               break;
-            case 'google':
-              google.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
-              break;
             case 'spotify':
               spotify.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
               break;
@@ -75,9 +72,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             case 'github':
               github.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
               break;
-            case 'google':
-              google.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
-              break;
             case 'spotify':
               spotify.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
               break;
@@ -99,7 +93,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    getAllAction();
+    // getAllAction();
     if (AllVariables.action == "") {
       whatPrintIf = "...";
     } else {
@@ -182,6 +176,17 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 AllVariables.tasks.add(AllVariables.createNewTask);
                 AllVariables.nbTask++;
                 AllVariables.taskIndex++;
+                print("action: ${AllVariables.action}");
+                print("reaction: ${AllVariables.reaction}");
+                print("actionDescription: ${AllVariables.actionDescription}");
+                print("reactionDescription: ${AllVariables.reactionDescription}");
+                print("actionPrint: ${AllVariables.actionPrint}");
+                print("reactionPrint: ${AllVariables.reactionPrint}");
+                print("nameServiceAction: ${AllVariables.nameServiceAction}");
+                print("nameServiceReaction: ${AllVariables.nameServiceReaction}");
+                print("controllersAction: ${AllVariables.controllersAction}");
+                print("controllersReaction: ${AllVariables.controllersReaction}");
+                print("accessToken: ${AllVariables.accessToken}");
                 postDataToServer();
                 Navigator.push(
                   context,

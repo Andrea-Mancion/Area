@@ -62,6 +62,9 @@ async function getFollowedChannel(access_token_twitch) {
           user_id: user_id_twitch,
         },
       });
+
+      console.log("REPONSE: " + reponse);
+      console.log("REPONSE: " + reponse.data);
       counter = counter + 1;
       return JSON.stringify(reponse.data);
     } catch(error) {
