@@ -259,6 +259,16 @@ export default new Vuex.Store({
         Reactions: {
         },
       },
+      Dropbox: {
+        Name: 'Dropbox',
+        ImageLink: 'https://play-lh.googleusercontent.com/b1-MIBjlMD9kvl0Okeglm9BL9ejRpOXMio303W0tiLb8Ul5WuVzBDoDKgGRcALOsCdw',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+        },
+        Reactions: {
+        },
+      },
       Google: {
         Name: 'Google',
         ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png',
@@ -289,6 +299,9 @@ export default new Vuex.Store({
     },
     getDailymotionToken(state) {
       return state.Services.Dailymotion.AuthentificationTokens;
+    },
+    getDropboxToken(state) {
+      return state.Services.Dropbox.AuthentificationTokens;
     },
     getSavedAction(state) {
       return state.Action;
@@ -327,6 +340,9 @@ export default new Vuex.Store({
     },
     setDailymotionToken(state, token) {
       state.Services.Dailymotion.AuthentificationTokens = token;
+    },
+    setDropboxToken(state, token) {
+      state.Services.Dropbox.AuthentificationTokens = token;
     },
     setSavedAction(state, action) {
       state.Action = action;

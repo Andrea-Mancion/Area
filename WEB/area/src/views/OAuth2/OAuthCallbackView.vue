@@ -117,7 +117,10 @@ export default {
         })
         .then((response) => {
           const accessToken = response.data.access_token;
-          Cookies.set("Dailymotion_access_token", accessToken, { expires: 7, secure: true });
+          Cookies.set("Dailymotion_access_token", accessToken, {
+            expires: 7,
+            secure: true,
+          });
           this.$store.commit("setDailymotionToken", accessToken);
           this.$router.push("/action-reaction");
         })
@@ -199,6 +202,35 @@ export default {
         .then((response) => {
           const accessToken = response.data.access_token;
           Cookies.set("Twitch_access_token", accessToken, { expires: 7, secure: true });
+          this.$store.commit("setTwitchToken", accessToken);
+          this.$router.push("/action-reaction");
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'échange du code d'autorisation : ", error);
+        });
+    }
+    if (this.$route.query.service === "Dropbox") {
+      // Gestion de l'authentification pour Dropbox
+      const clientId = process.env.DROPBOX_CLIENT_ID;
+      const clientSecret = process.env.DROPBOX_CLIENT_SECRET;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Dropbox`;
+
+      axios
+        .post("https://api.dropboxapi.com/oauth2/token", null, {
+          params: {
+            client_id: clientId,
+            client_secret: clientSecret,
+            code: code,
+            redirect_uri: redirectUri,
+            grant_type: "authorization_code",
+          },
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((response) => {
+          const accessToken = response.data.access_token;
+          Cookies.set("Dropbox_access_token", accessToken, { expires: 7, secure: true });
           this.$store.commit("setTwitchToken", accessToken);
           this.$router.push("/action-reaction");
         })
