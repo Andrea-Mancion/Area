@@ -173,7 +173,7 @@ export default new Vuex.Store({
       },
       Twitch: {
         Name: 'Twitch',
-        ImageLink: 'https://assets.stickpng.com/images/629731e2ccf362a12fe7a5e1.png',
+        ImageLink: 'https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-twitch-circle-512.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
@@ -235,6 +235,14 @@ export default new Vuex.Store({
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
+          AAddSong: {
+            Name: 'add_song',
+            IsParams: true,
+            Params: {
+              name_song: '',
+            },
+            IsBoolParams: false,
+          },
         },
         Reactions: {
         },
@@ -261,10 +269,30 @@ export default new Vuex.Store({
       },
       Dropbox: {
         Name: 'Dropbox',
-        ImageLink: 'https://play-lh.googleusercontent.com/b1-MIBjlMD9kvl0Okeglm9BL9ejRpOXMio303W0tiLb8Ul5WuVzBDoDKgGRcALOsCdw',
+        ImageLink: 'https://cdn3.iconfinder.com/data/icons/free-social-icons/67/dropbox_circle_color-512.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
+          CheckNewFile: {
+            Name: 'check_new_file',
+            IsParams: false,
+            IsBoolParams: false,
+          },
+        },
+        Reactions: {
+        },
+      },
+      Gitlab: {
+        Name: 'Gitlab',
+        ImageLink: 'https://talks.freelancerepublik.com/wp-content/uploads/2021/02/GitLab_Logo.svg-300x277.png',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+          GetListIssues: {
+            Name: 'get_list_issues',
+            IsParams: false,
+            IsBoolParams: false,
+          },
         },
         Reactions: {
         },
@@ -302,6 +330,9 @@ export default new Vuex.Store({
     },
     getDropboxToken(state) {
       return state.Services.Dropbox.AuthentificationTokens;
+    },
+    getGitlabToken(state) {
+      return state.Services.Gitlab.AuthentificationTokens;
     },
     getSavedAction(state) {
       return state.Action;
@@ -343,6 +374,9 @@ export default new Vuex.Store({
     },
     setDropboxToken(state, token) {
       state.Services.Dropbox.AuthentificationTokens = token;
+    },
+    setGitlabToken(state, token) {
+      state.Services.Gitlab.AuthentificationTokens = token;
     },
     setSavedAction(state, action) {
       state.Action = action;

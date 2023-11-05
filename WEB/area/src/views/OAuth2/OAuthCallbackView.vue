@@ -231,7 +231,37 @@ export default {
         .then((response) => {
           const accessToken = response.data.access_token;
           Cookies.set("Dropbox_access_token", accessToken, { expires: 7, secure: true });
-          this.$store.commit("setTwitchToken", accessToken);
+          this.$store.commit("setDropboxToken", accessToken);
+          this.$router.push("/action-reaction");
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'échange du code d'autorisation : ", error);
+        });
+    }
+    if (this.$route.query.service === "Gitlab") {
+      // Gestion de l'authentification pour Dropbox
+      const clientId = process.env.GITLAB_CLIENT_ID;
+      const clientSecret = process.env.GITLAB_CLIENT_SECRET;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Gitlab`;
+
+      axios
+        .post("https://gitlab.com/oauth/token", null, {
+          params: {
+            client_id: clientId,
+            client_secret: clientSecret,
+            code: code,
+            redirect_uri: redirectUri,
+            grant_type: "authorization_code",
+          },
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((response) => {
+          const accessToken = response.data.access_token;
+          Cookies.set("Gitlab_access_token", accessToken, { expires: 7, secure: true });
+          console.log(accessToken);
+          this.$store.commit("setGitlabToken", accessToken);
           this.$router.push("/action-reaction");
         })
         .catch((error) => {

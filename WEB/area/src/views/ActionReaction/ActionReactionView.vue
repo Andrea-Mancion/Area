@@ -50,7 +50,7 @@
 
 <script>
 import axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -71,10 +71,33 @@ export default {
     };
   },
   mounted() {
-    if (Cookies.get('Spotify_access_token'))
-      this.$store.commit("setSpotifyToken", Cookies.get('Spotify_access_token'));
-    if (Cookies.get('Discord_access_token'))
-      this.$store.commit("setDiscordToken", Cookies.get('Discord_access_token'));
+    if (Cookies.get("Spotify_access_token")) {
+      this.$store.commit("setSpotifyToken", Cookies.get("Spotify_access_token"));
+    }
+    if (Cookies.get("Discord_access_token")) {
+      this.$store.commit("setDiscordToken", Cookies.get("Discord_access_token"));
+    }
+    if (Cookies.get("Twitch_access_token")) {
+      this.$store.commit("setTwitchToken", Cookies.get("Twitch_access_token"));
+    }
+    if (Cookies.get("Yahoo_access_token")) {
+      this.$store.commit("setYahooToken", Cookies.get("Yahoo_access_token"));
+    }
+    if (Cookies.get("GitHub_access_token")) {
+      this.$store.commit("setGitHubToken", Cookies.get("GitHub_access_token"));
+    }
+    if (Cookies.get("Deezer_access_token")) {
+      this.$store.commit("setDeezerToken", Cookies.get("Deezer_access_token"));
+    }
+    if (Cookies.get("Google_access_token")) {
+      this.$store.commit("setGoogleToken", Cookies.get("Google_access_token"));
+    }
+    if (Cookies.get("Dropbox_access_token")) {
+      this.$store.commit("setDropboxToken", Cookies.get("Dropbox_access_token"));
+    }
+    if (Cookies.get("GitLab_access_token")) {
+      this.$store.commit("setGitLabToken", Cookies.get("GitLab_access_token"));
+    }
   },
   methods: {
     RedirectActionList() {
@@ -94,7 +117,7 @@ export default {
           }
           if (response.status === 500) {
             this.ShowFaildArgAlert = true;
-             console.log("ça marche pas (arg invalide)!");
+            console.log("ça marche pas (arg invalide)!");
           }
         })
         .catch((error) => {
@@ -103,15 +126,19 @@ export default {
         });
     },
     setActionReactionData() {
-        this.createActRecData.action_service_Name = this.$store.getters.getServiceActionSelected;
-        this.createActRecData.reaction_service_Name = this.$store.getters.getServiceReactionSelected;
-        this.createActRecData.action_Name = this.$store.getters.getSavedAction;
-        this.createActRecData.reaction_Name = this.$store.getters.getSavedReaction;
-        this.createActRecData.action_Param = this.$store.getters.getSavedActionParams;
-        this.createActRecData.reaction_Param = this.$store.getters.getSavedReactionParams;
-        this.createActRecData.action_access_token = this.$store.state.Services[this.$store.getters.getServiceActionSelected].AuthentificationTokens;
-        this.createActRecData.reaction_access_token = this.$store.state.Services[this.$store.getters.getServiceReactionSelected].AuthentificationTokens;
-        this.createActRecData.user_id = "test";
+      this.createActRecData.action_service_Name = this.$store.getters.getServiceActionSelected;
+      this.createActRecData.reaction_service_Name = this.$store.getters.getServiceReactionSelected;
+      this.createActRecData.action_Name = this.$store.getters.getSavedAction;
+      this.createActRecData.reaction_Name = this.$store.getters.getSavedReaction;
+      this.createActRecData.action_Param = this.$store.getters.getSavedActionParams;
+      this.createActRecData.reaction_Param = this.$store.getters.getSavedReactionParams;
+      this.createActRecData.action_access_token = this.$store.state.Services[
+        this.$store.getters.getServiceActionSelected
+      ].AuthentificationTokens;
+      this.createActRecData.reaction_access_token = this.$store.state.Services[
+        this.$store.getters.getServiceReactionSelected
+      ].AuthentificationTokens;
+      this.createActRecData.user_id = "test";
     },
   },
 };
