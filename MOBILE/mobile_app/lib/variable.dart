@@ -49,6 +49,7 @@ class AllVariables {
     "Twitch": "",
     "Yahoo": "",
     "Dropbox": "",
+    "Gitlab": "",
   };
   static List<ActionReaction> spotifyAction = [
     ActionReaction("check_new_saved_track", "Une nouvelle musique est enregistrée", []),
@@ -104,7 +105,7 @@ class AllVariables {
   static List<ActionReaction> dropboxReaction = [
   ];
   static List<ActionReaction> gitlabAction = [
-    ActionReaction("check_new_commit", "Check si un nouveau commit est ajouté", []),
+    ActionReaction("get_list_issues", "Un nouveau commit est ajouté", ["access_token","project_path"]),
   ];
   static List<ActionReaction> gitlabReaction = [
   ];
