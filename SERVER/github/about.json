@@ -1,0 +1,12 @@
+{
+    "name": "github",
+    "actions": [
+        {
+            "name": "check_new_issues",
+            "description": "check if we have a new issue",
+            "parametter": [
+                "access_token"
+            ]
+        }
+    ]
+}

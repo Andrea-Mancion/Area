@@ -1,0 +1,49 @@
+{
+    "name": "twitch",
+    "actions": [
+        {
+            "name": "check_new_follow",
+            "description": "Check if we follow a new channel",
+            "parametter": [
+                "access_token"
+            ]
+        },
+        {
+            "name": "check_new_followers",
+            "description": "Check if we have a new follower",
+            "parametter": [
+                "access_token"
+            ]
+        },
+        {
+            "name": "get_schedule",
+            "description": "Get le calendrier d'un streamer",
+            "parametter": [
+                "access_token"
+            ]
+        },
+        {
+            "name": "get_video",
+            "description": "Get if il y a une nouvelle video",
+            "parametter": [
+                "access_token"
+            ]
+        },
+        {
+            "name": "get_stream",
+            "description": "Check si on est en stream ou non",
+            "parametter": [
+                "access_token"
+            ]
+        }
+    ],
+    "reactions": [
+        {
+            "name": "send_mail",
+            "description": "send a mail to a specific mail address",
+            "parametter": [
+                "message"
+            ]
+        }
+    ]
+}

@@ -8,20 +8,28 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
 let { callActionSpotify, addNewVariables, nbreact } = require('./spotify/action.js');
 const { spotify_reaction } = require('./spotify/reaction.js');
+const { callActionDeezer } = require('./deezer/actions.js');
 const cors = require('cors');
 const { verify } = require('crypto');
 let { callActionDiscord } = require('./discord/actions.js');
 const { callReactionDiscord } = require('./discord/reactions.js');
+const { callActionGithub } = require('./github/actions.js');
 const BotClient = require('./discord/myBot.js');
+const { callActiondailymotion } = require('./dailymotion/action.js');
+const { callReactiondailymotion } = require('./dailymotion/reaction.js')
 const DiscordStrategy = require('passport-discord').Strategy;
-const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
-require('dotenv').config();
 const fs = require('fs');
 
 var userProfile;
 let previousWeatherData = null;
+const axios = require('axios');
+const { token } = require('morgan');
+let { callActionTwitch } = require('./twitch/actions.js');
+const { callReactionTwitch } = require('./twitch/reactions.js');
+require('dotenv').config();
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -112,7 +120,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-
 // Page de succès (vous pouvez créer cette page selon vos besoins)
 app.get('/success', (req, res) => {
   app.use(session({
@@ -121,6 +128,11 @@ app.get('/success', (req, res) => {
     secret: 'SECRET'
   }));
   res.render('pages/auth');
+  const passport = require('passport');
+  var userProfile;
+  var my_access_token
+  var my_refresh_token
+  var recup_Total;
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -171,24 +183,22 @@ app.get('/success', (req, res) => {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
-
-  // app.get('/auth/discord', passport.authenticate('discord'));
-
-  // app.get('/auth/discord/callback',
-  //   passport.authenticate('discord', { failureRedirect: '/auth/error' }),
-  //   function(req, res) {
-  //     res.redirect('/messages');
-  //   });
 });
 
 const action_map = {
   'Spotify': callActionSpotify,
   'Discord': callActionDiscord,
+  'Deezer': callActionDeezer,
+  'Github': callActionGithub,
+  'Twitch': callActionTwitch,
+  'dailymotion': callActiondailymotion,
 }
 
 const reaction_map = {
   'Spotify': spotify_reaction,
   'Discord': callReactionDiscord,
+  'Twitch': callReactionTwitch,
+  'dailymotion': callReactiondailymotion,
 }
 
 app.get("/about.json", (req, res) => {
