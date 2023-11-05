@@ -51,7 +51,7 @@ export default {
             else {
                 this.loginData.password = this.PassData;
                 this.loginData.username = this.MailData;
-                axios.post('http://localhost:3000/register', this.loginData)
+                axios.post('http://localhost:8080/register', this.loginData)
                     .then((response) => {
                         if (response.status === 200)
                             this.$router.push('/login');
