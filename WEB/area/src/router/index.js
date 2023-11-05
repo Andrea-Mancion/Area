@@ -13,6 +13,7 @@ import ReactionParamsView from '../views/ActionReaction/Reaction/ReactionParamsV
 import SignInView from '../views/SignInView.vue'
 import OAuthLogin from '../views/OAuth2/OAuthLoginView.vue'
 import OAuthCallback from '../views/OAuth2/OAuthCallbackView.vue'
+import TelechargerFichierView from '../views/TelechargerFichierView.vue'
 
 Vue.use(VueRouter)
 
@@ -85,6 +86,11 @@ const routes = [
     path: '/oauth-callback',
     name: 'oauth-callback',
     component: OAuthCallback
+  },
+  {
+    path: '/client.apk',
+    name: 'telecharger-fichier',
+    component: TelechargerFichierView,
   },
 ]
 

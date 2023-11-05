@@ -6,25 +6,37 @@ const { Pool } = require('pg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { access } = require('fs');
-let { callActionSpotify, addNewVariables, nbreact} = require('./spotify/action.js');
+let { callActionSpotify, addNewVariables, nbreact } = require('./spotify/action.js');
 const { spotify_reaction } = require('./spotify/reaction.js');
+const { callActionDeezer } = require('./deezer/actions.js');
 const cors = require('cors');
 const { verify } = require('crypto');
 let { callActionDiscord } = require('./discord/actions.js');
 const { callReactionDiscord } = require('./discord/reactions.js');
+const { callActionGithub } = require('./github/actions.js');
 const BotClient = require('./discord/myBot.js');
+const { callActiondailymotion } = require('./dailymotion/action.js');
+const { callReactiondailymotion } = require('./dailymotion/reaction.js')
+const { callActionDropbox } = require('./dropbox/action.js');
+const { callActionUnsplash } = require('./unsplash/action.js');
+const { callActionGitlab } = require('./gitlab/action.js');
 const DiscordStrategy = require('passport-discord').Strategy;
-const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
-require('dotenv').config();
+const fs = require('fs');
 
 var userProfile;
 let previousWeatherData = null;
+const axios = require('axios');
+const { token } = require('morgan');
+let { callActionTwitch } = require('./twitch/actions.js');
+const { callReactionTwitch } = require('./twitch/reactions.js');
+require('dotenv').config();
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 path = require('path');
 app.set('view engine', 'ejs'); // Utilisation du moteur de modèle EJS
 app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les fichiers de vue (views)
@@ -111,7 +123,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-
 // Page de succès (vous pouvez créer cette page selon vos besoins)
 app.get('/success', (req, res) => {
   app.use(session({
@@ -120,6 +131,11 @@ app.get('/success', (req, res) => {
     secret: 'SECRET'
   }));
   res.render('pages/auth');
+  const passport = require('passport');
+  var userProfile;
+  var my_access_token
+  var my_refresh_token
+  var recup_Total;
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -138,15 +154,15 @@ app.get('/success', (req, res) => {
   });
 
   passport.use(new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback"
-    },
-    function(accessToken, refreshToken, profile, done) {
-        userProfile=profile;
-        console.log(accessToken);
-        console.log(profile.id);
-        return done(null, userProfile);
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:8080/auth/google/callback"
+  },
+    function (accessToken, refreshToken, profile, done) {
+      userProfile = profile;
+      console.log(accessToken);
+      console.log(profile.id);
+      return done(null, userProfile);
     }
   ));
 
@@ -170,25 +186,48 @@ app.get('/success', (req, res) => {
       // Successful authentication, redirect success.
       res.redirect('/auth/success');
     });
-
-  // app.get('/auth/discord', passport.authenticate('discord'));
-
-  // app.get('/auth/discord/callback',
-  //   passport.authenticate('discord', { failureRedirect: '/auth/error' }),
-  //   function(req, res) {
-  //     res.redirect('/messages');
-  //   });
 });
 
 const action_map = {
   'Spotify': callActionSpotify,
   'Discord': callActionDiscord,
+  'Deezer': callActionDeezer,
+  'Github': callActionGithub,
+  'Twitch': callActionTwitch,
+  'dailymotion': callActiondailymotion,
+  'Dropbox': callActionDropbox,
+  'Unsplash': callActionUnsplash,
+  'Gitlab': callActionGitlab,
 }
 
 const reaction_map = {
   'Spotify': spotify_reaction,
   'Discord': callReactionDiscord,
+  'Twitch': callReactionTwitch,
+  'dailymotion': callReactiondailymotion,
 }
+
+app.get("/about.json", (req, res) => {
+  services = [];
+  //check all folder to see if there is a about.json file and if there is, add it to the array
+  fs.readdirSync('./').forEach(file => {
+    if (fs.existsSync('./' + file + '/about.json')) {
+      services.push(require('./' + file + '/about.json'));
+    }
+  });
+  // host_ip  indicates the IP address of the client performing the HTTP request
+  host_ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
+  about = {
+    "client": {
+      "host": host_ip,
+    },
+    "server": {
+      "current_time": Date.now(),
+      "services": services
+    }
+  };
+  res.status(200).json(about);
+});
 
 function verify_variable(area) {
   if (area.length == 0) {
@@ -248,12 +287,15 @@ app.post('/create_action', (req, res) => {
   console.log(area);
   addNewVariables();
   if (!verify_variable(newAreaObject)) {
-    res.status(500).json({ error: 'Error creating action' });
+    res.status(400).json({ error: 'Error creating action' });
+    console.log("NANNNNANNAN");
     return;
   }
+  console.log(area);
+
   setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
-  res.sendStatus(200);
+
   /*
     pool.connect()
       .then(client => {
@@ -277,7 +319,6 @@ app.post('/create_action', (req, res) => {
 });
 
 
-// Démarrer le serveur sur le port 3000
 app.listen(port, () => {
   console.log(`Serveur démarré sur le port ${port}`);
 });

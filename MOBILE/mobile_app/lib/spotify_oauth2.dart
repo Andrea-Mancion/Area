@@ -1,15 +1,15 @@
-// import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import 'package:webview_flutter/webview_flutter.dart';
-// import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:mobile_app/variable.dart';
 
-void function() async {
+void spotifyAuthentication() async {
   final spotifyClientId = 'fdbe5e5dbe5c42b680efb3ab1d3574af';
   final callbackUrlScheme = 'mobile';
 
+  if (AllVariables.accessToken["Spotify"] != '') {
+    return;
+  }
   final url = Uri.https('accounts.spotify.com', '/authorize', {
     'response_type': 'code',
     'client_id': spotifyClientId,
@@ -38,9 +38,9 @@ void function() async {
       headers: {"content-type": "application/x-www-form-urlencoded"},
     );
 
-    AllVariables.accessTokenSpotify = jsonDecode(response.body)['access_token'] as String;
+    AllVariables.accessToken["Spotify"] = jsonDecode(response.body)['access_token'] as String;
     print("access token:");
-    print(AllVariables.accessTokenSpotify);
+    print(AllVariables.accessToken["Spotify"]);
   } catch (e) {
     print('Error: $e');
   }

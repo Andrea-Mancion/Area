@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// import axios from "axios";
 export default {
   data() {
     return {
@@ -29,9 +30,9 @@ export default {
         // URL d'autorisation OAuth2
         const authUrl = "https://accounts.spotify.com/authorize";
         // Votre client_id OAuth2
-        const clientId = "fdbe5e5dbe5c42b680efb3ab1d3574af";
+        const clientId = process.env.SPOTIFY_CLIENT_ID;
         // URL de redirection après l'autorisation
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         // Les scopes que vous souhaitez demander (séparés par des espaces)
         const scopes =
           "user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public";
@@ -45,9 +46,102 @@ export default {
       if (this.serviceName == "Discord") {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://discord.com/api/oauth2/authorize";
-        const clientId = "1156974898644795393";
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const clientId = process.env.DISCORD_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "identify guilds";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Dropbox") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://www.dropbox.com/oauth2/authorize";
+        const clientId = process.env.DROPBOX_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Gitlab") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://gitlab.com/oauth/authorize";
+        const clientId = process.env.GITLAB_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Twitch") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://id.twitch.tv/oauth2/authorize";
+        const clientId = process.env.TWITCH_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const scopes = "user:read:email user:read:follows moderator:read:followers";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Dailymotion") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://www.dailymotion.com/oauth/authorize";
+        const clientId = process.env.DAILYMOTION_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "GitHub") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://github.com/login/oauth/authorize";
+        const clientId = process.env.GITHUB_CLIENT_ID;
+        const origin = "http://localhost:8081";
+        const state = "ezfrgerhn45526364";
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const scopes = "user";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&origin=${origin}&state=${state}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+        //   axios
+        //     .get(authUrl, null, {
+        //       params: {
+        //         clientId: clientId,
+        //         redirectUri: redirectUri,
+        //         scopes: scopes,
+        //       },
+        //       headers: {
+        //         "Access-Control-Allow-Origin": "*",
+        //         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        //       },
+        //     })
+        //     .then((response) => {
+        //       console.log(response);
+        //     })
+        //     .catch((error) => console.log(error));
+      }
+      if (this.serviceName == "Deezer") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://connect.deezer.com/oauth/auth.php";
+        const app_id = process.env.DEEZER_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const perms = "basic_access,email,manage_library,manage_community";
+        const oauthRedirectUrl = `${authUrl}?app_id=${app_id}&redirect_uri=${redirectUri}&perms=${perms}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Google") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://accounts.google.com/o/oauth2/auth";
+        const clientId = process.env.GOOGLE_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes
         )}`;

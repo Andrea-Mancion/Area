@@ -1,9 +1,10 @@
-const BotClient = require('../myBot.js');
+const BotClient = require('./myBot.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const axios = require('axios');
 const cron = require('node-cron');
 const { time } = require('console');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 async function callReactionDiscord(area) {
@@ -13,10 +14,24 @@ async function callReactionDiscord(area) {
     sendMessage(area.reaction_Param);
   if (area.reaction_Name == "send_weather")
     sendWeather();
+  if (area.reaction_Name == "send_mail")
+    send_mail(area.reaction_Param);
   return;
 }
 
 module.exports = { callReactionDiscord };
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  tls: {
+      rejectUnauthorized: false
+  },
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASSWORD,
+  },
+});
 
 function listMessage() {
     const channel = BotClient.channels.cache.get(process.env.DISCORD_CHANNEL);
@@ -73,4 +88,20 @@ function sendWeather() {
     }).catch(error => {
       console.error("Error: " + error);
     });
+}
+
+function send_mail(messageContent) {
+  const mailOptions = {
+    from: 'ferius.mancion@gmail.com',
+    to: 'ferius.mancion@gmail.com',
+    subject: 'New Mail',
+    text: 'You receive a new mail ' + messageContent.message,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          console.log("Error with the send Email: " + error);
+      }
+      console.log('Email sent: ' + info.response);
+  });
 }
