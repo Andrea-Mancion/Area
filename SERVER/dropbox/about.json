@@ -1,0 +1,12 @@
+{
+    "name": "dropbox",
+    "actions": [
+        {
+            "name": "check_new_file",
+            "description": "Check si on a un nouveu fichier dans un dossier",
+            "parametter": [
+                "access_token"
+            ]
+        }
+    ]
+}

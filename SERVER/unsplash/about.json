@@ -1,0 +1,13 @@
+{
+    "name": "unsplash",
+    "actions": [
+        {
+            "name": "check_liked_photo",
+            "description": "Check quelle photot on a like",
+            "parametter": [
+                "access_token",
+                "photo_id"
+            ]
+        }
+    ]
+}

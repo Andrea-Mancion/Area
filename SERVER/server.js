@@ -17,6 +17,8 @@ const { callActionGithub } = require('./github/actions.js');
 const BotClient = require('./discord/myBot.js');
 const { callActiondailymotion } = require('./dailymotion/action.js');
 const { callReactiondailymotion } = require('./dailymotion/reaction.js')
+const { callActionDropbox } = require('./dropbox/action.js');
+const { callActionUnsplash } = require('./unsplash/action.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const cron = require('node-cron');
 const { time } = require('console');
@@ -33,7 +35,7 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 path = require('path');
 app.set('view engine', 'ejs'); // Utilisation du moteur de modèle EJS
 app.set('views', path.join(__dirname, 'views')); // Dossier où se trouvent les fichiers de vue (views)
@@ -153,7 +155,7 @@ app.get('/success', (req, res) => {
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "http://localhost:8080/auth/google/callback"
   },
     function (accessToken, refreshToken, profile, done) {
       userProfile = profile;
@@ -192,6 +194,8 @@ const action_map = {
   'Github': callActionGithub,
   'Twitch': callActionTwitch,
   'dailymotion': callActiondailymotion,
+  'Dropbox': callActionDropbox,
+  'Unsplash': callActionUnsplash,
 }
 
 const reaction_map = {
@@ -312,7 +316,6 @@ app.post('/create_action', (req, res) => {
 });
 
 
-// Démarrer le serveur sur le port 3000
 app.listen(port, () => {
   console.log(`Serveur démarré sur le port ${port}`);
 });

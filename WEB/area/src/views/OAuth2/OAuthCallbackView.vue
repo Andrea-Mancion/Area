@@ -19,7 +19,7 @@ export default {
             code: code,
             client_id: "fdbe5e5dbe5c42b680efb3ab1d3574af",
             client_secret: process.env.SPOTIFY_CLIENT_SECRET,
-            redirect_uri: `http://localhost:8080/oauth-callback?service=Spotify`,
+            redirect_uri: `http://localhost:8081/oauth-callback?service=Spotify`,
             grant_type: "authorization_code",
             scopes:
               "user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public",
@@ -44,7 +44,7 @@ export default {
       params.append("client_secret", process.env.DISCORD_CLIENT_SECRET);
       params.append(
         "redirect_uri",
-        "http://localhost:8080/oauth-callback?service=Discord"
+        "http://localhost:8081/oauth-callback?service=Discord"
       );
       params.append("grant_type", "authorization_code");
       params.append("code", code);
@@ -70,7 +70,7 @@ export default {
       // Gestion de l'authentification pour GitHub
       const clientId = process.env.GITHUB_CLIENT_ID;
       const clientSecret = process.env.GITHUB_CLIENT_SECRET;
-      const redirectUri = `http://localhost:8080/oauth-callback?service=GitHub`;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=GitHub`;
 
       axios
         .post("https://github.com/login/oauth/access_token", null, {
@@ -98,7 +98,7 @@ export default {
       // Gestion de l'authentification pour Yahoo
       const clientId = process.env.YAHOO_CLIENT_ID;
       const clientSecret = process.env.YAHOO_CLIENT_SECRET;
-      const redirectUri = `http://localhost:8080/oauth-callback?service=Yahoo`;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Yahoo`;
 
       axios
         .post("https://api.login.yahoo.com/oauth2/get_token", null, {
@@ -127,7 +127,7 @@ export default {
       // Gestion de l'authentification pour Deezer
       const clientId = process.env.DEEZER_CLIENT_ID;
       const clientSecret = process.env.DEEZER_CLIENT_SECRET;
-      const redirectUri = `http://localhost:8080/oauth-callback?service=Deezer`;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Deezer`;
       axios
         .post("https://connect.deezer.com/oauth/access_token.php", null, {
           params: {
@@ -155,7 +155,7 @@ export default {
       // Gestion de l'authentification pour Google
       const clientId = process.env.GOOGLE_CLIENT_ID;
       const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-      const redirectUri = `http://localhost:8080/oauth-callback?service=Google`;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Google`;
 
       axios
         .post("https://accounts.google.com/o/oauth2/token", null, {
@@ -184,7 +184,7 @@ export default {
       // Gestion de l'authentification pour Twitch
       const clientId = process.env.TWITCH_CLIENT_ID;
       const clientSecret = process.env.TWITCH_CLIENT_SECRET;
-      const redirectUri = `http://localhost:8080/oauth-callback?service=Twitch`;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Twitch`;
 
       axios
         .post("https://id.twitch.tv/oauth2/token", null, {

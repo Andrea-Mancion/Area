@@ -28,7 +28,7 @@ export default {
     },
     CallServer() {
       axios
-        .post("http://localhost:3000/create_action_saved_track")
+        .post("http://localhost:8080/create_action_saved_track")
         .then((response) => {
           if (response.status === 200) console.log(response.data);
         })
@@ -39,7 +39,7 @@ export default {
     // loginToSpotify() {
     //   const oauth2 = new OAuth2Client({
     //     clientId: "fdbe5e5dbe5c42b680efb3ab1d3574af",
-    //     redirectUri: "http://localhost:3000/callback",
+    //     redirectUri: "http://localhost:8081/callback",
     //     authorizationUri: "https://accounts.spotify.com/authorize",
     //     tokenUri: "https://accounts.spotify.com/api/token",
     //   });
