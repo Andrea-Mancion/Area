@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/create_task_page.dart';
 import 'package:mobile_app/variable.dart';
@@ -111,7 +113,7 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
                 return;
               }
               for (var i = 0; i < trigger.parameters.length; i++) {
-                AllVariables.controllersAction.add(params[i].text);
+                AllVariables.controllersAction[trigger.parameters[i]] = (params[i].text);
               }
               AllVariables.action = trigger.name;
               AllVariables.actionPrint = trigger.description;
@@ -126,7 +128,7 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
                 return;
               }
               for (var i = 0; i < trigger.parameters.length; i++) {
-                AllVariables.controllersReaction.add(params[i].text);
+                AllVariables.controllersReaction[trigger.parameters[i]] = (params[i].text);
               }
               params.clear();
               AllVariables.reaction = trigger.name;

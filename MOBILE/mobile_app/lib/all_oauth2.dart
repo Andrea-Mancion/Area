@@ -1,17 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:mobile_app/variable.dart';
-import 'dart:math';
-import 'package:crypto/crypto.dart';
 import 'package:mobile_app/github_oauth2.dart';
 import 'package:mobile_app/spotify_oauth2.dart';
 import 'package:mobile_app/discord_oauth2.dart';
 import 'package:mobile_app/twitch_oauth2.dart';
 import 'package:mobile_app/yahoo_oauth2.dart';
-import 'package:mobile_app/variable.dart';
-import 'package:mobile_app/pages/service_page.dart';
 
 void performOAuth2(Service service, bool isAction) {
   switch (service.name) {

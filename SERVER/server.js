@@ -284,6 +284,8 @@ app.post('/create_action', (req, res) => {
     res.status(400).json({ error: 'Error creating action' });
     return;
   }
+  console.log(area);
+
   setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
 

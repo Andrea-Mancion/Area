@@ -7,11 +7,14 @@ Future<void> twitchOAuth2() async {
   final twitchClientId = 'wvtkdzlzxnrm3yucfl9tgx7sh2oqw5';
   final redirectUri = 'mobile:/';
 
+  if (AllVariables.accessToken["Twitch"] != '') {
+    return;
+  }
   final url = Uri.https('id.twitch.tv', '/oauth2/authorize', {
     'response_type': 'code',
     'client_id': twitchClientId,
     'redirect_uri': redirectUri,
-    'scope': 'user:read:email',
+    'scope': 'user:read:email user:read:follows moderator:read:followers',
   });
 
   try {
