@@ -13,20 +13,20 @@ services:
     volumes:
       - ./empty.env:/SERVER/.env
 
-  # mobile:
-  #   build:
-  #     context: ./MOBILE/mobile_app
-  #   depends_on:
-  #     - server
-  #   volumes:
-  #     - common:/apk
+  mobile:
+    build:
+      context: ./MOBILE/mobile_app
+    depends_on:
+      - server
+    volumes:
+      - common:/apk
 
   web:
     build:
       context: ./WEB/area
     depends_on:
       - server
-      # - mobile
+      - mobile
     ports:
       - "8081:8081"
     volumes:
