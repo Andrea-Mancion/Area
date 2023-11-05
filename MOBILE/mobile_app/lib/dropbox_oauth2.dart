@@ -38,6 +38,9 @@ String generateCodeChallenge(String codeVerifier) {
 }
 
 void dropboxAuthentication2() async {
+  if (AllVariables.accessToken["Dropbox"] != '') {
+    return;
+  }
   final url = Uri.https('www.dropbox.com', 'oauth2/authorize', {
     'response_type': 'code',
     'client_id': dropboxClientId,

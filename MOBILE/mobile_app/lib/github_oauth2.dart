@@ -8,6 +8,9 @@ void githubOAuth2Authentication() async {
   final githubClientSecret = '6c9db17717be8962cd41c3695f7b0a50ec4d9545';
   final callbackUrlScheme = 'mobile';
 
+  if (AllVariables.accessToken["Github"] != '') {
+    return;
+  }
   final url = Uri.https('github.com', '/login/oauth/authorize', {
     'client_id': githubClientId,
     'redirect_uri': 'mobile://oauth2-callback',

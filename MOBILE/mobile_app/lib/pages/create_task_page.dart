@@ -20,7 +20,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   void getAllAction() async{
     final response = await http.get(
-      Uri.parse("http://10.19.255.70:3000/about.json"),
+      Uri.parse("http://${AllVariables.ipMan}:3000/about.json"),
        headers: {
       'Content-Type': 'application/json; charset=UTF-8'
       },
@@ -94,6 +94,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   @override
   Widget build(BuildContext context) {
     // getAllAction();
+    if (AllVariables.ipMan == "") {
+      AllVariables.ipMan = "10.19.255.70";
+    }
     if (AllVariables.action == "") {
       whatPrintIf = "...";
     } else {
@@ -106,7 +109,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Crée une tâche"),
+        title: const Text(""),
       ),
       body: Center(
         child: Column(
@@ -187,6 +190,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 print("controllersAction: ${AllVariables.controllersAction}");
                 print("controllersReaction: ${AllVariables.controllersReaction}");
                 print("accessToken: ${AllVariables.accessToken}");
+                print("ipman = ${AllVariables.ipMan}");
                 postDataToServer();
                 Navigator.push(
                   context,

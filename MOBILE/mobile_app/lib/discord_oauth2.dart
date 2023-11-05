@@ -38,6 +38,9 @@ String generateCodeChallenge(String codeVerifier) {
 }
 
 void discordAuthentication2() async {
+    if (AllVariables.accessToken["Discord"] != '') {
+      return;
+    }
     final url = Uri.https('discord.com', '/api/oauth2/authorize', {
         'response_type': 'code',
         'client_id': discordClientId,

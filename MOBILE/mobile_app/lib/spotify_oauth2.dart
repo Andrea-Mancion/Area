@@ -7,6 +7,9 @@ void spotifyAuthentication() async {
   final spotifyClientId = 'fdbe5e5dbe5c42b680efb3ab1d3574af';
   final callbackUrlScheme = 'mobile';
 
+  if (AllVariables.accessToken["Spotify"] != '') {
+    return;
+  }
   final url = Uri.https('accounts.spotify.com', '/authorize', {
     'response_type': 'code',
     'client_id': spotifyClientId,

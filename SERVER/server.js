@@ -286,6 +286,7 @@ app.post('/create_action', (req, res) => {
   addNewVariables();
   if (!verify_variable(newAreaObject)) {
     res.status(400).json({ error: 'Error creating action' });
+    console.log("NANNNNANNAN");
     return;
   }
   console.log(area);

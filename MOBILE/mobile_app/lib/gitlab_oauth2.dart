@@ -8,6 +8,9 @@ void gitlabAuthentication() async {
   final gitlabClientSecret = 'gloas-50c571e7f506a683c7ddcd00a4628c95547a6a041878b9443bcca98eeda3e511';
   final callbackUrlScheme = 'mobile';
 
+  if (AllVariables.accessToken["Gitlab"] != '') {
+    return;
+  }
   final url = Uri.https('gitlab.com', '/oauth/authorize', {
     'client_id': gitlabClientId,
     'redirect_uri': 'mobile://oauth2-callback',
@@ -39,7 +42,7 @@ void gitlabAuthentication() async {
     final Map<String, dynamic> data = jsonDecode(response.body);
 
     if (data.containsKey('access_token')) {
-      AllVariables.accessToken["GitLab"] = jsonDecode(response.body)['access_token'] as String;
+      AllVariables.accessToken["Gitlab"] = jsonDecode(response.body)['access_token'] as String;
       print("Access token gitlab: ${AllVariables.accessToken["GitLab"]}");
     } else {
       print("Error: Failed to obtain access token");

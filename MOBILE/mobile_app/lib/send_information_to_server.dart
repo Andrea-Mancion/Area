@@ -4,7 +4,7 @@ import 'package:mobile_app/variable.dart';
 
 Future<void> postDataToServer() async {
   final res = await http.post(
-    Uri.parse("http://10.19.255.70:3000/create_action"),
+    Uri.parse("http://${AllVariables.ipMan}:8080/create_action"),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     },
