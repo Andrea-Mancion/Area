@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'package:mobile_app/variable.dart';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
-import 'package:mobile_app/pages/action_pages/discord/discord_action_page.dart';
 
 class DiscordAuthenticationPage extends StatefulWidget {
     @override
@@ -83,10 +82,6 @@ class _DiscordAuthenticationPageState extends State<DiscordAuthenticationPage> {
                 var jsonResponse = json.decode(response.body) as Map<String, dynamic>;
                 AllVariables.discordAccessToken = jsonResponse["access_token"];
                 print("Discord access token: ${jsonResponse['access_token']}");
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DiscordActionPage()),
-                );
             } else {
                 print('Error: ${response.statusCode}');
                 print(response.body);
