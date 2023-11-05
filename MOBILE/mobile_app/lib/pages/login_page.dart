@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/create_task_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_app/pages/home_page.dart';
 import 'dart:convert';
-
 import 'package:mobile_app/pages/register_page.dart';
 import 'package:mobile_app/variable.dart';
+import 'package:mobile_app/discord_oauth2.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 250,
                 height: 250,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 25),
               const Text(
                 'Log in',
                 style: TextStyle(
@@ -119,6 +120,23 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: _login,
                 child: const Text(
                   'Connexion',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 255, 0, 0),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  discordAuthentication();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
+                child: const Text(
+                  'Connexion avec Discord',
                   style: TextStyle(
                     fontSize: 20,
                     color: Color.fromARGB(255, 255, 0, 0),
