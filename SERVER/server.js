@@ -17,6 +17,9 @@ const { callActionGithub } = require('./github/actions.js');
 const BotClient = require('./discord/myBot.js');
 const { callActiondailymotion } = require('./dailymotion/action.js');
 const { callReactiondailymotion } = require('./dailymotion/reaction.js')
+const { callActionDropbox } = require('./dropbox/action.js');
+const { callActionUnsplash } = require('./unsplash/action.js');
+const { callActionGitlab } = require('./gitlab/action.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const cron = require('node-cron');
 const { time } = require('console');
@@ -192,6 +195,9 @@ const action_map = {
   'Github': callActionGithub,
   'Twitch': callActionTwitch,
   'dailymotion': callActiondailymotion,
+  'Dropbox': callActionDropbox,
+  'Unsplash': callActionUnsplash,
+  'Gitlab': callActionGitlab,
 }
 
 const reaction_map = {
@@ -282,8 +288,11 @@ app.post('/create_action', (req, res) => {
   addNewVariables();
   if (!verify_variable(newAreaObject)) {
     res.status(400).json({ error: 'Error creating action' });
+    console.log("NANNNNANNAN");
     return;
   }
+  console.log(area);
+
   setInterval(() => action_map[action_service_Name](newAreaObject, nbreact, reaction_map), 3000);
   nbreact++;
 

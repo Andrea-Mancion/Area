@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:mobile_app/pages/register_page.dart';
+import 'package:mobile_app/variable.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _passwordVisible = false;
   final TextEditingController usernameController = TextEditingController();
+  final TextEditingController ipController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   String message = '';
 
@@ -23,8 +25,9 @@ class _LoginPageState extends State<LoginPage> {
     final password = passwordController.text;
 
     try {
+      AllVariables.ipMan = ipController.text;
       final response = await http.post(
-        Uri.parse('http://10.19.254.241:3000/login'),
+        Uri.parse('http://${AllVariables.ipMan}:8080/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -87,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: passwordController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  labelText: 'Password',
+                  labelText: 'Mot de passe',
                   suffixIcon: IconButton(
                     icon: _passwordVisible
                         ? const Icon(Icons.visibility)
@@ -100,6 +103,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 obscureText: !_passwordVisible,
+                keyboardType: TextInputType.text,
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: ipController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Adresse IP',
+                ),
                 keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 20),

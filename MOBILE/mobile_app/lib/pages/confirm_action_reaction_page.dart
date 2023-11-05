@@ -22,7 +22,7 @@ class _ConfimActionReactionPageState extends State<ConfimActionReactionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Confirm Action Reaction"),
+        title: const Text(""),
       ),
       body:
        ConfirmFeildParamActionReaction(widget.trigger, widget.service, widget.isAction, key: UniqueKey()),
@@ -111,10 +111,11 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
                 return;
               }
               for (var i = 0; i < trigger.parameters.length; i++) {
-                AllVariables.controllersAction.add(params[i].text);
+                AllVariables.controllersAction[trigger.parameters[i]] = (params[i].text);
               }
               AllVariables.action = trigger.name;
               AllVariables.actionPrint = trigger.description;
+              AllVariables.nameServiceAction = service.name;
               params.clear();
               Navigator.push(
                 context,
@@ -125,11 +126,12 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
                 return;
               }
               for (var i = 0; i < trigger.parameters.length; i++) {
-                AllVariables.controllersReaction.add(params[i].text);
+                AllVariables.controllersReaction[trigger.parameters[i]] = (params[i].text);
               }
               params.clear();
               AllVariables.reaction = trigger.name;
               AllVariables.reactionPrint = trigger.description;
+              AllVariables.nameServiceReaction = service.name;
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const CreateTaskPage()),

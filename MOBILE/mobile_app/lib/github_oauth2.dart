@@ -8,6 +8,9 @@ void githubOAuth2Authentication() async {
   final githubClientSecret = '6c9db17717be8962cd41c3695f7b0a50ec4d9545';
   final callbackUrlScheme = 'mobile';
 
+  if (AllVariables.accessToken["Github"] != '') {
+    return;
+  }
   final url = Uri.https('github.com', '/login/oauth/authorize', {
     'client_id': githubClientId,
     'redirect_uri': 'mobile://oauth2-callback',
@@ -35,10 +38,8 @@ void githubOAuth2Authentication() async {
     final Map<String, dynamic> data = jsonDecode(response.body);
 
     if (data.containsKey('access_token')) {
-      final accessToken = data['access_token'] as String;
-      print("Access token: $accessToken");
-
-      // Now you can use the GitHub access token for API requests.
+      AllVariables.accessToken["Github"] = jsonDecode(response.body)['access_token'] as String;
+      print("Access token: ${AllVariables.accessToken["Github"]}");
     } else {
       print("Error: Failed to obtain access token");
     }

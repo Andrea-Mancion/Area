@@ -22,6 +22,8 @@ const transporter = nodemailer.createTransport({
 });
 
 function send_mail(messageContent) {
+    console.log("send_mail to bite");
+    console.log(messageContent.message);
     const mailOptions = {
         from: 'ferius.mancion@gmail.com',
         to: 'ferius.mancion@gmail.com',

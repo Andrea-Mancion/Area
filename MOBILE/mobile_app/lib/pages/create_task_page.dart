@@ -20,7 +20,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   void getAllAction() async{
     final response = await http.get(
-      Uri.parse("http://10.19.255.70:3000/about.json"),
+      Uri.parse("http://${AllVariables.ipMan}:3000/about.json"),
        headers: {
       'Content-Type': 'application/json; charset=UTF-8'
       },
@@ -43,9 +43,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               break;
             case 'github':
               github.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
-              break;
-            case 'google':
-              google.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
               break;
             case 'spotify':
               spotify.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
@@ -75,9 +72,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             case 'github':
               github.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
               break;
-            case 'google':
-              google.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
-              break;
             case 'spotify':
               spotify.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
               break;
@@ -99,7 +93,10 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    getAllAction();
+    // getAllAction();
+    if (AllVariables.ipMan == "") {
+      AllVariables.ipMan = "10.19.255.70";
+    }
     if (AllVariables.action == "") {
       whatPrintIf = "...";
     } else {
@@ -112,7 +109,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Crée une tâche"),
+        title: const Text(""),
       ),
       body: Center(
         child: Column(
@@ -182,6 +179,18 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 AllVariables.tasks.add(AllVariables.createNewTask);
                 AllVariables.nbTask++;
                 AllVariables.taskIndex++;
+                print("action: ${AllVariables.action}");
+                print("reaction: ${AllVariables.reaction}");
+                print("actionDescription: ${AllVariables.actionDescription}");
+                print("reactionDescription: ${AllVariables.reactionDescription}");
+                print("actionPrint: ${AllVariables.actionPrint}");
+                print("reactionPrint: ${AllVariables.reactionPrint}");
+                print("nameServiceAction: ${AllVariables.nameServiceAction}");
+                print("nameServiceReaction: ${AllVariables.nameServiceReaction}");
+                print("controllersAction: ${AllVariables.controllersAction}");
+                print("controllersReaction: ${AllVariables.controllersReaction}");
+                print("accessToken: ${AllVariables.accessToken}");
+                print("ipman = ${AllVariables.ipMan}");
                 postDataToServer();
                 Navigator.push(
                   context,
