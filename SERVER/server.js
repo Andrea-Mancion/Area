@@ -220,7 +220,7 @@ app.get("/about.json", (req, res) => {
       "services": services
     }
   };
-  res.send(about);
+  res.status(200).json(about);
 });
 
 function verify_variable(area) {

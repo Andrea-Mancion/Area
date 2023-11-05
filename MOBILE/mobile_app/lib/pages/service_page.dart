@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/pages/home_page.dart';
+// import 'package:mobile_app/pages/home_page.dart';
 import 'package:mobile_app/variable.dart';
+import 'package:mobile_app/pages/confirm_action_reaction_page.dart';
 
 class ServicePage extends StatefulWidget {
   final Service service;
@@ -19,16 +20,20 @@ class ServicePage extends StatefulWidget {
 class _ServicePageState extends State<ServicePage> {
   @override
   Widget build(BuildContext context) {
-    return  ServicePageBannerAndButton(serviceImage: widget.service.image, serviceTrigger: widget.isAction ? widget.service.allAction : widget.service.allReaction, key: UniqueKey());
+    return ServicePageBannerAndButton(serviceImage: widget.service.image, serviceTrigger: widget.isAction ? widget.service.allAction : widget.service.allReaction,service: widget.service, isAction: widget.isAction, key: UniqueKey());
   }
 }
 
 class ServicePageBannerAndButton extends StatelessWidget {
   final String serviceImage;
-  final List<String> serviceTrigger;
+  final List<ActionReaction> serviceTrigger;
+  final Service service;
+  final bool isAction;
   const ServicePageBannerAndButton({
     required this.serviceImage,
     required this.serviceTrigger,
+    required this.service,
+    required this.isAction,
     super.key,
   });
 
@@ -44,7 +49,7 @@ class ServicePageBannerAndButton extends StatelessWidget {
           children: [
             ServicePageBanner(image: serviceImage, key: UniqueKey()),
             const SizedBox(height: 50),
-            ServicePageButton(trigger: serviceTrigger, nbTrigger: serviceTrigger.length, key: UniqueKey())
+            ServicePageButton(trigger: serviceTrigger, nbTrigger: serviceTrigger.length,service: service, isAction: isAction, key: UniqueKey())
           ],
         ),
       )
@@ -80,11 +85,15 @@ class ServicePageBanner extends StatelessWidget {
 }
 
 class ServicePageButton extends StatelessWidget {
-  final List<String> trigger;
+  final List<ActionReaction> trigger;
   final int nbTrigger;
+  final Service service;
+  final bool isAction;
   const ServicePageButton({
     required this.trigger,
     required this.nbTrigger,
+    required this.service,
+    required this.isAction,
     required Key key,
   }) : super(key: key);
 
@@ -107,11 +116,9 @@ class ServicePageButton extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                      );
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => ConfimActionReactionPage(trigger[index], service, isAction, key: UniqueKey())));
                     },
-                    child: Text(trigger[index])
+                    child: Text(trigger[index].description)
                   );
                 },
                 childCount: nbTrigger,

@@ -4,6 +4,8 @@ import 'package:mobile_app/pages/all_service_page.dart';
 // import 'package:mobile_app/pages/then_that_page.dart';
 import 'package:mobile_app/variable.dart';
 import 'package:mobile_app/send_information_to_server.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CreateTaskPage extends StatefulWidget {
   const CreateTaskPage({super.key});
@@ -16,8 +18,88 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   String whatPrintIf = "";
   String whatPrintThen = "";
 
+  void getAllAction() async{
+    final response = await http.get(
+      Uri.parse("http://10.19.255.70:3000/about.json"),
+       headers: {
+      'Content-Type': 'application/json; charset=UTF-8'
+      },
+    );
+    if (response.statusCode == 200) {
+      final reponse = jsonDecode(response.body);
+      for (var service in reponse['server']['services']) {
+        String serviceName = service['name'];
+        //get Actions
+        for (var action in service['actions']) {
+          String actionName = action['name'];
+          String actionDescription = action['description'];
+          List<dynamic>? actionParam = action['parametter'];
+          switch (serviceName) {
+            case 'deezer':
+              deezer.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
+              break;
+            case 'discord':
+              discord.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
+              break;
+            case 'github':
+              github.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
+              break;
+            case 'google':
+              google.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
+              break;
+            case 'spotify':
+              spotify.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
+              break;
+            case 'twitch':
+              twitch.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
+              break;
+            case 'yahoo':
+              yahoo.allAction.add(ActionReaction(actionName, actionDescription, actionParam??[]));
+              break;
+            default:
+              break;
+          }
+        }
+        //get Reactions
+        for (var reaction in service['reactions']) {
+          String reactionName = reaction['name'];
+          String reactionDescription = reaction['description'];
+          List<dynamic>? reactionParam = reaction['parametter'];
+          switch (serviceName) {
+            case 'deezer':
+              deezer.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
+              break;
+            case 'discord':
+              discord.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
+              break;
+            case 'github':
+              github.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
+              break;
+            case 'google':
+              google.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
+              break;
+            case 'spotify':
+              spotify.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
+              break;
+            case 'twitch':
+              twitch.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
+              break;
+            case 'yahoo':
+              yahoo.allReaction.add(ActionReaction(reactionName, reactionDescription, reactionParam??[]));
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    } else {
+      print('GET request failed with status: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getAllAction();
     if (AllVariables.action == "") {
       whatPrintIf = "...";
     } else {
@@ -52,7 +134,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AllServicePage(isAction: true)),
+                      MaterialPageRoute(builder: (context) => const AllServicePage(isAction: true)),
                     );
                   },
                   child: Text("Si \"$whatPrintIf\"",
@@ -81,7 +163,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AllServicePage(isAction: false)),
+                      MaterialPageRoute(builder: (context) => const AllServicePage(isAction: false)),
                     );
                   },
                   child: Text("Fais \"$whatPrintThen\"",
@@ -105,6 +187,12 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   context,
                   MaterialPageRoute(builder: (context) => const HomePage()),
                 );
+                AllVariables.controllersAction.clear();
+                AllVariables.controllersReaction.clear();
+                AllVariables.action = "";
+                AllVariables.actionPrint = "";
+                AllVariables.reaction = "";
+                AllVariables.reactionPrint = "";
               },
               child: const Text("Confirmer"),
             )
