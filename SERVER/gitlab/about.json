@@ -1,0 +1,13 @@
+{
+    "name": "gitlab",
+    "actions": [
+        {
+            "name": "get_list_issues",
+            "description": "Get une liste d'issue",
+            "parametter": [
+                "access_token",
+                "project_path"
+            ]
+        }
+    ]
+}
