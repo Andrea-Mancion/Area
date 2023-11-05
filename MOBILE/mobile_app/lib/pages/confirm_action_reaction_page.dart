@@ -115,6 +115,7 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
               }
               AllVariables.action = trigger.name;
               AllVariables.actionPrint = trigger.description;
+              AllVariables.nameServiceAction = service.name;
               params.clear();
               Navigator.push(
                 context,
@@ -130,6 +131,7 @@ class ConfirmFeildParamActionReaction extends StatelessWidget {
               params.clear();
               AllVariables.reaction = trigger.name;
               AllVariables.reactionPrint = trigger.description;
+              AllVariables.nameServiceReaction = service.name;
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const CreateTaskPage()),

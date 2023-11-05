@@ -33,9 +33,9 @@ void yahooAuthentication() async {
       headers: {"content-type": "application/x-www-form-urlencoded"},
     );
 
-    AllVariables.accessTokenYahoo = jsonDecode(response.body)['access_token'] as String;
+    AllVariables.accessToken["Yahoo"] = jsonDecode(response.body)['access_token'] as String;
     print("access token:");
-    print(AllVariables.accessTokenYahoo);
+    print(AllVariables.accessToken["Yahoo"]);
   } catch (e) {
     print('Error: $e');
   }

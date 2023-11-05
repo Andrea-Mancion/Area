@@ -35,9 +35,9 @@ void spotifyAuthentication() async {
       headers: {"content-type": "application/x-www-form-urlencoded"},
     );
 
-    AllVariables.accessTokenSpotify = jsonDecode(response.body)['access_token'] as String;
+    AllVariables.accessToken["Spotify"] = jsonDecode(response.body)['access_token'] as String;
     print("access token:");
-    print(AllVariables.accessTokenSpotify);
+    print(AllVariables.accessToken["Spotify"]);
   } catch (e) {
     print('Error: $e');
   }

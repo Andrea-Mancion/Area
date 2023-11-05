@@ -13,29 +13,22 @@ import 'package:mobile_app/yahoo_oauth2.dart';
 import 'package:mobile_app/variable.dart';
 import 'package:mobile_app/pages/service_page.dart';
 
-Future<void> performOAuth2(Service service, bool isAction) {
+void performOAuth2(Service service, bool isAction) {
   switch (service.name) {
     case "Spotify":
       spotifyAuthentication();
-      ServicePage(isAction: isAction, service: spotify);
       break;
     case "Deezer":
       print("deezer not implemented yet");
       break;
     case "Discord":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DiscordAuthenticationPage()),
-      );
-      ServicePage(isAction: isAction, service: discord);
+      discordAuthentication();
       break;
     case "Github":
       githubOAuth2Authentication();
-      ServicePage(isAction: isAction, service: github);
       break;
     case "Twitch":
       twitchOAuth2();
-      ServicePage(isAction: isAction, service: twitch);
       break;
     case "Yahoo":
       yahooAuthentication();
@@ -46,4 +39,3 @@ Future<void> performOAuth2(Service service, bool isAction) {
       break;
   }
 }
-

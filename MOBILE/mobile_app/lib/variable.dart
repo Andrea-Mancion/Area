@@ -3,12 +3,6 @@ class AllVariables {
 
   static String reaction = "";
   static String action = "";
-  static String accessTokenSpotify = '';
-  static String discordAccessToken = '';
-  static String twitchAccessToken = '';
-  static String deezerAccessToken = '';
-  static String accessTokenYahoo = '';
-  static String accessTokenGoogle = '';
   static var actionDescription = <String, dynamic>{
 
   };
@@ -42,7 +36,16 @@ class AllVariables {
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
   static List<String> controllersAction = [];
   static List<String> controllersReaction = [];
-
+  static String nameServiceAction = "";
+  static String nameServiceReaction = "";
+  static Map<String,String> accessToken = {
+    "Spotify": "",
+    "Deezer": "",
+    "Discord": "",
+    "Github": "",
+    "Twitch": "",
+    "Yahoo": "",
+  };
 }
 Service spotify = Service(AllVariables.imageSpotify, "Spotify");
 Service deezer = Service(AllVariables.imageDeezer, "Deezer");
@@ -62,6 +65,7 @@ class Service {
   List<ActionReaction> allReaction = [];
   List<String> tmp = [];
   String name = '';
+  String accessToken = '';
 }
 
 class ActionReaction {

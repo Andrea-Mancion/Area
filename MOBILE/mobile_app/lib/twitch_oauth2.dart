@@ -35,8 +35,8 @@ Future<void> twitchOAuth2() async {
       headers: {"content-type": "application/x-www-form-urlencoded"},
     );
 
-    AllVariables.twitchAccessToken = jsonDecode(response.body)['access_token'] as String;
-    print("Twitch access token: ${AllVariables.twitchAccessToken}");
+    AllVariables.accessToken["Twitch"] = jsonDecode(response.body)['access_token'] as String;
+    print("Twitch access token: ${AllVariables.accessToken["Twitch"]}");
   } catch (e) {
     print('Error: $e');
   }

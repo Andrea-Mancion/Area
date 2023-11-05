@@ -6,12 +6,12 @@ import 'package:mobile_app/variable.dart';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 
-final String discordClientId = '1156974898644795393';
-final String discordClientSecret = 'X8IKJ1RTnh-QUyfFTTh6N5d1lZoUuSGD';
-final String redirectUri = 'mobile://oauth2-callback';
-final String customUriScheme = 'mobile';
-late String codeVerifier;
-late String codeChallenge;
+const String discordClientId = '1156974898644795393';
+const String discordClientSecret = 'X8IKJ1RTnh-QUyfFTTh6N5d1lZoUuSGD';
+String redirectUri = 'mobile://oauth2-callback';
+String customUriScheme = 'mobile';
+String codeVerifier = '';
+String codeChallenge = '';
 
 void discordAuthentication() {
     codeVerifier = generateCodeVerifier();
@@ -71,7 +71,7 @@ void discordAuthentication2() async {
 
         if (response.statusCode == 200) {
             var jsonResponse = json.decode(response.body) as Map<String, dynamic>;
-            AllVariables.discordAccessToken = jsonResponse["access_token"];
+            AllVariables.accessToken["Discord"] = jsonResponse["access_token"];
             print("Discord access token: ${jsonResponse['access_token']}");
         } else {
             print('Error: ${response.statusCode}');
