@@ -48,6 +48,86 @@ export default new Vuex.Store({
               is_public: false,
             },
           },
+          AddItemsToPlaylist: {
+            Name: 'add_items_to_playlist',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              playlist_id: '',
+              track_id: '',
+            },
+          },
+          AddTrackToQueue: {
+            Name: 'add_track_to_queue',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              track_id: '',
+            },
+          },
+          SetVolume: {
+            Name: 'set_volume',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              volume: '',
+            },
+          },
+          StartSong: {
+            Name: 'start_song',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              volume: '',
+            },
+          },
+          PauseSong: {
+            Name: 'pause_song',
+            IsParams: false,
+            IsBoolParams: false,
+          },
+          NextSong: {
+            Name: 'next_song',
+            IsParams: false,
+            IsBoolParams: false,
+          },
+          PreviousSong: {
+            Name: 'previous_song',
+            IsParams: false,
+            IsBoolParams: false,
+          },
+          FollowPlaylist: {
+            Name: 'follow_playlist',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              playlist_id: '',
+            }
+          },
+          RemoveSavedTrack: {
+            Name: 'remove_saved_track',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              track_id: '',
+            }
+          },
+          save_show: {
+            Name: 'save_show',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              show_id: '',
+            }
+          },
+          RemoveSavedShow: {
+            Name: 'remove_saved_show',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              show_id: '',
+            }
+          },
         },
       },
       Discord: {
@@ -127,8 +207,21 @@ export default new Vuex.Store({
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
+          NewFollow: {
+            Name: 'new_follow',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
         },
         Reactions: {
+          SendNotif: {
+            Name: 'send_notif',
+            IsParams: false,
+            IsBoolParams: false,
+          },
         },
       },
       Google: {
