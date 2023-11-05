@@ -17,6 +17,7 @@ const { callActionGithub } = require('./github/actions.js');
 const BotClient = require('./discord/myBot.js');
 const { callActiondailymotion } = require('./dailymotion/action.js');
 const { callReactiondailymotion } = require('./dailymotion/reaction.js')
+const { callActionDropbox } = require('./dropbox/action.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const cron = require('node-cron');
 const { time } = require('console');
@@ -192,6 +193,7 @@ const action_map = {
   'Github': callActionGithub,
   'Twitch': callActionTwitch,
   'dailymotion': callActiondailymotion,
+  'Dropbox': callActionDropbox,
 }
 
 const reaction_map = {
