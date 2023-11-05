@@ -9,7 +9,6 @@ import 'package:mobile_app/pages/login_page.dart';
 import 'package:mobile_app/pages/service_page.dart';
 // import 'package:mobile_app/pages/login_page.dart';
 import 'package:mobile_app/variable.dart';
-
 void main() {
   /*Timer.periodic(Duration(seconds: 5), (Timer timer) {
     // Placez le code que vous souhaitez exécuter ici
