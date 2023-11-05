@@ -18,6 +18,7 @@ const BotClient = require('./discord/myBot.js');
 const { callActiondailymotion } = require('./dailymotion/action.js');
 const { callReactiondailymotion } = require('./dailymotion/reaction.js')
 const { callActionDropbox } = require('./dropbox/action.js');
+const { callActionUnsplash } = require('./unsplash/action.js');
 const DiscordStrategy = require('passport-discord').Strategy;
 const cron = require('node-cron');
 const { time } = require('console');
@@ -194,6 +195,7 @@ const action_map = {
   'Twitch': callActionTwitch,
   'dailymotion': callActiondailymotion,
   'Dropbox': callActionDropbox,
+  'Unsplash': callActionUnsplash,
 }
 
 const reaction_map = {
