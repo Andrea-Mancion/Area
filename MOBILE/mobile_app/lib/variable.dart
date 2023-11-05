@@ -34,6 +34,7 @@ class AllVariables {
   static String imageSpotify = "assets/images/Logo_Spotify.png";
   static String imageTwitch = "assets/images/Logo_Twitch.png";
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
+  static String imageDropbox = "assets/images/Logo_Dropbox.png";
   static var controllersAction = <String, dynamic>{};
   static var controllersReaction = <String, dynamic>{};
   static String nameServiceAction = "";
@@ -45,6 +46,7 @@ class AllVariables {
     "Github": "",
     "Twitch": "",
     "Yahoo": "",
+    "Dropbox": "",
   };
   static List<ActionReaction> spotifyAction = [
     ActionReaction("check_new_saved_track", "Une nouvelle musique est enregistrée", []),
@@ -94,6 +96,11 @@ class AllVariables {
   ];
   static List<ActionReaction> yahooReaction = [
   ];
+  static List<ActionReaction> dropboxAction = [
+    ActionReaction("check_new_file", "Check si un nouveau fichier est ajouté", []),
+  ];
+  static List<ActionReaction> dropboxReaction = [
+  ];
 }
 Service spotify = Service(AllVariables.imageSpotify, "Spotify", AllVariables.spotifyAction, AllVariables.spotifyReaction);
 Service deezer = Service(AllVariables.imageDeezer, "Deezer", AllVariables.spotifyAction, AllVariables.spotifyReaction);
@@ -101,7 +108,7 @@ Service discord = Service(AllVariables.imageDiscord, "Discord", AllVariables.dis
 Service github = Service(AllVariables.imageGithub, "Github", AllVariables.githubAction, AllVariables.githubReaction);
 Service twitch = Service(AllVariables.imageTwitch, "Twitch", AllVariables.twitchAction, AllVariables.twitchReaction);
 Service yahoo = Service(AllVariables.imageYahoo, "Yahoo", AllVariables.spotifyAction, AllVariables.spotifyReaction);
-
+Service dropbox = Service(AllVariables.imageDropbox, "Dropbox", AllVariables.dropboxAction, AllVariables.dropboxReaction);
 class Service {
   Service(
     this.image,

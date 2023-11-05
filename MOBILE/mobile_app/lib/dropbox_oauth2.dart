@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -6,8 +5,8 @@ import 'package:mobile_app/variable.dart';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 
-const String discordClientId = 'aovpzza7354cn7d';
-const String discordClientSecret = 'sblrd1uw8chxzfz';
+const String dropboxClientId = 'aovpzza7354cn7d';
+const String dropboxClientSecret = 'sblrd1uw8chxzfz';
 String redirectUri = 'mobile://oauth2-callback';
 String customUriScheme = 'mobile';
 String codeVerifier = '';
@@ -64,14 +63,14 @@ void dropboxAuthentication2() async {
         "code": code,
         "redirect_uri": redirectUri,
         "client_id": dropboxClientId,
-        "client_secret": discordClientSecret,
+        "client_secret": dropboxClientSecret,
         "code_verifier": codeVerifier,
       },
     );
 
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body) as Map<String, dynamic>;
-      AllVariables.accessToken["Discord"] = jsonResponse["access_token"];
+      AllVariables.accessToken["Dropbox"] = jsonResponse["access_token"];
       print("Discord access token: ${jsonResponse['access_token']}");
     } else {
       print('Error: ${response.statusCode}');
