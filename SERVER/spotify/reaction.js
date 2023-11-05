@@ -8,7 +8,7 @@ const { create } = require('domain');
 
 let nbEpisode = -1;
 const app = express();
-const port = 3000; // Le port sur lequel le serveur Express écoutera
+const port = 8080; // Le port sur lequel le serveur Express écoutera
 
 async function spotify_reaction(area) { // to replace
     const reaction_Name = area.reaction_Name;

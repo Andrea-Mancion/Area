@@ -62,8 +62,11 @@ async function getFollowedChannel(access_token_twitch) {
           user_id: user_id_twitch,
         },
       });
+
+      console.log("REPONSE: " + reponse);
+      console.log("REPONSE: " + reponse.data);
       counter = counter + 1;
-      return reponse.data;
+      return JSON.stringify(reponse.data);
     } catch(error) {
       console.log("ERROR GETTING FOLLOWED CHANNELS");
       console.log(error);
@@ -112,7 +115,7 @@ async function checkNewFollow(access_token_twitch) {
       },
     });
     counter_twitch = counter_twitch + 1;
-    return reponse.data;
+    return JSON.stringify(reponse.data);
   } catch (error) {
     console.log("ERROR GETTING FOLLOWERS CHANNELS");
     console.log(error);
@@ -160,7 +163,6 @@ async function getStreamerSchedule(access_token_twitch) {
         broadcaster_id: broadcast_id_schedule,
       },
     });
-
     return JSON.stringify(reponse.data.data.segments);
   } catch (error) {
     console.log("ERROR GETTING SCHEDULE");
@@ -201,7 +203,7 @@ async function get_videos(access_token_twitch) {
       },
     });
     counter_video = counter_video + 1;
-    return reponse.data.data;
+    return JSON.stringify(reponse.data.data);
   } catch(error) {
     console.log("ERROR GETTING VIDEOS");
     console.log(error);
@@ -238,7 +240,7 @@ async function getStream(access_token_twitch) {
       },
     });
 
-    return reponse.data.data;
+    return JSON.stringify(reponse.data.data);
   } catch (error) {
     console.log("ERROR GETTING STREAM");
     console.log(error);

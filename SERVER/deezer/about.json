@@ -1,0 +1,13 @@
+{
+    "name": "deezer",
+    "actions": [
+        {
+            "name": "add_song",
+            "description": "ajouter une musique à la playlist",
+            "parametter": [
+                "access_token",
+                "name_song"
+            ]
+        }
+    ]
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:mobile_app/pages/login_page.dart';
+import 'package:mobile_app/variable.dart';
 
 
 class RegisterPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class RegisterPageState extends State<RegisterPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://10.19.254.241:3000/register'),
+        Uri.parse('http://${AllVariables.ipMan}:3000/register'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

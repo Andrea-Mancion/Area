@@ -9,8 +9,8 @@ var recup_Total;
 
 async function callActionGithub(area) {
     const action_Name = area.action_Name;
-    if (action_Name == "get_issues") {
-        getIssues(area.action_Param);
+    if (action_Name == "check_new_issues") {
+        checkNewIssues(area.action_Param);
     }
 }
 
@@ -36,7 +36,7 @@ async function getIssue(access_token) {
     }
 }
 
-async function getIssues(areaContent) {
+async function checkNewIssues(areaContent) {
     const test = await getIssue(areaContent.access_token);
     if (counter === 1)
       recup_Total = Object.keys(test).length;

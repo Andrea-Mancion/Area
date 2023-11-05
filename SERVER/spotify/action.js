@@ -23,7 +23,7 @@ function addNewVariables() {
 }
 
 const app = express();
-const port = 3000; // Le port sur lequel le serveur Express écoutera
+const port = 8080; // Le port sur lequel le serveur Express écoutera
 
 
 
