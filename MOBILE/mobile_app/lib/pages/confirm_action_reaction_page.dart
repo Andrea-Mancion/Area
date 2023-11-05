@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/create_task_page.dart';
 import 'package:mobile_app/variable.dart';
@@ -24,7 +22,7 @@ class _ConfimActionReactionPageState extends State<ConfimActionReactionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Confirm Action Reaction"),
+        title: const Text(""),
       ),
       body:
        ConfirmFeildParamActionReaction(widget.trigger, widget.service, widget.isAction, key: UniqueKey()),

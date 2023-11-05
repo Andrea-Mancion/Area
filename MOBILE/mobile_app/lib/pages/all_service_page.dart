@@ -28,7 +28,7 @@ class AllServicePageState extends State<AllServicePage> {
     print("isAction: ${widget.isAction}");
     return Scaffold(
       appBar: AppBar(
-        title: const Text("If This Page"),
+        title: const Text(""),
       ),
       body:  Column(
           children: [
@@ -43,13 +43,13 @@ class AllServicePageState extends State<AllServicePage> {
             DoubleBouttonService(
               key: UniqueKey(),
               service1: github,
-              service2: deezer,
+              service2: dropbox,
               isAction: widget.isAction,
             ),
             const SizedBox(height: verticaleSpace),
             DoubleBouttonService(
               key: UniqueKey(),
-              service1: yahoo,
+              service1: gitlab,
               service2: twitch,
               isAction: widget.isAction,
             ),

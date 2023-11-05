@@ -4,6 +4,8 @@ import 'package:mobile_app/spotify_oauth2.dart';
 import 'package:mobile_app/discord_oauth2.dart';
 import 'package:mobile_app/twitch_oauth2.dart';
 import 'package:mobile_app/yahoo_oauth2.dart';
+import 'package:mobile_app/dropbox_oauth2.dart';
+import 'package:mobile_app/gitlab_oauth2.dart';
 
 void performOAuth2(Service service, bool isAction) {
   switch (service.name) {
@@ -25,6 +27,12 @@ void performOAuth2(Service service, bool isAction) {
     case "Yahoo":
       yahooAuthentication();
       print("yahoo not implemented yet");
+      break;
+    case "Dropbox":
+      dropboxAuthentication();
+      break;
+    case "Gitlab":
+      gitlabAuthentication();
       break;
     default:
       print("service unknown");

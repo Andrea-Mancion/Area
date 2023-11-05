@@ -15,6 +15,7 @@ class AllVariables {
   static const double spaceBetweenButton = 30;
   static const double heightButton = 45;
   static const double widthButton = 220;
+  static String ipMan = "";
   static final TextEditingController spotifyCreatePlaylistReactionName = TextEditingController();
   static final TextEditingController spotifyCreatePlaylistReactionDescription = TextEditingController();
   static final TextEditingController spotifyCreatePlaylistReactionPrivate = TextEditingController();
@@ -34,6 +35,8 @@ class AllVariables {
   static String imageSpotify = "assets/images/Logo_Spotify.png";
   static String imageTwitch = "assets/images/Logo_Twitch.png";
   static String imageYahoo = "assets/images/Logo_Yahoo.png";
+  static String imageDropbox = "assets/images/Logo_Dropbox.png";
+  static String imageGitlab = "assets/images/Logo_Gitlab.png";
   static var controllersAction = <String, dynamic>{};
   static var controllersReaction = <String, dynamic>{};
   static String nameServiceAction = "";
@@ -45,6 +48,8 @@ class AllVariables {
     "Github": "",
     "Twitch": "",
     "Yahoo": "",
+    "Dropbox": "",
+    "Gitlab": "",
   };
   static List<ActionReaction> spotifyAction = [
     ActionReaction("check_new_saved_track", "Une nouvelle musique est enregistrée", []),
@@ -61,31 +66,31 @@ class AllVariables {
     ActionReaction("previous_song", "Joue l'ancienne musique dans la queue (premium only)", []),
     ActionReaction("follow_playlist", "Suis la prochaine playliste", ["playlist_id"]),
     ActionReaction("unfollow_playlist", "Ne suis plus la prochiane playliste", ["playlist_id"]),
-    ActionReaction("remove_saved_track", "Suprimme la musique donnée", ["id de la musique"]),
-    ActionReaction("save_show", "Sauvegarde le podcast donné", ["id du podcast"]),
-    ActionReaction("remove_saved_show", "Enlève le podcast suivi donnée", ["id du podcast"]),
+    ActionReaction("remove_saved_track", "Suprimme la musique donnée", ["track_id"]),
+    ActionReaction("save_show", "Sauvegarde le podcast donné", ["show_id"]),
+    ActionReaction("remove_saved_show", "Enlève le podcast suivi donnée", ["show_id"]),
   ];
   static List<ActionReaction> discordAction = [
     ActionReaction("weather_hour", "Get the weather at a certain hour", ["hour"]),
     ActionReaction("weather_diff", "Get the weather difference when there is a big difference", []),
   ];
   static List<ActionReaction> discordReaction = [
-    ActionReaction("list_message","list all the message in a channel",[]),
-    ActionReaction("send_message","send a message in a channel",["message"]),
-    ActionReaction("send_weather", "send the weather in a channel", []),
-    ActionReaction("send_mail", "send a message by mail", ["message"])
+    ActionReaction("list_message","Montre tous les messages de ce channel",[]),
+    ActionReaction("send_message","Envoie un message dans ce channel",["message"]),
+    ActionReaction("send_weather", "Envoie la météo dans ce channel", []),
+    ActionReaction("send_mail", "Envoie un message par mail", ["message"])
   ];
   static List<ActionReaction> githubAction = [
-    ActionReaction("check_new_issues", "check if we have a new issue", []),
+    ActionReaction("check_new_issues", "Il y a une nouvelle issue", []),
   ];
   static List<ActionReaction> githubReaction = [
   ];
   static List<ActionReaction> twitchAction = [
-    ActionReaction("check_new_follow", "Check if we follow a new channel", []),
-    ActionReaction("check_new_followers", "Check if we have a new follower", []),
+    ActionReaction("check_new_follow", "On suit une nouvelle chaîne", []),
+    ActionReaction("check_new_followers", "On a un nouveau follower", []),
     ActionReaction("get_schedule", "Get le calendrier d'un streamer", []),
-    ActionReaction("get_video", "Get if il y a une nouvelle video", []),
-    ActionReaction("get_stream", "Check si on est en stream ou non", [])
+    ActionReaction("get_video", "Il y a une nouvelle video", []),
+    ActionReaction("get_stream", "On est en stream ou non", [])
   ];
   static List<ActionReaction> twitchReaction = [
     ActionReaction("send_mail", "send a mail to a specific mail address", ["message"]),
@@ -94,6 +99,16 @@ class AllVariables {
   ];
   static List<ActionReaction> yahooReaction = [
   ];
+  static List<ActionReaction> dropboxAction = [
+    ActionReaction("check_new_file", "Check si un nouveau fichier est ajouté", []),
+  ];
+  static List<ActionReaction> dropboxReaction = [
+  ];
+  static List<ActionReaction> gitlabAction = [
+    ActionReaction("get_list_issues", "Un nouveau commit est ajouté", ["access_token","project_path"]),
+  ];
+  static List<ActionReaction> gitlabReaction = [
+  ];
 }
 Service spotify = Service(AllVariables.imageSpotify, "Spotify", AllVariables.spotifyAction, AllVariables.spotifyReaction);
 Service deezer = Service(AllVariables.imageDeezer, "Deezer", AllVariables.spotifyAction, AllVariables.spotifyReaction);
@@ -101,7 +116,8 @@ Service discord = Service(AllVariables.imageDiscord, "Discord", AllVariables.dis
 Service github = Service(AllVariables.imageGithub, "Github", AllVariables.githubAction, AllVariables.githubReaction);
 Service twitch = Service(AllVariables.imageTwitch, "Twitch", AllVariables.twitchAction, AllVariables.twitchReaction);
 Service yahoo = Service(AllVariables.imageYahoo, "Yahoo", AllVariables.spotifyAction, AllVariables.spotifyReaction);
-
+Service dropbox = Service(AllVariables.imageDropbox, "Dropbox", AllVariables.dropboxAction, AllVariables.dropboxReaction);
+Service gitlab = Service(AllVariables.imageGitlab, "Gitlab", AllVariables.gitlabAction, AllVariables.gitlabReaction);
 class Service {
   Service(
     this.image,
