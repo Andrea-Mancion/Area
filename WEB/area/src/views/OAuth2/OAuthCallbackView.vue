@@ -11,6 +11,7 @@ export default {
   mounted() {
     // Récupérez le code d'autorisation de l'URL
     const code = this.$route.query.code;
+    console.log(code);
     // Utilisez Axios pour échanger le code d'autorisation contre un jeton d'accès
     if (this.$route.query.service == "Spotify") {
       axios
@@ -18,6 +19,7 @@ export default {
           params: {
             code: code,
             client_id: "fdbe5e5dbe5c42b680efb3ab1d3574af",
+            origin: "http://localhost:8081",
             client_secret: process.env.SPOTIFY_CLIENT_SECRET,
             redirect_uri: `http://localhost:8081/oauth-callback?service=Spotify`,
             grant_type: "authorization_code",
@@ -94,14 +96,14 @@ export default {
         .catch((error) => {
           console.error("Erreur lors de l'échange du code d'autorisation : ", error);
         });
-    } else if (this.$route.query.service === "Yahoo") {
-      // Gestion de l'authentification pour Yahoo
-      const clientId = process.env.YAHOO_CLIENT_ID;
-      const clientSecret = process.env.YAHOO_CLIENT_SECRET;
-      const redirectUri = `http://localhost:8081/oauth-callback?service=Yahoo`;
+    } else if (this.$route.query.service === "Dailymotion") {
+      // Gestion de l'authentification pour Dailymotion
+      const clientId = process.env.DAILYMOTION_CLIENT_ID;
+      const clientSecret = process.env.DAILYMOTION_CLIENT_SECRET;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Dailymotion`;
 
       axios
-        .post("https://api.login.yahoo.com/oauth2/get_token", null, {
+        .post("https://api.dailymotion.com/oauth/token", null, {
           params: {
             client_id: clientId,
             client_secret: clientSecret,
@@ -115,8 +117,11 @@ export default {
         })
         .then((response) => {
           const accessToken = response.data.access_token;
-          Cookies.set("Yahoo_access_token", accessToken, { expires: 7, secure: true });
-          this.$store.commit("setYahooToken", accessToken);
+          Cookies.set("Dailymotion_access_token", accessToken, {
+            expires: 7,
+            secure: true,
+          });
+          this.$store.commit("setDailymotionToken", accessToken);
           this.$router.push("/action-reaction");
         })
         .catch((error) => {
@@ -134,10 +139,6 @@ export default {
             app_id: clientId,
             secret: clientSecret,
             code: code,
-            redirect_uri: redirectUri,
-          },
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
           },
         })
         .then((response) => {
@@ -203,6 +204,65 @@ export default {
           const accessToken = response.data.access_token;
           Cookies.set("Twitch_access_token", accessToken, { expires: 7, secure: true });
           this.$store.commit("setTwitchToken", accessToken);
+          this.$router.push("/action-reaction");
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'échange du code d'autorisation : ", error);
+        });
+    }
+    if (this.$route.query.service === "Dropbox") {
+      // Gestion de l'authentification pour Dropbox
+      const clientId = process.env.DROPBOX_CLIENT_ID;
+      const clientSecret = process.env.DROPBOX_CLIENT_SECRET;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Dropbox`;
+
+      axios
+        .post("https://api.dropboxapi.com/oauth2/token", null, {
+          params: {
+            client_id: clientId,
+            client_secret: clientSecret,
+            code: code,
+            redirect_uri: redirectUri,
+            grant_type: "authorization_code",
+          },
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((response) => {
+          const accessToken = response.data.access_token;
+          Cookies.set("Dropbox_access_token", accessToken, { expires: 7, secure: true });
+          this.$store.commit("setDropboxToken", accessToken);
+          this.$router.push("/action-reaction");
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'échange du code d'autorisation : ", error);
+        });
+    }
+    if (this.$route.query.service === "Gitlab") {
+      // Gestion de l'authentification pour Dropbox
+      const clientId = process.env.GITLAB_CLIENT_ID;
+      const clientSecret = process.env.GITLAB_CLIENT_SECRET;
+      const redirectUri = `http://localhost:8081/oauth-callback?service=Gitlab`;
+
+      axios
+        .post("https://gitlab.com/oauth/token", null, {
+          params: {
+            client_id: clientId,
+            client_secret: clientSecret,
+            code: code,
+            redirect_uri: redirectUri,
+            grant_type: "authorization_code",
+          },
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((response) => {
+          const accessToken = response.data.access_token;
+          Cookies.set("Gitlab_access_token", accessToken, { expires: 7, secure: true });
+          console.log(accessToken);
+          this.$store.commit("setGitlabToken", accessToken);
           this.$router.push("/action-reaction");
         })
         .catch((error) => {

@@ -16,7 +16,7 @@ export default new Vuex.Store({
     Services: {
       Spotify: {
         Name: 'Spotify',
-        ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/2048px-Spotify_App_Logo.svg.png',
+        ImageLink: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/1024px-Spotify_logo_without_text.svg.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
@@ -132,7 +132,7 @@ export default new Vuex.Store({
       },
       Discord: {
         Name: 'Discord',
-        ImageLink: 'https://m1.quebecormedia.com/emp/emp/discord31fa7044-2286-4838-be61-a8fb7db67d6e_ORIGINAL.jpg?impolicy=crop-resize&x=0&y=0&w=0&h=0&width=925',
+        ImageLink: 'https://logodownload.org/wp-content/uploads/2017/11/discord-logo-4-1.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
@@ -171,12 +171,78 @@ export default new Vuex.Store({
           },
         },
       },
-      Deezer: {
-        Name: 'Deezer',
-        ImageLink: 'https://assets.stickpng.com/images/6297981ce01809629f11358d.png',
+      Twitch: {
+        Name: 'Twitch',
+        ImageLink: 'https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-twitch-circle-512.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
+          CheckNewFollow: {
+            Name: 'check_new_follow',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+          CheckNewFollowers: {
+            Name: 'check_new_followers',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+          GetSchedule: {
+            Name: 'get_schedule',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+          GetVideo: {
+            Name: 'get_video',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+          GetStream: {
+            Name: 'get_stream',
+            IsParams: false,
+            IsBoolParams: false,
+            Params: {
+              access_token: '',
+            }
+          },
+        },
+        Reactions: {
+          SendMail: {
+            Name: 'send_mail',
+            IsParams: true,
+            IsBoolParams: false,
+            Params: {
+              message: '',
+            }
+          },
+        },
+      },
+      Deezer: {
+        Name: 'Deezer',
+        ImageLink: 'https://boost.latelierdecedric.com/wp-content/uploads/2017/12/deezer-logo-circle.png',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+          AAddSong: {
+            Name: 'add_song',
+            IsParams: true,
+            Params: {
+              name_song: '',
+            },
+            IsBoolParams: false,
+          },
         },
         Reactions: {
         },
@@ -191,9 +257,9 @@ export default new Vuex.Store({
         Reactions: {
         },
       },
-      Yahoo: {
-        Name: 'Yahoo',
-        ImageLink: 'https://s.yimg.com/cv/apiv2/social/images/yahoo_default_logo.png',
+      Dailymotion: {
+        Name: 'Dailymotion',
+        ImageLink: 'https://static1.dmcdn.net/images/dailymotion-logo-ogtag-new.png.va3e30462476a82772',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
@@ -201,27 +267,34 @@ export default new Vuex.Store({
         Reactions: {
         },
       },
-      Twitch: {
-        Name: 'Twitch',
-        ImageLink: 'https://play-lh.googleusercontent.com/QLQzL-MXtxKEDlbhrQCDw-REiDsA9glUH4m16syfar_KVLRXlzOhN7tmAceiPerv4Jg',
+      Dropbox: {
+        Name: 'Dropbox',
+        ImageLink: 'https://cdn3.iconfinder.com/data/icons/free-social-icons/67/dropbox_circle_color-512.png',
         IsLog: false,
         AuthentificationTokens: '',
         Actions: {
-          NewFollow: {
-            Name: 'new_follow',
-            IsParams: true,
-            IsBoolParams: false,
-            Params: {
-              access_token: '',
-            }
-          },
-        },
-        Reactions: {
-          SendNotif: {
-            Name: 'send_notif',
+          CheckNewFile: {
+            Name: 'check_new_file',
             IsParams: false,
             IsBoolParams: false,
           },
+        },
+        Reactions: {
+        },
+      },
+      Gitlab: {
+        Name: 'Gitlab',
+        ImageLink: 'https://talks.freelancerepublik.com/wp-content/uploads/2021/02/GitLab_Logo.svg-300x277.png',
+        IsLog: false,
+        AuthentificationTokens: '',
+        Actions: {
+          GetListIssues: {
+            Name: 'get_list_issues',
+            IsParams: false,
+            IsBoolParams: false,
+          },
+        },
+        Reactions: {
         },
       },
       Google: {
@@ -235,23 +308,6 @@ export default new Vuex.Store({
         },
       },
     },
-
-
-    authentificationTokens: {
-      Spotify: '',
-    },
-    ActionsList: {
-      Spotify: {
-        Actions: ['check_new_episode', 'check_new_saved_track',],
-        ActionParams: {},
-      },
-    },
-    ReactionsList: {
-      Spotify: {
-        reactions: ['createPlaylist'],
-        ActionParams: {},
-      }
-    }
   },
   getters: {
     getSpotifyToken(state) {
@@ -259,6 +315,24 @@ export default new Vuex.Store({
     },
     getDiscordToken(state) {
       return state.Services.Discord.AuthentificationTokens;
+    },
+    getTwitchToken(state) {
+      return state.Services.Twitch.AuthentificationTokens;
+    },
+    getGitHubToken(state) {
+      return state.Services.GitHub.AuthentificationTokens;
+    },
+    getDeezerToken(state) {
+      return state.Services.Deezer.AuthentificationTokens;
+    },
+    getDailymotionToken(state) {
+      return state.Services.Dailymotion.AuthentificationTokens;
+    },
+    getDropboxToken(state) {
+      return state.Services.Dropbox.AuthentificationTokens;
+    },
+    getGitlabToken(state) {
+      return state.Services.Gitlab.AuthentificationTokens;
     },
     getSavedAction(state) {
       return state.Action;
@@ -283,8 +357,26 @@ export default new Vuex.Store({
     setSpotifyToken(state, token) {
       state.Services.Spotify.AuthentificationTokens = token;
     },
+    setTwitchToken(state, token) {
+      state.Services.Twitch.AuthentificationTokens = token;
+    },
     setDiscordToken(state, token) {
       state.Services.Discord.AuthentificationTokens = token;
+    },
+    setGitHubToken(state, token) {
+      state.Services.GitHub.AuthentificationTokens = token;
+    },
+    setDeezerToken(state, token) {
+      state.Services.Deezer.AuthentificationTokens = token;
+    },
+    setDailymotionToken(state, token) {
+      state.Services.Dailymotion.AuthentificationTokens = token;
+    },
+    setDropboxToken(state, token) {
+      state.Services.Dropbox.AuthentificationTokens = token;
+    },
+    setGitlabToken(state, token) {
+      state.Services.Gitlab.AuthentificationTokens = token;
     },
     setSavedAction(state, action) {
       state.Action = action;

@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// import axios from "axios";
 export default {
   data() {
     return {
@@ -53,10 +54,10 @@ export default {
         )}`;
         window.location.href = oauthRedirectUrl;
       }
-      if (this.serviceName == "Twitch") {
+      if (this.serviceName == "Dropbox") {
         this.$store.state.TryToLogTo = this.serviceName;
-        const authUrl = "https://id.twitch.tv/oauth2/authorize";
-        const clientId = process.env.TWITCH_CLIENT_ID;
+        const authUrl = "https://www.dropbox.com/oauth2/authorize";
+        const clientId = process.env.DROPBOX_CLIENT_ID;
         const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
@@ -64,10 +65,32 @@ export default {
         )}`;
         window.location.href = oauthRedirectUrl;
       }
-      if (this.serviceName == "Yahoo") {
+      if (this.serviceName == "Gitlab") {
         this.$store.state.TryToLogTo = this.serviceName;
-        const authUrl = "https://api.login.yahoo.com/oauth2/request_auth";
-        const clientId = process.env.YHAOO_CLIENT_ID;
+        const authUrl = "https://gitlab.com/oauth/authorize";
+        const clientId = process.env.GITLAB_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const scopes = "";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Twitch") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://id.twitch.tv/oauth2/authorize";
+        const clientId = process.env.TWITCH_CLIENT_ID;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
+        const scopes = "user:read:email user:read:follows moderator:read:followers";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+          scopes
+        )}`;
+        window.location.href = oauthRedirectUrl;
+      }
+      if (this.serviceName == "Dailymotion") {
+        this.$store.state.TryToLogTo = this.serviceName;
+        const authUrl = "https://www.dailymotion.com/oauth/authorize";
+        const clientId = process.env.DAILYMOTION_CLIENT_ID;
         const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
@@ -79,22 +102,38 @@ export default {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://github.com/login/oauth/authorize";
         const clientId = process.env.GITHUB_CLIENT_ID;
+        const origin = "http://localhost:8081";
+        const state = "ezfrgerhn45526364";
         const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
-        const scopes = "";
-        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
+        const scopes = "user";
+        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&origin=${origin}&state=${state}&response_type=code&scope=${encodeURIComponent(
           scopes
         )}`;
         window.location.href = oauthRedirectUrl;
+        //   axios
+        //     .get(authUrl, null, {
+        //       params: {
+        //         clientId: clientId,
+        //         redirectUri: redirectUri,
+        //         scopes: scopes,
+        //       },
+        //       headers: {
+        //         "Access-Control-Allow-Origin": "*",
+        //         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        //       },
+        //     })
+        //     .then((response) => {
+        //       console.log(response);
+        //     })
+        //     .catch((error) => console.log(error));
       }
       if (this.serviceName == "Deezer") {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://connect.deezer.com/oauth/auth.php";
-        const clientId = process.env.DEEZER_CLIENT_ID;
+        const app_id = process.env.DEEZER_CLIENT_ID;
         const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
-        const scopes = "";
-        const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
-          scopes
-        )}`;
+        const perms = "basic_access,email,manage_library,manage_community";
+        const oauthRedirectUrl = `${authUrl}?app_id=${app_id}&redirect_uri=${redirectUri}&perms=${perms}`;
         window.location.href = oauthRedirectUrl;
       }
       if (this.serviceName == "Google") {

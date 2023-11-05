@@ -163,7 +163,7 @@ async function getStreamerSchedule(access_token_twitch) {
         broadcaster_id: broadcast_id_schedule,
       },
     });
-    return JSON.stringify(response.data.data.segments);
+    return JSON.stringify(reponse.data.data.segments);
   } catch (error) {
     console.log("ERROR GETTING SCHEDULE");
     console.log(error);
