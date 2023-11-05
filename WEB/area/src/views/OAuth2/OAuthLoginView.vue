@@ -31,7 +31,7 @@ export default {
         // Votre client_id OAuth2
         const clientId = process.env.SPOTIFY_CLIENT_ID;
         // URL de redirection après l'autorisation
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         // Les scopes que vous souhaitez demander (séparés par des espaces)
         const scopes =
           "user-read-private user-read-email user-read-playback-state user-modify-playback-state user-library-read user-modify-playback-state playlist-modify-public";
@@ -46,7 +46,7 @@ export default {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://discord.com/api/oauth2/authorize";
         const clientId = process.env.DISCORD_CLIENT_ID;
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "identify guilds";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes
@@ -57,7 +57,7 @@ export default {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://id.twitch.tv/oauth2/authorize";
         const clientId = process.env.TWITCH_CLIENT_ID;
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes
@@ -68,7 +68,7 @@ export default {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://api.login.yahoo.com/oauth2/request_auth";
         const clientId = process.env.YHAOO_CLIENT_ID;
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes
@@ -79,7 +79,7 @@ export default {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://github.com/login/oauth/authorize";
         const clientId = process.env.GITHUB_CLIENT_ID;
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes
@@ -90,7 +90,7 @@ export default {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://connect.deezer.com/oauth/auth.php";
         const clientId = process.env.DEEZER_CLIENT_ID;
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes
@@ -101,7 +101,7 @@ export default {
         this.$store.state.TryToLogTo = this.serviceName;
         const authUrl = "https://accounts.google.com/o/oauth2/auth";
         const clientId = process.env.GOOGLE_CLIENT_ID;
-        const redirectUri = `http://localhost:8080/oauth-callback?service=${this.serviceName}`;
+        const redirectUri = `http://localhost:8081/oauth-callback?service=${this.serviceName}`;
         const scopes = "";
         const oauthRedirectUrl = `${authUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${encodeURIComponent(
           scopes

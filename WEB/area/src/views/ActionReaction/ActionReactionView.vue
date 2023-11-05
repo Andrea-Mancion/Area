@@ -86,7 +86,7 @@ export default {
     CreateActionReaction() {
       this.setActionReactionData();
       axios
-        .post("http://localhost:3000/create_action", this.createActRecData)
+        .post("http://localhost:8080/create_action", this.createActRecData)
         .then((response) => {
           if (response.status === 200) {
             this.ShowGoodAlert = true;

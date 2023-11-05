@@ -310,7 +310,6 @@ app.post('/create_action', (req, res) => {
 });
 
 
-// Démarrer le serveur sur le port 8080
 app.listen(port, () => {
   console.log(`Serveur démarré sur le port ${port}`);
 });
